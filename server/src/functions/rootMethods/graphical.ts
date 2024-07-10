@@ -11,9 +11,10 @@ export interface GraphicalResponse {
     result: {
         x: number;
         y: number;
+        error?: number;
     };
-	count: number;
-	rows?: { x: number; y: number }[];
+	iter: number;
+	iteraions?: { x: number; y: number }[];
 	error?: string;
     statusCode: number;
 }
@@ -26,8 +27,8 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
             x: 0,
             y: 0
         },
-        count: 0,
-        rows: [],
+        iter: 0,
+        iteraions: [],
         statusCode: 400
     };
 
@@ -46,43 +47,48 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
         return result;
     }
 
-    const minus = (y: number) : boolean => y < 0;
-
     let step : number = 1;
     let x : number = xStart;
-    const MAX_COUNT : number = 1000;
+    const MAX_ITER : number = 1000;
     let y : number;
+    let oldY : number = math.evaluate(func, {x: Number(x)} as any);
 
-    while (result.count < MAX_COUNT) {
+    while (result.iter < MAX_ITER) {
+        result.iter++;
         y = math.evaluate(func, {x: Number(x)} as any);
+        result.iteraions.push({ x: Number(x), y: y } as { x: number; y: number });
 
-		if (math.abs(y) < errorFactor) {
+		if (y == 0 || math.abs(y) < errorFactor) {
 			break;
 		}
         
-        if (minus(y)){
+        if (oldY * y < 0){
             x -= step;
 			step /= 10;
 
             y = math.evaluate(func as string, {x: Number(x)} as {x : number});
-            result.rows.push({ x: Number(x), y: y } as { x: number; y: number });
-            result.count++;
         }
 
         x += step;
+
+        if (x > xEnd) {
+            // x = xEnd;
+            break;
+        }
+
+        oldY = y;
         
     }
 
     result.result = {
-        x: result.rows[result.rows.length - 1].x,
-        y: result.rows[result.rows.length - 1].y
+        x: x,
+        y: y
     };
+
     result.statusCode = 200;
 
     return result;
 }
-
-// const checkMinus = (y: number) => y < 0;
 
 //     let x = xStart;
 //     const MAX_ITER = 1000;
