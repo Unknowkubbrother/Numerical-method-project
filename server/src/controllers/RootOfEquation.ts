@@ -1,5 +1,4 @@
 import express from 'express';
-import math from '../lib/math';
 import { GraphicalRequest, graphicalMethod, GraphicalResponse } from '../functions/rootMethods/graphical';
 import { BisectionRequest, bisectionMethod, BisectionResponse } from '../functions/rootMethods/bisection';
 import { FalsePositionRequest, FalsePositionResponse, falsePositionMethod } from '../functions/rootMethods/falsePosition';

@@ -13,7 +13,7 @@ export interface BisectionResponse {
         y: number;
     };
 	iter: number;
-	iteraions?: { 
+	iterations?: { 
         x: number; 
         y: number;
         error?: number;
@@ -31,7 +31,7 @@ export function bisectionMethod (xStart: number, xEnd: number, func: string, err
             y: 0
         },
         iter: 0,
-        iteraions: [],
+        iterations: [],
         statusCode: 400
     };
 
@@ -52,7 +52,7 @@ export function bisectionMethod (xStart: number, xEnd: number, func: string, err
 
     let xL : number = xStart;
     let xR : number = xEnd;
-    let oldXm :number = (xL + xR) / 2;
+    let oldXm :number = 0;
     let xM :number;
     let funcM :number;
     const MAX_ITER : number = 1000;
@@ -62,13 +62,12 @@ export function bisectionMethod (xStart: number, xEnd: number, func: string, err
         xM = (xL + xR) / 2;
         let error : number = math.abs((xM - oldXm));
         funcM = math.evaluate(func, {x: Number(xM)} as any);
-        result.iteraions.push({ x: Number(xM), y: funcM , error: error} as { x: number; y: number, error: number});
 
-        if (funcM == 0 || math.abs(funcM) < errorFactor){
-            result.result.x = xM;
-            result.result.y = funcM;
+        if (error == 0 || error < errorFactor){
             break;
         }
+
+        result.iterations.push({ x: Number(xM), y: funcM , error: error} as { x: number; y: number, error: number});
 
         let facR = math.evaluate(func, {x: Number(xR)} as any);
 
@@ -83,9 +82,10 @@ export function bisectionMethod (xStart: number, xEnd: number, func: string, err
     }
 
     result.result = {
-        x: xM,
-        y: funcM
+        x: result.iterations[result.iterations.length - 1].x,
+        y: result.iterations[result.iterations.length - 1].y
     };
+    
     result.statusCode = 200;
 
     return result;

@@ -14,7 +14,7 @@ export interface GraphicalResponse {
         error?: number;
     };
 	iter: number;
-	iteraions?: { x: number; y: number }[];
+	iterations?: { x: number; y: number }[];
 	error?: string;
     statusCode: number;
 }
@@ -28,7 +28,7 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
             y: 0
         },
         iter: 0,
-        iteraions: [],
+        iterations: [],
         statusCode: 400
     };
 
@@ -56,7 +56,7 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
     while (result.iter < MAX_ITER) {
         result.iter++;
         y = math.evaluate(func, {x: Number(x)} as any);
-        result.iteraions.push({ x: Number(x), y: y } as { x: number; y: number });
+        result.iterations.push({ x: Number(x), y: y } as { x: number; y: number });
 
 		if (y == 0 || math.abs(y) < errorFactor) {
 			break;
@@ -65,7 +65,7 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
         if (oldY * y < 0){
             x -= step;
 			step /= 10;
-
+            
             y = math.evaluate(func as string, {x: Number(x)} as {x : number});
         }
 

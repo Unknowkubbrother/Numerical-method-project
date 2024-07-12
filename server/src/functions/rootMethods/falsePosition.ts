@@ -13,7 +13,7 @@ export interface FalsePositionResponse {
         y: number;
     };
 	iter: number;
-	iteraions?: { 
+	iterations?: { 
         x: number; 
         y: number;
         error?: number;
@@ -31,7 +31,7 @@ export function falsePositionMethod (xStart: number, xEnd: number, func: string,
             y: 0
         },
         iter: 0,
-        iteraions: [],
+        iterations: [],
         statusCode: 400
     };
 
@@ -54,14 +54,14 @@ export function falsePositionMethod (xStart: number, xEnd: number, func: string,
     let xR :number = xEnd;
     let x1 :number;
     let funcX1 :number;
-    const MAX_ITER : number = 1000;
+    const MAX_ITER : number = 1000; 
     while (result.iter < MAX_ITER) {
         result.iter++;
         let funcL :number = math.evaluate(func, {x: xL} as any);
         let funcR :number = math.evaluate(func, {x: xR} as any);
         x1 = (xL * funcR - xR * funcL) / (funcR - funcL);
         funcX1 = math.evaluate(func, {x: x1} as any);
-        result.iteraions.push({x: x1, y: funcX1} as {x: number, y: number});
+        result.iterations.push({x: x1, y: funcX1} as {x: number, y: number});
 
         if (funcX1 == 0 || math.abs((funcX1)) < errorFactor){
             result.result.x = x1;
