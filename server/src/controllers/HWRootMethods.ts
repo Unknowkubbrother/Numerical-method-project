@@ -109,10 +109,14 @@ export const HW2 = async (req: express.Request, res: express.Response) => {
     let xM: number;
     let funcM: number;
 
-    while (result.iter < xEnd) {
+    while (true) {
       xM = (xL + xR) / 2;
       let error: number = math.abs(xM - oldXm);
       funcM = math.evaluate(func, { x: Number(xM) } as any);
+
+      if (xM > xEnd) {
+        break;
+      }
 
       if (error == 0 || error < errorFactor) {
         break;
@@ -238,12 +242,16 @@ export const HW5 = async (req: express.Request, res: express.Response) => {
     let oldX1: number = 0;
     let funcX1: number;
 
-    while (result.iter < xEnd) {
+    while (true) {
       let funcL: number = math.evaluate(func, { x: xL } as any);
       let funcR: number = math.evaluate(func, { x: xR } as any);
       x1 = (xL * funcR - xR * funcL) / (funcR - funcL);
       let error: number = math.abs(x1 - oldX1);
       funcX1 = math.evaluate(func, { x: x1 } as any);
+
+      if (x1 > xEnd) {
+        break;
+      }
 
       if (error == 0 || error < errorFactor) {
         break;
