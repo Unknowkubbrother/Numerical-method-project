@@ -23,14 +23,12 @@ interface response {
 
 export const HW1 = async (req: express.Request, res: express.Response) => {
   try {
-
     // {
     //     "xStart" :  0,
     //     "xEnd":  10.0,
     //     "func": "43x - 180",
     //     "errorFactor": 0.000001
     // }
-
 
     let { xStart, xEnd, func, errorFactor }: playload = req.body;
 
@@ -48,33 +46,39 @@ export const HW1 = async (req: express.Request, res: express.Response) => {
     let x = xStart;
     let y;
     let tempY = math.evaluate(func, { x: Number(x) } as any);
-    let step : number = 1;
+    let step: number = 1;
+    let oldX: number = 0;
 
-    while (x < xEnd) {
+    while (x <= xEnd) {
       y = math.evaluate(func, { x: Number(x) } as any);
-
-      if (math.abs(y) < Number(errorFactor)) {
-          break;
-      }
 
       result.iter++;
       result.iterations.push({ x: x, y: y } as { x: number; y: number });
 
+
       if (checkMinus(y) != checkMinus(tempY)) {
+        console.log(x, oldX, y, tempY);
         xEnd = x;
         x = x - step;
+        tempY = math.evaluate(func, { x: Number(x) } as any);
         step = Number(errorFactor);
 
-      }
-      
-      x+=step;
+        let error = math.abs(x - oldX);
 
+        if (error == 0 || error < errorFactor) {
+          break;
+        }
+
+        oldX = x;
+      }
+
+      x += step;
     }
 
     result.result = {
       x: result.iterations[result.iterations.length - 1].x,
       y: result.iterations[result.iterations.length - 1].y,
-    }
+    };
 
     return res.status(200).json(result).end();
   } catch (error) {
