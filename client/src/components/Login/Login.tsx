@@ -21,7 +21,7 @@ function Login() {
     }
 
   return (
-    <div className="w-full h-[calc(100vh-75px)] flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center">
         <div className="flex flex-col gap-5 scale-105">
 
             <header className="text-2xl font-semibold my-5 flex gap-2 justify-center items-center">

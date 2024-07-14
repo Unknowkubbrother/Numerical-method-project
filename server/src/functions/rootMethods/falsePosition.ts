@@ -53,33 +53,45 @@ export function falsePositionMethod (xStart: number, xEnd: number, func: string,
     let xL :number = xStart;
     let xR :number = xEnd;
     let x1 :number;
+    let oldX1: number = 0;
     let funcX1 :number;
-    const MAX_ITER : number = 1000; 
+    const MAX_ITER : number = 1000;
+
     while (result.iter < MAX_ITER) {
-        result.iter++;
         let funcL :number = math.evaluate(func, {x: xL} as any);
         let funcR :number = math.evaluate(func, {x: xR} as any);
         x1 = (xL * funcR - xR * funcL) / (funcR - funcL);
+        let error: number = math.abs(x1 - oldX1);
         funcX1 = math.evaluate(func, {x: x1} as any);
-        result.iterations.push({x: x1, y: funcX1} as {x: number, y: number});
 
-        if (funcX1 == 0 || math.abs((funcX1)) < errorFactor){
-            result.result.x = x1;
-            result.result.y = funcX1;
+        if (x1 > xEnd) {
             break;
         }
+    
+        if (error == 0 || error < errorFactor) {
+            break;
+        }
+
+        result.iter++;
+        result.iterations.push({ x: x1, y: funcX1, error: error } as {
+        x: number;
+        y: number;
+        error: number;
+        });
 
         if (funcL * funcX1 < 0){
             xR = x1;
         } else {
             xL = x1;
         }
+
+        oldX1 = x1;
     }
 
     result.result = {
-        x: x1,
-        y: funcX1
-    }
+        x: result.iterations[result.iterations.length - 1].x,
+        y: result.iterations[result.iterations.length - 1].y,
+      };
     
     result.statusCode = 200;
 

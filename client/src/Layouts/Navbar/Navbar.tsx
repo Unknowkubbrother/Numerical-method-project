@@ -9,11 +9,14 @@ function Navbar() {
   }
 
   return (
-    <nav className='sticky top-0 left-0 flex justify-between items-center w-full px-5 py-2 bg-background'>
-        <div className='w-[50px] h-[50px] cursor-pointer' onClick={() => setPage('/home')}>
-          <img src="logo.png" alt="logo"/>
+    <nav className='fixed top-0 left-0 flex justify-between items-center w-full px-5 py-5 backdrop-blur'>
+        <div className='flex justify-center items-center gap-2'>
+          <div className='w-[50px] h-[50px] cursor-pointer' onClick={() => setPage('/home')}>
+            <img src="logo.png" alt="logo"/>
+          </div>
+          <span className='text-lg'>Numerical methods</span>
         </div>
-        <ul className='flex justify-center items-center gap-3 font-semibold'>
+        <ul className='flex justify-center items-center gap-5 font-semibold'>
             <li className={`hover:scale-105 duration-300 ${currentLocation.pathname === '/home' ? 'active' : ''}`}>
                 <Link to="/home">Home</Link>
             </li>

@@ -53,14 +53,16 @@ export const HW1 = async (req: express.Request, res: express.Response) => {
       y = math.evaluate(func, { x: Number(x) } as any);
 
       result.iter++;
+
       result.iterations.push({ x: x, y: y } as { x: number; y: number });
 
-
       if (checkMinus(y) != checkMinus(tempY)) {
-        console.log(x, oldX, y, tempY);
         xEnd = x;
+
         x = x - step;
+
         tempY = math.evaluate(func, { x: Number(x) } as any);
+
         step = Number(errorFactor);
 
         let error = math.abs(x - oldX);

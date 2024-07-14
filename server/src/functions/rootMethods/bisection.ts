@@ -58,15 +58,19 @@ export function bisectionMethod (xStart: number, xEnd: number, func: string, err
     const MAX_ITER : number = 1000;
 
     while (result.iter < MAX_ITER) {
-        result.iter++;
         xM = (xL + xR) / 2;
         let error : number = math.abs((xM - oldXm));
         funcM = math.evaluate(func, {x: Number(xM)} as any);
+
+        if (xM > xEnd) {
+            break;
+          }
 
         if (error == 0 || error < errorFactor){
             break;
         }
 
+        result.iter++;
         result.iterations.push({ x: Number(xM), y: funcM , error: error} as { x: number; y: number, error: number});
 
         let facR = math.evaluate(func, {x: Number(xR)} as any);

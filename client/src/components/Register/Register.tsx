@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 function Register() {
 
   return (
-    <div className="w-full h-[calc(100vh-75px)] flex justify-center items-center">
-        <div className="flex flex-col gap-5 scale-105 mt-[-5rem]">
+    <div className="w-full h-screen flex justify-center items-center">
+        <div className="flex flex-col gap-5 scale-105">
 
             <header className="text-2xl font-semibold my-5 flex gap-2 justify-center items-center">
                 <img src="logo.png" alt="logo" className="w-[60px] h-[60px] object-contain"/>
