@@ -41,7 +41,7 @@ export const HW1 = async (req: express.Request, res: express.Response) => {
       iterations: [],
     };
 
-    const checkMinus = (y: number) => y < 0;
+    const checkSign = (y: number) => y < 0;
 
     let x = xStart;
     let y;
@@ -56,7 +56,7 @@ export const HW1 = async (req: express.Request, res: express.Response) => {
 
       result.iterations.push({ x: x, y: y } as { x: number; y: number });
 
-      if (checkMinus(y) != checkMinus(tempY)) {
+      if (checkSign(y) != checkSign(tempY)) {
         xEnd = x;
 
         x = x - step;
@@ -75,6 +75,8 @@ export const HW1 = async (req: express.Request, res: express.Response) => {
       }
 
       x += step;
+
+      
     }
 
     result.result = {
@@ -189,10 +191,10 @@ export const HW3 = async (req: express.Request, res: express.Response) => {
       let error: number = math.abs(xM - oldXm);
       let funcR = calFunc(xR, x, n);
 
-      if (iter > xEnd) {
-        result = xM;
-        break;
-      }
+      // if (iter > xEnd) {
+      //   result = xM;
+      //   break;
+      // }
 
       if (funcM == 0 || error < Number(errorFactor)) {
         result = xM;
@@ -335,10 +337,10 @@ export const HW6 = async (req: express.Request, res: express.Response) => {
       let error: number = math.abs(x1 - oldX1);
       funcX1 = calFunc(x1, x, n);
 
-      if (iter > xEnd) {
-        result = x1;
-        break;
-      }
+      // if (iter > xEnd) {
+      //   result = x1;
+      //   break;
+      // }
 
       if (error == 0 || error < Number(errorFactor)) {
         result = x1;
