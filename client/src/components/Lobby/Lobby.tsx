@@ -8,7 +8,7 @@ function Lobby() {
     const [selectedMenu, setselectedMenu] = useState(mainMenu[0].title)
 
   return (
-    <div className='w-full h-screen mt-[90px]'>
+    <div className='w-full mt-[90px]'>
         <div className='w-[70%] h-content m-auto list-none flex gap-5 justify-center items-center'>
             {mainMenu.map((item : {title : string}, index : number) => {
                 return (

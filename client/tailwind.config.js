@@ -18,6 +18,7 @@ export default {
       yellow: colors.amber,
       pink: colors.fuchsia,
       sky: colors.sky,
+      zinc: colors.zinc,
     },
     extend: {},
   },
