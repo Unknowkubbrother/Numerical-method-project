@@ -4,21 +4,21 @@ import Graph from "../../renders/Graph";
 import { graphicalApi } from "../../../Methods/api";
 import { GraphicalResponse } from "../../../Interfaces/Graphicalmethods";
 import Table from "../../renders/Table";
+import { useOutletContext } from "react-router-dom";
 
-interface InputEquation {
-  InputEquation: (equation: string) => void;
-}
-
-function Graphicalmethods(props: InputEquation) {
-  const [equation, setEquation] = useState("");
+function Graphicalmethods() {
+  // Assuming the context provides a string for the equation, adjust the type as necessary
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [equation, setEquation] = useOutletContext<[string, React.Dispatch<React.SetStateAction<string>>]>();
+  const [equation1, setEquation1] = useState("");
   const [xStart, setXStart] = useState(0);
   const [xEnd, setXEnd] = useState(0);
   const [errorfactor, seterrorfacoter] = useState(0);
   const [Data, setData] = useState<GraphicalResponse | null>(null);
 
   const handleSetEquation = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.InputEquation(e.target.value);
     setEquation(e.target.value);
+    setEquation1(e.target.value);
   };
 
   const handleSetXStart = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +37,7 @@ function Graphicalmethods(props: InputEquation) {
     const result: GraphicalResponse = await graphicalApi(
       xStart,
       xEnd,
-      equation,
+      equation1,
       errorfactor
     );
     setData(result);
@@ -87,7 +87,7 @@ function Graphicalmethods(props: InputEquation) {
           </button>
         </div>
 
-        <div className="w-[70%] h-[550px] rounded-lg pt-5 px-5 flex flex-col bg-white">
+        <div className="w-[73%] h-[550px] rounded-lg pt-5 px-5 flex flex-col bg-white">
           <span className="text-gray-700 font-semibold">Graph</span>
           <div className="w-full h-full">
             <Graph data={Data as GraphicalResponse} />

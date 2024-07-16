@@ -1,34 +1,41 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState} from 'react';
 import { mainMenu } from '../../../Configs/Configs'
-import Graphicalmethods from './Graphicalmethods'
+import { Outlet,useNavigate,useLocation  } from 'react-router-dom'
 
 interface MenuItem {
   title: string;
-  menu: string[];
+  menu: {
+    title: string;
+    path: string;
+  }[];
 }
 
-function Root( props : {menu : string} ) {
-
-    const [selectedSubMenu, setselectedSubMenu] = useState("graphicalmethods")
+function Root() {
+    const navigate = useNavigate();
+    const [selectedSubMenu, setselectedSubMenu] = useState("")
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [equation, setEquation] = useState('')
 
-    const changeEquation = (equation : string) => {
-        setEquation(equation)
-    }
+    const setSubMenu = ((e: React.ChangeEvent<HTMLSelectElement>)=>{
+        setselectedSubMenu(e.target.value)
+        navigate(e.target.value)
+        setEquation('')
+    })
 
+    const location = useLocation();
 
-  return (
+return (
     <>
-    <div className='w-full mt-10 flex justify-start items-center gap-5'>
+        <div className='w-full mt-10 flex justify-start items-center gap-5'>
             <div className='flex flex-col gap-2'>
                 <span>Solutions</span>
-                <select className="select select-bordered w-[200px]" value={selectedSubMenu} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setselectedSubMenu(e.target.value)}>
-                    {mainMenu.map((item : MenuItem) => {
-                        if (item.title === props.menu){
-                            return (item.menu.map((subItem : string, index : number) => {
+                <select className="select select-bordered w-[200px]" value={selectedSubMenu} onChange={setSubMenu}>
+                    {mainMenu.map((item: MenuItem) => {
+                        if (item.title === "Root of Equation") {
+                            return (item.menu.map((subItem: { title: string, path: string }, index: number) => {
                                 return (
-                                    <option key={index} value={subItem}>{subItem}</option>
+                                    <option key={index} value={subItem.path}>{subItem.title}</option>
                                 )
                             }))
                         }
@@ -36,19 +43,20 @@ function Root( props : {menu : string} ) {
                 </select>
             </div>
 
-            <div className='w-[700px] h-[100px] bg-background ml-[7rem] rounded-lg flex justify-center items-center'>
+            <div className='w-[700px] h-[100px] bg-background ml-[12rem] rounded-lg flex justify-center items-center'>
                 <span className='text-xl font-semibold'>
-                    <span>f(x)</span> = <span className='ml-2'>{equation == '' ? ". . ." : equation}</span>
+                    <span>
+                        {location.pathname.split('/')[3] != 'onepoint' ? 'f(x)' : 'xn+1'}
+                    </span> = <span className='ml-2'>{equation == '' ? ". . ." : equation}</span>
                 </span>
             </div>
-      </div>
-        <div className='w-full'>
-            {selectedSubMenu === 'graphicalmethods' && 
-                <Graphicalmethods InputEquation={changeEquation}/>
-            }
         </div>
-      </>
-  )
+        <div className='w-full'>
+            <Outlet context={[equation, setEquation]}/>
+        </div>
+
+    </>
+)
 }
 
 export default Root

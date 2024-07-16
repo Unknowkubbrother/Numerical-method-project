@@ -1,4 +1,5 @@
 import { Link , useNavigate, useLocation  } from 'react-router-dom'
+import logo from '../../assets/logo.png'
 
 function Navbar() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Navbar() {
     <nav className='fixed top-0 left-0 flex justify-between items-center w-full px-5 py-5 backdrop-blur'>
         <div className='flex justify-center items-center gap-2'>
           <div className='w-[50px] h-[50px] cursor-pointer' onClick={() => setPage('/home')}>
-            <img src="logo.png" alt="logo"/>
+            <img src={logo} alt="logo"/>
           </div>
           <span className='text-lg'>Numerical methods</span>
         </div>
