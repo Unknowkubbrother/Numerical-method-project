@@ -63,10 +63,6 @@ export function falsePositionMethod (xStart: number, xEnd: number, func: string,
         x1 = (xL * funcR - xR * funcL) / (funcR - funcL);
         let error: number = math.abs(x1 - oldX1);
         funcX1 = math.evaluate(func, {x: x1} as any);
-
-        if (x1 > xEnd) {
-            break;
-        }
     
         if (error == 0 || error < errorFactor) {
             break;

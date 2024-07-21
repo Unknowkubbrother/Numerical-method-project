@@ -62,10 +62,6 @@ export function bisectionMethod (xStart: number, xEnd: number, func: string, err
         let error : number = math.abs((xM - oldXm));
         funcM = math.evaluate(func, {x: Number(xM)} as any);
 
-        if (xM > xEnd) {
-            break;
-          }
-
         if (error == 0 || error < errorFactor){
             break;
         }
