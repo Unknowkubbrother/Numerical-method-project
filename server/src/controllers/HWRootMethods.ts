@@ -358,3 +358,69 @@ export const HW6 = async (req: express.Request, res: express.Response) => {
     return res.sendStatus(400);
   }
 };
+
+export const HwOnePoint = async (req: express.Request, res: express.Response) => {
+    try{
+      // {
+      //     "xStart" :  0,
+      //     "func": "x^2-7+x",
+      //     "errorFactor": 0.000001
+      // }
+
+      const { xStart, func, errorFactor }: playload = req.body;
+
+      let result: {
+        result: {
+          x: number| string;
+          y: number | string;
+        };
+        iter: number;
+        iterations: {
+          x: number | string;
+          y: number | string;
+        }[];
+      } = {
+        result: {
+          x: 0,
+          y: 0,
+        },
+        iter: 0,
+        iterations: [],
+      };
+
+      let x : number = xStart;
+      let oldX : number;
+
+      while (true){
+         oldX = x;
+
+          x = math.evaluate(func, { x: Number(oldX) } as any);
+
+          result.iter++;
+
+          if (x !== Infinity && x !== -Infinity) {
+            result.iterations.push({ x: oldX, y: x } as { x: number, y: number });
+          }else{
+            result.iterations.push({ x: "infinity", y: "infinity" } as { x: string, y: string });
+          }
+
+          let error = math.abs(x - oldX);
+
+          if (error == 0 || error < errorFactor || x == Infinity || x == -Infinity) {
+            break;
+          }
+
+      }
+
+      result.result = {
+        x: result.iterations[result.iterations.length - 1].x,
+        y: result.iterations[result.iterations.length - 1].y,
+      };
+
+      return res.status(200).json(result).end();
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
