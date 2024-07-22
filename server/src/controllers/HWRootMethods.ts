@@ -394,7 +394,7 @@ export const HwOnePoint = async (req: express.Request, res: express.Response) =>
       let oldX : number;
 
       while (true){
-         oldX = x;
+          oldX = x;
 
           x = math.evaluate(func, { x: Number(oldX) } as any);
 
