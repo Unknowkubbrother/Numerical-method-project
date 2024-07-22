@@ -373,11 +373,13 @@ export const HwOnePoint = async (req: express.Request, res: express.Response) =>
         result: {
           x: number| string;
           y: number | string;
+          error?: number | string;
         };
         iter: number;
         iterations: {
           x: number | string;
           y: number | string;
+          error?: number | string;
         }[];
       } = {
         result: {
@@ -398,13 +400,13 @@ export const HwOnePoint = async (req: express.Request, res: express.Response) =>
 
           result.iter++;
 
-          if (x !== Infinity && x !== -Infinity) {
-            result.iterations.push({ x: oldX, y: x } as { x: number, y: number });
-          }else{
-            result.iterations.push({ x: "infinity", y: "infinity" } as { x: string, y: string });
-          }
-
           let error = math.abs(x - oldX);
+
+          if (x !== Infinity && x !== -Infinity) {
+            result.iterations.push({ x: oldX, y: x ,error: error} as { x: number, y: number, error: number });
+          }else{
+            result.iterations.push({ x: "infinity", y: "infinity" ,error: "NaN" } as { x: string, y: string , error: string});
+          }
 
           if (error == 0 || error < errorFactor || x == Infinity || x == -Infinity) {
             break;
@@ -416,6 +418,7 @@ export const HwOnePoint = async (req: express.Request, res: express.Response) =>
         x: result.iterations[result.iterations.length - 1].x,
         y: result.iterations[result.iterations.length - 1].y,
       };
+      
 
       return res.status(200).json(result).end();
         
