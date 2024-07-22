@@ -369,7 +369,9 @@ export const HwOnePoint = async (req: express.Request, res: express.Response) =>
 
       const { xStart, func, errorFactor }: playload = req.body;
       
-      // console.log(math.derivative(func, 'x').toString())
+      // let diff1 = math.derivative(func, 'x').toString();
+      // let diff2 = math.derivative(diff1, 'x').toString();
+      // console.log(diff2,math.evaluate(diff2,{x: xStart}))
 
       let result: {
         result: {
