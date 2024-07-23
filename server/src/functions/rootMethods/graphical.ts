@@ -14,7 +14,11 @@ export interface GraphicalResponse {
         error?: number;
     };
 	iter: number;
-	iterations?: { x: number; y: number }[];
+	iterations?: { 
+        x: number; 
+        y: number;
+        error?:number; 
+    }[];
 	error?: string;
     statusCode: number;
 }
@@ -56,7 +60,7 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
     while (result.iter < MAX_ITER) {
         result.iter++;
         y = math.evaluate(func, {x: Number(x)} as any);
-        result.iterations.push({ x: Number(x), y: y } as { x: number; y: number });
+        result.iterations.push({ x: Number(x), y: y , error: math.abs(y)} as { x: number; y: number , error: number});
 
 		if (y == 0 || math.abs(y) < errorFactor) {
 			break;
@@ -82,40 +86,11 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
 
     result.result = {
         x: x,
-        y: y
+        y: y,
+        error: math.abs(y)
     };
 
     result.statusCode = 200;
 
     return result;
 }
-
-//     let x = xStart;
-//     const MAX_ITER = 1000;
-//     let y;
-
-//     while (result.iter < MAX_ITER) {
-//         result.iter++;
-//         y = math.evaluate(func, {x: Number(x)} as any);
-
-//         if (checkMinus(y)){
-//             let bottom = x-1
-//             let top = x
-//             result.iter = 0;
-//             result.iterations = [];
-//             for(let i = bottom; i < top; i += errorFactor){
-//                 y = math.evaluate(func, {x: i} as any);
-//                 if (checkMinus(y)){
-//                     result.result = i-errorFactor;
-//                     break;
-//                 }
-//                 result.iterations.push({x: i, y: Number(y)});
-//                 result.iter++;
-//             }
-//             break;
-//         }
-
-//         x++;
-        
-//     }
-//     return result;

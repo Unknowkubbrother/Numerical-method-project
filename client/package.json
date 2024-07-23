@@ -11,17 +11,24 @@
   },
   "dependencies": {
     "@types/d3": "^7.4.3",
+    "@types/katex": "^0.16.7",
     "@types/mathjs": "^9.4.2",
+    "@types/react-katex": "^3.0.4",
     "apexcharts": "^3.50.0",
     "axios": "^1.7.2",
+    "better-react-mathjax": "^1.0.3",
     "d3": "^7.9.0",
+    "katex": "^0.16.11",
     "mathjs": "^13.0.3",
     "plotly.js": "^2.33.0",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.3.1",
+    "react-katex": "^3.0.1",
+    "react-markdown": "^9.0.1",
     "react-plotly.js": "^2.6.0",
-    "react-router-dom": "^6.24.0"
+    "react-router-dom": "^6.24.0",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@types/plotly.js": "^2.33.0",

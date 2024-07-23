@@ -17,34 +17,34 @@ export const mainMenu = [
       },
     ],
   },
-  {
-    title: "Linear Algebraic Equation",
-    path: "/lobby/linear",
-    menu: [
-    ],
-  },
-  {
-    title: "Interpolation",
-    path: "/lobby/root",
-    menu: [
-    ],
-  },
-  {
-    title: "Extrapolation",
-    path: "/lobby/root",
-    menu: [
-    ],
-  },
-  {
-    title: "Integration",
-    path: "/lobby/root",
-    menu: [
-    ],
-  },
-  {
-    title: "Differentiation",
-    path: "/lobby/root",
-    menu: [
-    ],
-  },
+  // {
+  //   title: "Linear Algebraic Equation",
+  //   path: "/lobby/linear",
+  //   menu: [
+  //   ],
+  // },
+  // {
+  //   title: "Interpolation",
+  //   path: "/lobby/root",
+  //   menu: [
+  //   ],
+  // },
+  // {
+  //   title: "Extrapolation",
+  //   path: "/lobby/root",
+  //   menu: [
+  //   ],
+  // },
+  // {
+  //   title: "Integration",
+  //   path: "/lobby/root",
+  //   menu: [
+  //   ],
+  // },
+  // {
+  //   title: "Differentiation",
+  //   path: "/lobby/root",
+  //   menu: [
+  //   ],
+  // },
 ];

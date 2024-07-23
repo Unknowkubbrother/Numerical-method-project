@@ -11,6 +11,7 @@ export interface BisectionResponse {
     result: {
         x: number;
         y: number;
+        error? : number;
     };
 	iter: number;
 	iterations?: { 
@@ -83,7 +84,8 @@ export function bisectionMethod (xStart: number, xEnd: number, func: string, err
 
     result.result = {
         x: result.iterations[result.iterations.length - 1].x,
-        y: result.iterations[result.iterations.length - 1].y
+        y: result.iterations[result.iterations.length - 1].y,
+        error: result.iterations[result.iterations.length - 1].error
     };
     
     result.statusCode = 200;

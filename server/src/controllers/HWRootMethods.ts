@@ -361,11 +361,11 @@ export const HW6 = async (req: express.Request, res: express.Response) => {
 
 export const HwOnePoint = async (req: express.Request, res: express.Response) => {
     try{
-      // {
-      //     "xStart" :  0,
-      //     "func": "x^2-7+x",
-      //     "errorFactor": 0.000001
-      // }
+        // {
+        //     "xStart" :  0,
+        //     "func": "1/2*(x+7/x)",
+        //     "errorFactor": 0.000001
+        // }
 
       const { xStart, func, errorFactor }: playload = req.body;
       
@@ -396,15 +396,21 @@ export const HwOnePoint = async (req: express.Request, res: express.Response) =>
 
       let x : number = xStart;
       let oldX : number;
+      let error: number;
+
+
+      const calFunc = (func: string, x: number): number => {
+        return (x==0) ? 1 : math.evaluate(func, { x: x } as any);
+      }
 
       while (true){
           oldX = x;
 
-          x = math.evaluate(func, { x: Number(oldX) } as any);
+          x = calFunc(func , oldX);
 
           result.iter++;
 
-          let error = math.abs(x - oldX);
+          error = math.abs(x - oldX);
 
           if (x !== Infinity && x !== -Infinity) {
             result.iterations.push({ x: oldX, y: x ,error: error} as { x: number, y: number, error: number });

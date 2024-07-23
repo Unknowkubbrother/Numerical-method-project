@@ -3,7 +3,6 @@ import {GraphicalResponse} from '../../Interfaces/Graphicalmethods'
 import {round} from 'mathjs'
 
 function Table(props : {data : GraphicalResponse}) {
-  console.log(props)
   return (
     <div className="w-full rounded-md overflow-hidden">
       <div className="overflow-x-auto">
@@ -26,7 +25,7 @@ function Table(props : {data : GraphicalResponse}) {
                   <td>{index}</td>
                   <td>{round(item?.x,6)}</td>
                   <td>{round(item?.y,6)}</td>
-                  <td>{(item?.error) ? item?.error : "NaN"}</td>
+                  <td>{(item?.error) ? (round(item?.error * 100,6)) + '%' : "NaN"}</td>
                 </tr>
               );
             }) : 

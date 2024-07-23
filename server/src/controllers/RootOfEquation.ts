@@ -2,6 +2,7 @@ import express from 'express';
 import { GraphicalRequest, graphicalMethod, GraphicalResponse } from '../functions/rootMethods/graphical';
 import { BisectionRequest, bisectionMethod, BisectionResponse } from '../functions/rootMethods/bisection';
 import { FalsePositionRequest, FalsePositionResponse, falsePositionMethod } from '../functions/rootMethods/falsePosition';
+import { OnePointRequest, OnePointResponse, OnepointMethod } from '../functions/rootMethods/onepoint';
 
 export const graphical = async (req: express.Request, res: express.Response) => {
     try{
@@ -48,6 +49,20 @@ export const falsePosition = async (req: express.Request, res: express.Response)
         const result : FalsePositionResponse = falsePositionMethod(xStart, xEnd, func, errorFactor);
 
         return res.status(result.statusCode).json(result).end();
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+export const onePoint = async (req: express.Request, res: express.Response) => {
+    try{
+        const {xInitial, func, errorFactor} : OnePointRequest = req.body;
+
+        const result : OnePointResponse = OnepointMethod(xInitial, func, errorFactor);
+
+        return res.status(result.statusCode).json(result).end();
+
     }catch (error) {
         console.log(error);
         return res.sendStatus(400);
