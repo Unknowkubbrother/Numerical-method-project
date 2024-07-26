@@ -44,53 +44,65 @@ function Graphicalmethods() {
 
   return (
     <div className="w-full mt-5">
-      <div className="w-full flex gap-5">
-        <div className="w-[20%] flex flex-col gap-2 justify-start items-start">
-          <label className="font-semibold">Equation</label>
-          <input
-            type="text"
-            name="Equation"
-            className="w-[180px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
-            placeholder="43x-180"
-            onInput={handleSetEquation}
-            value={equation}
-          />
-          <label className="font-semibold">X Start</label>
-          <input
-            type="number"
-            name="xstart"
-            className="w-[180px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
-            placeholder="1.00"
-            onInput={handleSetXStart}
-            value={xStart}
-          />
-          <label className="font-semibold">X End</label>
-          <input
-            type="number"
-            name="xend"
-            className="w-[180px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
-            placeholder="10.00"
-            onInput={handleSetXEnd}
-            value={xEnd}
-          />
-          <label className="font-semibold">Error threshold 𝜖</label>
-          <input
-            type="number"
-            name="error"
-            className="w-[180px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
-            placeholder="0.000001"
-            onInput={handleSetError}
-            value={errorfactor}
-          />
-          <button
-            className="p-2 mt-2 bg-secondary rounded-lg hover:scale-105 duration-300"
-            onClick={sendRequest}
-          >
-            Calculate!
-          </button>
+      <div className="w-full flex min-[340px]:flex-col lg:flex-row gap-5 min-[340px]:justify-center min-[340px]:items-center lg:justify-start lg:items-start">
+        <div className="min-[340px]:w-full lg:w-[20%] flex flex-col gap-5 justify-center items-center">
+          <div className="min-[340px]:w-full md:w-[90%] lg:w-full min-[340px]:grid min-[340px]:grid-cols-2 grid-rows-2 min-[340px]:gap-2 lg:flex lg:flex-col lg:gap-5 m-auto">
+            <div className="flex flex-col gap-2 min-[340px]:items-center lg:justify-start lg:items-start">
+              <label className="font-semibold">Equation</label>
+              <input
+                type="text"
+                name="Equation"
+                className="min-[340px]:w-[150px] min-[667px]:w-[280px] md:w-[300px] lg:w-[200px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
+                placeholder="43x-180"
+                onInput={handleSetEquation}
+                value={equation}
+              />
+            </div>
+            <div className="flex flex-col gap-2 min-[340px]:items-center lg:justify-start lg:items-start">
+              <label className="font-semibold">X Start</label>
+              <input
+                type="number"
+                name="xstart"
+                className="min-[340px]:w-[150px] min-[667px]:w-[280px] md:w-[300px] lg:w-[200px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
+                placeholder="1.00"
+                onInput={handleSetXStart}
+                value={xStart}
+              />
+            </div>
+            <div className="flex flex-col gap-2 min-[340px]:items-center lg:justify-start lg:items-start">
+              <label className="font-semibold">X End</label>
+              <input
+                type="number"
+                name="xend"
+                className="min-[340px]:w-[150px] min-[667px]:w-[280px] md:w-[300px] lg:w-[200px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
+                placeholder="10.00"
+                onInput={handleSetXEnd}
+                value={xEnd}
+              />
+            </div>
+            <div className="flex flex-col gap-2 min-[340px]:items-center lg:justify-start lg:items-start">
+              <label className="font-semibold">Error threshold 𝜖</label>
+              <input
+                type="number"
+                name="error"
+                className="min-[340px]:w-[150px] min-[667px]:w-[280px] md:w-[300px] lg:w-[200px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
+                placeholder="0.000001"
+                onInput={handleSetError}
+                value={errorfactor}
+              />
+            </div>
+          </div>
+          <div className="w-full flex min-[340px]:justify-center min-[340px]:items-center lg:justify-start lg:items-start">
+            <button
+              className="min-[340px]:w-[250px] lg:w-[200px] p-2 mt-2 bg-secondary rounded-lg hover:scale-105 duration-300"
+              onClick={sendRequest}
+            >
+              Calculate!
+            </button>
+          </div>
         </div>
 
-        <div className="w-[73%] h-[550px] rounded-lg pt-5 px-5 flex flex-col bg-white">
+        <div className="min-[340px]:w-full lg:w-[85%] xl:w-[73.5%] h-[550px] rounded-lg pt-5 px-5 flex flex-col bg-white">
           <span className="text-gray-700 font-semibold">Graph</span>
           <div className="w-full h-full">
             <Graph data={Data as GraphicalResponse} />

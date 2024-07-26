@@ -27,8 +27,8 @@ function Root() {
 
   return (
     <>
-      <div className="w-full mt-10 flex justify-start items-center gap-5">
-        <div className="w-[15%] flex flex-col gap-2">
+      <div className="w-full mt-10 flex flex-col lg:flex-row justify-start items-center gap-5">
+        <div className="lg:w-[18%] xl:w-[15%] flex min-[340px]:justify-center min-[340px]:items-center lg:flex-col lg:justify-start lg:items-start gap-2">
           <span>Solutions</span>
           <select
             className="select select-bordered "
@@ -51,14 +51,14 @@ function Root() {
           </select>
         </div>
 
-        <div className="w-[70%] flex justify-center items-centers m-auto">
+        <div className="min-[340px]:w-[90%] md:-[75%] lg:w-[70%] flex justify-center items-centers m-auto">
           <div className="w-full h-[100px] bg-background rounded-lg flex justify-center items-center">
               <MathUI equation={equation}/>
               
           </div>
         </div>
       </div>
-      <div className="w-full">
+      <div className="min-[340px]:w-[90%] lg:w-full m-auto">
         <Outlet context={[equation, setEquation]} />
       </div>
     </>

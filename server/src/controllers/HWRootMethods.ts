@@ -412,6 +412,7 @@ export const HwOnePoint = async (req: express.Request, res: express.Response) =>
 
           error = math.abs(x - oldX);
 
+
           if (x !== Infinity && x !== -Infinity) {
             result.iterations.push({ x: oldX, y: x ,error: error} as { x: number, y: number, error: number });
           }else{
