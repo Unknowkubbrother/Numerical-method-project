@@ -23,7 +23,7 @@ function Lobby() {
 
   return (
     <div className='w-full mt-[90px]'>
-        <div className='lg:w-[90%] xl:w-[70%] h-content m-auto list-none flex gap-5 justify-center items-center'>
+        <div className='min-[340px]:w-[75%] lg:w-[90%] xl:w-[70%] h-content m-auto list-none flex gap-5 justify-center items-center flex-wrap'>
             {mainMenu.map((item : {title: string, path: string, menu: {title: string, path: string}[]}, index : number) => {
                 return (
                     <button className={`btn text-white hover:bg-primary hover:scale-105 ${selectedMenu == item.title ? 'bg-primary' : ''}`} key={index} onClick={() => handlerSetRouter(item)}>{item.title}</button>
