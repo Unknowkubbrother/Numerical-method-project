@@ -428,10 +428,159 @@ export const HwOnePoint = async (req: express.Request, res: express.Response) =>
       result.result = {
         x: result.iterations[result.iterations.length - 1].x,
         y: result.iterations[result.iterations.length - 1].y,
+        error: result.iterations[result.iterations.length - 1].error
       };
       
 
       return res.status(200).json(result).end();
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+export const Hw3Newton = async (req: express.Request, res: express.Response) => {
+  // {
+  //   "xInital": 2,
+  //   "func": "x^2 - 7",
+  //   "errorFactor": 0.000001
+  // }
+    try{
+      const { xInital, func, errorFactor }: {
+        xInital: number;
+        func: string;
+        errorFactor: number;
+      } = req.body;
+
+      let result: {
+        result: {
+          x: number;
+          y: number;
+          error?: number;
+        };
+        iter: number;
+        iterations: {
+          x: number;
+          y: number;
+          error?: number;
+        }[];
+      } = {
+        result: {
+          x: 0,
+          y: 0,
+        },
+        iter: 0,
+        iterations: [],
+      };
+
+      const calFuncdiff = (func: string, x: number): number => {
+        return math.derivative(func, 'x').evaluate({x: x});
+      }
+
+      const calFunc = (func: string, x: number): number => {
+        return math.evaluate(func, { x: x } as any);
+      }
+
+
+      let x: number = xInital;
+      let error: number;
+      let oldX: number;
+      do{
+        oldX = x;
+
+        x = oldX - (calFunc(func, oldX) / calFuncdiff(func, oldX));
+
+        error = math.abs(x - oldX);
+
+        result.iter++;
+        result.iterations.push({ x: oldX, y: x , error: error} as { x: number; y: number , error: number});
+
+      }while(error != 0 && error > errorFactor);
+
+      result.result = {
+        x: result.iterations[result.iterations.length - 1].x,
+        y: result.iterations[result.iterations.length - 1].y,
+        error: result.iterations[result.iterations.length - 1].error
+      };
+
+      return res.status(200).json(result).end();
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+export const HW3Secant = async (req: express.Request, res: express.Response) => {
+    try{
+      // {
+      //   "xInital0": 0,
+      //   "xInital1": 2,
+      //   "func": "x^2 - 7",
+      //   "errorFactor": 0.000001
+      // }
+      const {xInital0, xInital1, func, errorFactor} : {
+        xInital0: number;
+        xInital1: number;
+        func: string;
+        errorFactor: number;
+      } = req.body;
+
+      let result: {
+        result: {
+          xi_1: number;
+          xi: number ;
+          error?: number ;
+        };
+        iter: number;
+        iterations: {
+          xi_1: number ;
+          xi: number ;
+          error?: number ;
+        }[];
+      } = {
+        result: {
+          xi_1: 0,
+          xi: 0,
+        },
+        iter: 0,
+        iterations: [],
+      };
+
+
+      let x0: number = xInital0;
+      let x1: number = xInital1;
+      let error:number;
+      let oldX: number;
+
+      const calFunc = (func: string, x: number): number => {
+        return math.evaluate(func, { x: x } as any);
+      }
+
+      const calX1 = (x0: number, x1: number, func: string): number => {
+        return x1 - ((calFunc(func, x1) * (x0 - x1)) / (calFunc(func, x0) - calFunc(func, x1)));
+      }
+
+      do{
+        oldX = x1;
+        x1 = calX1(x0, x1, func);
+        error = math.abs(x1 - oldX);
+        x0 = oldX;
+
+        result.iter++;
+        result.iterations.push({ xi_1: x1, xi: oldX, error: error} as { xi_1: number, xi:number, error: number});
+
+      }while(error != 0 && error > errorFactor);
+
+      result.result = {
+        xi_1: result.iterations[result.iterations.length - 1].xi_1,
+        xi: result.iterations[result.iterations.length - 1].xi,
+        error: result.iterations[result.iterations.length - 1].error
+      };
+
+      return res.status(200).json(result).end();
+
         
     }catch (error) {
         console.log(error);
