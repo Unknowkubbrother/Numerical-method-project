@@ -8,6 +8,7 @@ export interface GaussEliminationRequest {
 export interface GaussEliminationResponse {
     result: number[];
     martixAList: number[][][];
+    arrBList: number[][];
 	error?: string;
     statusCode: number;
 }
@@ -18,6 +19,7 @@ export function GaussEliminationMethod (martixA: number[][], arrB: number[]) : G
     const result: GaussEliminationResponse = { 
         result: [],
         martixAList: [],
+        arrBList: [],
         statusCode: 400
     };
 
@@ -34,16 +36,21 @@ export function GaussEliminationMethod (martixA: number[][], arrB: number[]) : G
                     return value - tempMartixA[index];
                 });
                 arrB[j] = arrB[j] - temparrB;
+                result.martixAList.push(martixA.map((arr) => [...arr]));
+                result.arrBList.push([...arrB]);
             }
         }
     }
-
-    console.log(martixA, arrB);
-
-    // console.log(martixA);
-
     
 
+    for(let i = martixA.length - 1; i >= 0; i--){
+        let sum = 0;
+        for(let j = martixA.length - 1; j > i; j--){
+            sum += martixA[i][j] * result.result[j];
+        }
+        result.result[i] = (arrB[i] - sum) / martixA[i][i];
+        result.result[i] = math.round(result.result[i], 6);
+    }
     
     result.statusCode = 200;
 
