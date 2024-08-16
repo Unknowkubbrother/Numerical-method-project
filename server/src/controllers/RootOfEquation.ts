@@ -3,6 +3,8 @@ import { GraphicalRequest, graphicalMethod, GraphicalResponse } from '../functio
 import { BisectionRequest, bisectionMethod, BisectionResponse } from '../functions/rootMethods/bisection';
 import { FalsePositionRequest, FalsePositionResponse, falsePositionMethod } from '../functions/rootMethods/falsePosition';
 import { OnePointRequest, OnePointResponse, OnepointMethod } from '../functions/rootMethods/onepoint';
+import { NewTonRequest, NewTonResponse, NewTonMethod } from '../functions/rootMethods/newton';
+import { SecantRequest, SecantResponse, SecantMethod } from '../functions/rootMethods/secant';
 
 export const graphical = async (req: express.Request, res: express.Response) => {
     try{
@@ -66,5 +68,33 @@ export const onePoint = async (req: express.Request, res: express.Response) => {
     }catch (error) {
         console.log(error);
         return res.sendStatus(400);
+    }
+}
+
+export const newTon = async (req: express.Request, res: express.Response) => {
+    try{
+        const {xInitial, func, errorFactor} : NewTonRequest = req.body;
+
+        const result : NewTonResponse = NewTonMethod(xInitial, func, errorFactor);
+
+        return res.status(result.statusCode).json(result).end();
+
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+export const secant = async (req: express.Request, res: express.Response) => {
+    try{
+        const {xInitial0, xInitial1, func, errorFactor} : SecantRequest = req.body;
+
+        const result : SecantResponse = SecantMethod(xInitial0, xInitial1, func, errorFactor);
+
+        return res.status(result.statusCode).json(result).end();
+
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus
     }
 }

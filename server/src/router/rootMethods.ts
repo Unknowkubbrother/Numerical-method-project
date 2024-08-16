@@ -1,9 +1,11 @@
 import express from 'express';
-import {graphical,bisection, falsePosition, onePoint} from '../controllers/RootOfEquation';
+import {graphical,bisection, falsePosition, onePoint,newTon,secant} from '../controllers/RootOfEquation';
 
 export default (router: express.Router) => {
-    router.post('/numerical/root/graphical',graphical)
-    router.post('/numerical/root/bisection',bisection)
-    router.post('/numerical/root/falsePosition',falsePosition)
-    router.post('/numerical/root/onePoint',onePoint)
+    router.post('/root/graphical',graphical)
+    router.post('/root/bisection',bisection)
+    router.post('/root/falsePosition',falsePosition)
+    router.post('/root/onePoint',onePoint)
+    router.post('/root/newTon',newTon)
+    router.post('/root/seant',secant)
 }
