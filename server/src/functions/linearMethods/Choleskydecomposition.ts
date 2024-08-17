@@ -8,7 +8,7 @@ export interface CholeskydecompositionRequest {
 export interface CholeskydecompositionResponse {
     result: number[];
     matrixL: number[][];
-    matrixU: number[][];
+    matrixLT: number[][];
     arrY : number[];
 	error?: string;
     statusCode: number;
@@ -20,7 +20,7 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
     const result: CholeskydecompositionResponse = { 
         result: [],
         matrixL: [],
-        matrixU: [],
+        matrixLT: [],
         arrY: [],
         statusCode: 400
     };
@@ -34,34 +34,35 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
     };
 
     let matrixL:number[][] = createMatrix(matrixA.length);
-    let matrixU:number[][] = createMatrix(matrixA.length);
+    let matrixLT:number[][] = createMatrix(matrixA.length);
 
     for (let i = 0; i < matrixA.length; i++) {
 		for (let j = 0; j < matrixA.length; j++) {
 			matrixL[i][j] = 0;
-			matrixU[i][j] = i == j ? 1 : 0;
+			matrixLT[i][j] = 0;
 		}
 	}
 
-    //LU = A
+    //LL^t = A
     for(let i=0; i < matrixA.length; i++){
-        for(let j=0; j < matrixA.length; j++){
+        for(let j = 0; j <= i; j++){
             let sum = matrixA[i][j];
-            for(let k=0; k < matrixA.length; k++){
-                sum -= matrixL[i][k] * matrixU[k][j];
+            for(let k=0; k < j; k++){
+                sum -= matrixL[i][k] * matrixLT[k][j];
             }
-
-            if (i >= j){
-                matrixL[i][j] = sum / matrixU[i][i];
+            if (i == j){
+                matrixL[i][j] = Math.sqrt(sum);
+                matrixLT[j][i] = matrixL[i][j];
             }
             else{
-                matrixU[i][j] = sum / matrixL[i][i];
+                matrixL[i][j] = sum / matrixL[j][j];
+                matrixLT[j][i] = matrixL[i][j];
             }
         }
-    } 
+    }
 
     result.matrixL = matrixL;
-    result.matrixU = matrixU;
+    result.matrixLT = matrixLT;
 
     //LY = B
     let arrY:number[] = new Array(arrB.length);
@@ -76,14 +77,14 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
     result.arrY = arrY;
 
 
-    //UX = Y
+    //L^tX = Y
     let arrX:number[] = new Array(arrY.length);
-    for(let i = matrixU.length - 1; i >= 0; i--){
+    for(let i = matrixLT.length - 1; i >= 0; i--){
         let sum =  0;
-        for(let j = matrixU.length - 1; j > i; j--){
-            sum += matrixU[i][j] * arrX[j];
+        for(let j = matrixLT.length - 1; j > i; j--){
+            sum += matrixLT[i][j] * arrX[j];
         }
-        arrX[i] = math.round((arrY[i] - sum) / matrixU[i][i], 6);
+        arrX[i] = math.round((arrY[i] - sum) / matrixLT[i][i], 6);
     }
 
     result.result = arrX;
