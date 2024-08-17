@@ -25,6 +25,15 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
         statusCode: 400
     };
 
+    for(let i=0; i < matrixA.length; i++){
+        for(let j = 0; j <= i; j++){
+            if(matrixA[i][j] != matrixA[j][i]){
+                result.error = "Matrix A is not symmetric";
+                return result;
+            }
+        }
+    }
+
     const createMatrix = (matrixSize: number) => {
         const matrix = new Array(Number(matrixSize));
         for (let i = 0; i < matrixSize; i++) {
