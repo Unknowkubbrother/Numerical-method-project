@@ -23,21 +23,23 @@ export function GaussEliminationMethod (martixA: number[][], arrB: number[]) : G
         statusCode: 400
     };
 
-    for(let i = 0; i < martixA.length -1; i++){
-        for(let j = i+1; j < martixA.length; j++){
-            if (martixA[j][i] != 0){
-                let tempMartixA = [...martixA[i]];
-                let temparrB = arrB[i];
-                tempMartixA = tempMartixA.map((value, index) => {
-                    return (value / martixA[i][i]) * martixA[j][i];
-                });
-                temparrB = (temparrB / martixA[i][i]) * martixA[j][i];
-                martixA[j] = martixA[j].map((value, index) => {
-                    return value - tempMartixA[index];
-                });
-                arrB[j] = arrB[j] - temparrB;
-                result.martixAList.push(martixA.map((arr) => [...arr]));
-                result.arrBList.push([...arrB]);
+    for(let i = 0; i < martixA.length; i++){
+        for(let j = 0; j < martixA.length; j++){
+            if (i>j){
+                if (martixA[j][i] != 0){
+                    let tempMartixA = [...martixA[j]];
+                    let temparrB = arrB[j];
+                    tempMartixA = tempMartixA.map((value, index) => {
+                        return (value / martixA[j][j]) * martixA[i][j];
+                    });
+                    temparrB = (temparrB / martixA[j][j]) * martixA[i][j];
+                    martixA[i] = martixA[i].map((value, index) => {
+                        return value - tempMartixA[index];
+                    });
+                    arrB[i] = arrB[i] - temparrB;
+                    result.martixAList.push(martixA.map((arr) => [...arr]));
+                    result.arrBList.push([...arrB]);
+                }
             }
         }
     }
