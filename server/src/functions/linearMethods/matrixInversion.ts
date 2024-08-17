@@ -1,34 +1,34 @@
 import math from '../../lib/math';
 
 export interface MatrixInversionRequest {
-    martixA: number[][], 
+    matrixA: number[][], 
     arrB: number[]
 }
 
 export interface MatrixInversionResponse {
     result: number[];
-    martixAInverse: number[][];
+    matrixAInverse: number[][];
 	error?: string;
     statusCode: number;
 }
   
 
-export function MatrixInversionMethod(martixA: number[][], arrB: number[]) : MatrixInversionResponse{
+export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : MatrixInversionResponse{
 
     const result: MatrixInversionResponse = { 
         result: [],
-        martixAInverse: [],
+        matrixAInverse: [],
         statusCode: 400
     };
 
-    let martixAInverse = math.inv(martixA);
-    result.martixAInverse = martixAInverse.map((arr : []) => 
+    let matrixAInverse = math.inv(matrixA);
+    result.matrixAInverse = matrixAInverse.map((arr : []) => 
         arr.map((value : number) => math.round(value, 6))
     );
     for(let i = 0; i < arrB.length; i++){
         let sum = 0;
-        for(let j = 0; j < martixA.length; j++){
-            sum += martixAInverse[i][j] * arrB[j];
+        for(let j = 0; j < matrixA.length; j++){
+            sum += matrixAInverse[i][j] * arrB[j];
         }
         result.result.push(math.round(sum, 6));
     }

@@ -1,13 +1,13 @@
 import math from '../../lib/math';
 
 export interface CramerRequest {
-    martixA: number[][], 
+    matrixA: number[][], 
     arrB: number[]
 }
 
 export interface CramerResponse {
     result: number[];
-    martixAList: number[][][];
+    matrixAList: number[][][];
     detA: number;
     detAi: number[];
 	error?: string;
@@ -15,33 +15,33 @@ export interface CramerResponse {
 }
   
 
-export function CramerMethod (martixA: number[][], arrB: number[]) : CramerResponse{
+export function CramerMethod (matrixA: number[][], arrB: number[]) : CramerResponse{
 
     const result: CramerResponse = { 
         result: [],
-        martixAList: [],
+        matrixAList: [],
         detA: 0,
         detAi: [],
         statusCode: 400
     };
 
-    const detA = math.det(martixA);
+    const detA = math.det(matrixA);
     if(detA === 0){
         result.error = "Determinant of matrix A is 0";
         return result;
     }
 
     result.detA = detA;
-    for(let i = 0; i < martixA.length; i++){
-        let tempMartix: number[][] = martixA.map((arr) => [...arr]);
-        for(let j = 0; j < martixA.length; j++){
-            tempMartix[j][i] = arrB[j];
+    for(let i = 0; i < matrixA.length; i++){
+        let tempMatrix: number[][] = matrixA.map((arr) => [...arr]);
+        for(let j = 0; j < matrixA.length; j++){
+            tempMatrix[j][i] = arrB[j];
         }
-        result.martixAList.push(tempMartix);
+        result.matrixAList.push(tempMatrix);
     }
 
-    for(let i = 0; i < result.martixAList.length; i++){
-        result.detAi.push(math.det(result.martixAList[i]));
+    for(let i = 0; i < result.matrixAList.length; i++){
+        result.detAi.push(math.det(result.matrixAList[i]));
         result.result.push(result.detAi[i] / detA);
     }
     

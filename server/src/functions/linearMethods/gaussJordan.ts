@@ -1,72 +1,72 @@
 import math from '../../lib/math';
 
 export interface GaussJordanRequest {
-    martixA: number[][], 
+    matrixA: number[][], 
     arrB: number[]
 }
 
 export interface GaussJordanResponse {
     result: number[];
-    martixAList: number[][][];
+    matrixAList: number[][][];
     arrBList: number[][];
 	error?: string;
     statusCode: number;
 }
   
 
-export function GaussJordanMethod(martixA: number[][], arrB: number[]) : GaussJordanResponse{
+export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJordanResponse{
 
     const result: GaussJordanResponse = { 
         result: [],
-        martixAList: [],
+        matrixAList: [],
         arrBList: [],
         statusCode: 400
     };
 
-    for(let i = 0; i < martixA.length; i++){
-        for(let j = 0; j < martixA.length; j++){
+    for(let i = 0; i < matrixA.length; i++){
+        for(let j = 0; j < matrixA.length; j++){
             if (i>j){
-                if (martixA[j][i] != 0){
-                    let tempMartixA = [...martixA[j]];
+                if (matrixA[j][i] != 0){
+                    let tempMatrixA = [...matrixA[j]];
                     let temparrB = arrB[j];
-                    tempMartixA = tempMartixA.map((value, index) => {
-                        return (value / martixA[j][j]) * martixA[i][j];
+                    tempMatrixA = tempMatrixA.map((value, index) => {
+                        return (value / matrixA[j][j]) * matrixA[i][j];
                     });
-                    temparrB = (temparrB / martixA[j][j]) * martixA[i][j];
-                    martixA[i] = martixA[i].map((value, index) => {
-                        return value - tempMartixA[index];
+                    temparrB = (temparrB / matrixA[j][j]) * matrixA[i][j];
+                    matrixA[i] = matrixA[i].map((value, index) => {
+                        return value - tempMatrixA[index];
                     });
                     arrB[i] = arrB[i] - temparrB;
-                    result.martixAList.push(martixA.map((arr) => [...arr]));
+                    result.matrixAList.push(matrixA.map((arr) => [...arr]));
                     result.arrBList.push([...arrB]);
                 }
             }
         }
     }
 
-    for(let i = martixA.length - 1; i >= 0; i--){
-        for(let j =  martixA.length - 1; j >= 0; j--){
+    for(let i = matrixA.length - 1; i >= 0; i--){
+        for(let j =  matrixA.length - 1; j >= 0; j--){
             if (i<j){
-                if (martixA[i][j] != 0){
-                    let tempMartixA = [...martixA[j]];
+                if (matrixA[i][j] != 0){
+                    let tempMatrixA = [...matrixA[j]];
                     let temparrB = arrB[j];
-                    tempMartixA = tempMartixA.map((value, index) => {
-                        return (value / martixA[j][j]) * martixA[i][j];
+                    tempMatrixA = tempMatrixA.map((value, index) => {
+                        return (value / matrixA[j][j]) * matrixA[i][j];
                     });
-                    temparrB = (temparrB / martixA[j][j]) * martixA[i][j];
-                    martixA[i] = martixA[i].map((value, index) => {
-                        return value - tempMartixA[index];
+                    temparrB = (temparrB / matrixA[j][j]) * matrixA[i][j];
+                    matrixA[i] = matrixA[i].map((value, index) => {
+                        return value - tempMatrixA[index];
                     });
                     arrB[i] = arrB[i] - temparrB;
-                    result.martixAList.push(martixA.map((arr) => [...arr]));
+                    result.matrixAList.push(matrixA.map((arr) => [...arr]));
                     result.arrBList.push([...arrB]);
                 }
             }
         }
     }
 
-    for(let i = 0; i < martixA.length; i++){
-        result.result[i] = arrB[i]  / martixA[i][i];
+    for(let i = 0; i < matrixA.length; i++){
+        result.result[i] = arrB[i]  / matrixA[i][i];
         result.result[i] = math.round(result.result[i], 6);
     }
     
