@@ -3,6 +3,7 @@ import { CramerRequest, CramerResponse, CramerMethod} from '../functions/linearM
 import { GaussEliminationRequest, GaussEliminationResponse, GaussEliminationMethod} from '../functions/linearMethods/gaussElimination';
 import { GaussJordanRequest, GaussJordanResponse, GaussJordanMethod} from '../functions/linearMethods/gaussJordan';
 import { MatrixInversionMethod, MatrixInversionRequest, MatrixInversionResponse } from '../functions/linearMethods/matrixInversion';
+import {LudecompositionRequest, LudecompositionResponse, LudecompositionMethod} from '../functions/linearMethods/Ludecomposition';
 
 export const cramer = async (req: express.Request, res: express.Response) => {
     try{
@@ -62,6 +63,21 @@ export const matrixInversion = async (req: express.Request, res: express.Respons
         const {matrixA, arrB} : MatrixInversionRequest = req.body;
 
         let result : MatrixInversionResponse = MatrixInversionMethod(matrixA, arrB);
+
+        return res.status(result.statusCode).json(result).end();
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+export const ludecomposition = async (req: express.Request, res: express.Response) => {
+    try{
+
+        const {matrixA, arrB} : LudecompositionRequest = req.body;
+
+        let result : LudecompositionResponse = LudecompositionMethod(matrixA, arrB);
 
         return res.status(result.statusCode).json(result).end();
         

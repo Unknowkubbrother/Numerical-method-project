@@ -1,11 +1,11 @@
 import math from '../../lib/math';
 
-export interface LudecompositionRequest {
+export interface CholeskydecompositionRequest {
     matrixA: number[][], 
     arrB: number[]
 }
 
-export interface LudecompositionResponse {
+export interface CholeskydecompositionResponse {
     result: number[];
     matrixL: number[][];
     matrixU: number[][];
@@ -15,9 +15,9 @@ export interface LudecompositionResponse {
 }
   
 
-export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : LudecompositionResponse{
+export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[]) : CholeskydecompositionResponse{
 
-    const result: LudecompositionResponse = { 
+    const result: CholeskydecompositionResponse = { 
         result: [],
         matrixL: [],
         matrixU: [],
