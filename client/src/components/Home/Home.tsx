@@ -28,12 +28,12 @@ function Home() {
 
   return (
     <div className="w-full h-screen">
-      <div className="w-full h-full flex justify-around items-center px-[15rem]">
+      <div className="w-full h-full flex min-[340px]:flex-col lg:flex-row min-[340px]:mt-[200px] min-[340px]:min-[340px]:items-center lg:justify-around lg:items-center lg:px-[15rem] lg:m-0">
         {/* Left */}
-        <div className="flex justify-center flex-col gap-5 scale-105">
+        <div className="flex justify-center flex-col gap-5 lg:scale-105">
           <p className="text-2xl text-start">ระบบคำนวณสมการเป็นกราฟ</p>
-          <h1 className="text-5xl font-bold text-center flex gap-2">
-            <span className="text-test">Numerical</span>
+          <h1 className="min-[340px]:text-2xl lg:text-5xl font-bold text-center flex gap-2">
+            <span >Numerical</span>
             <span>Methods</span>
           </h1>
           <div className="flex gap-5 mt-3">
@@ -48,13 +48,13 @@ function Home() {
         {/* endLeft  */}
 
         {/* Right */}
-        <div className="Box-Numer-chart">
-          <div className="row Numer-chart">
+        <div className="Box-Numer-chart min-[340px]:mt-10 lg:m-0">
+          <div className="row Numer-chart min-[340px]:w-[400px] lg:w-[700px]">
             <Chart
               options={state.options}
               series={state.series}
               type="line"
-              width="700"
+              width="100%"
             />
           </div>
         </div>
