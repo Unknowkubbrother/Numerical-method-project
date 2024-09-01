@@ -17,7 +17,7 @@ function Lobby() {
     
     useEffect(() => {
         navigate('/lobby/root/graphical')
-      }, );
+      }, []);
 
 
   return (
