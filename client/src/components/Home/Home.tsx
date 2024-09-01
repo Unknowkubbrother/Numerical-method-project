@@ -27,7 +27,7 @@ function Home() {
   };
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen overflow-hidden">
       <div className="w-full h-full flex min-[340px]:flex-col lg:flex-row min-[340px]:mt-[200px] min-[340px]:min-[340px]:items-center lg:justify-around lg:items-center lg:px-[15rem] lg:m-0">
         {/* Left */}
         <div className="flex justify-center flex-col gap-5 lg:scale-105">

@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <footer className="w-full flex justify-center items-center py-2">
-      Copyright © 2024 Nutchanon Supmeechai. All Rights Reserved
+        <span className="min-[340px]:text-sm text-center">Copyright © 2024 Nutchanon Supmeechai. All Rights Reserved</span>
       {/* <div className="w-full h-full flex justify-around items-center">
         <img
           src="logo.png"
