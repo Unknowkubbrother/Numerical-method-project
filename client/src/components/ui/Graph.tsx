@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react';
 import Plot from 'react-plotly.js';
-import {GraphicalResponse} from '../../Interfaces/Graphicalmethods'
+import { GraphicalResponse} from "../../Methods/rootMethods/graphical";
 
 function Graph(props : {data : GraphicalResponse}) {  
   const [Data,setData] = useState<{x: number[], y: number[]}>({x:[],y:[]})

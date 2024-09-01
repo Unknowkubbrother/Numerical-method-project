@@ -13,12 +13,12 @@ interface MenuItem {
 }
 
 function Root() {
-  const navigate = useNavigate();
+   const navigate = useNavigate();
   const [selectedSubMenu, setselectedSubMenu] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [equation, setEquation] = useState("");
 
-  const setSubMenu = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const setSubMenu= (e: React.ChangeEvent<HTMLSelectElement>) => {
     setselectedSubMenu(e.target.value);
     navigate(e.target.value);
     setEquation("");

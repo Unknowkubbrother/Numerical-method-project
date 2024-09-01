@@ -1,8 +1,13 @@
 // import React from "react";
-import {GraphicalResponse} from '../../Interfaces/Graphicalmethods'
+import { GraphicalResponse} from "../../Methods/rootMethods/graphical";
+import { BisectionResponse} from "../../Methods/rootMethods/bisection";
+import { FalsePositionResponse} from "../../Methods/rootMethods/falsePosition";
+import { OnePointResponse } from "../../Methods/rootMethods/onepoint";
+import {NewTonResponse} from "../../Methods/rootMethods/newton";
+import {SecantResponse} from "../../Methods/rootMethods/secant";
 import {round} from 'mathjs'
 
-function Table(props : {data : GraphicalResponse}) {
+function Table(props : {data : GraphicalResponse | BisectionResponse | FalsePositionResponse | OnePointResponse | NewTonResponse | SecantResponse}) {
   return (
     <div className="w-full rounded-md overflow-hidden">
       <div className="overflow-x-auto">

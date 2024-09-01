@@ -1,4 +1,4 @@
-import math from '../../lib/math';
+import math from 'mathjs';
 
 export interface GaussEliminationRequest {
     matrixA: number[][], 
@@ -23,7 +23,7 @@ export function GaussEliminationMethod (matrixA: number[][], arrB: number[]) : G
         statusCode: 400
     };
 
-    let tempmatrixA = matrixA.map((arr) => [...arr]);
+    const tempmatrixA = matrixA.map((arr) => [...arr]);
     
     for(let i = 0; i < matrixA.length; i++){
         for(let j = 0; j < matrixA.length; j++){
@@ -31,7 +31,7 @@ export function GaussEliminationMethod (matrixA: number[][], arrB: number[]) : G
                 if (matrixA[j][i] != 0){
                     let tempMatrixA = [...matrixA[j]];
                     let temparrB = arrB[j];
-                    tempMatrixA = tempMatrixA.map((value, index) => {
+                    tempMatrixA = tempMatrixA.map((value) => {
                         return (value / matrixA[j][j]) * matrixA[i][j];
                     });
                     temparrB = (temparrB / matrixA[j][j]) * matrixA[i][j];

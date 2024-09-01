@@ -51,7 +51,7 @@ export function OnepointMethod (xInitial: number, func: string, errorFactor: num
 
 
       const calFunc = (func: string, x: number): number => {
-        return (x==0) ? 1 : math.evaluate(func, { x: x } as any);
+        return math.evaluate(func, { x: x } as any);
       }
 
       while (true){

@@ -15,6 +15,18 @@ export const mainMenu = [
         title: 'falseposition',
         path: '/lobby/root/falseposition'
       },
+      {
+        title: 'onepoint',
+        path: '/lobby/root/onepoint'
+      },
+      {
+        title: 'newton',
+        path: '/lobby/root/newton'
+      },
+      {
+        title: 'secant',
+        path  : '/lobby/root/secant'
+      }
     ],
   },
   {

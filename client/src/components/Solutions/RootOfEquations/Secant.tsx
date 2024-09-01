@@ -1,30 +1,30 @@
 import { useState } from "react";
 import React from "react";
 import Graph from "../../ui/Graph";
-import { graphicalMethod , GraphicalResponse} from "../../../Methods/rootMethods/graphical";
+import { SecantMethod , SecantResponse} from "../../../Methods/rootMethods/secant";
 import Table from "../../ui/Table";
 import { useOutletContext } from "react-router-dom";
 
-function Graphicalmethods() {
+function Secant() {
   // Assuming the context provides a string for the equation, adjust the type as necessary
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [equation, setEquation] =
     useOutletContext<[string, React.Dispatch<React.SetStateAction<string>>]>();
-  const [xStart, setXStart] = useState<number>(0);
-  const [xEnd, setXEnd] = useState<number>(0);
+  const [xInitial0, setxInitial0] = useState<number>(0);
+  const [xInitial1, setxInitial1] = useState<number>(0);
   const [errorfactor, seterrorfacoter] = useState<number>(0.000001);
-  const [Data, setData] = useState<GraphicalResponse | null>(null);
+  const [Data, setData] = useState<SecantResponse | null>(null);
 
   const handleSetEquation = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEquation(e.target.value);
   };
 
-  const handleSetXStart = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setXStart(Number(e.target.value));
+  const handleSetxInitial0 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setxInitial0(Number(e.target.value));
   };
 
-  const handleSetXEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setXEnd(Number(e.target.value));
+  const handleSetxInitial1 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setxInitial1(Number(e.target.value));
   };
 
   const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,9 +32,9 @@ function Graphicalmethods() {
   };
 
   const sendRequest = async () => {
-    const result: GraphicalResponse = await graphicalMethod(
-      xStart,
-      xEnd,
+    const result: SecantResponse = await SecantMethod(
+      xInitial0,
+      xInitial1,
       equation,
       errorfactor
     );
@@ -58,25 +58,25 @@ function Graphicalmethods() {
               />
             </div>
             <div className="flex flex-col gap-2 min-[340px]:items-center lg:justify-start lg:items-start">
-              <label className="font-semibold">X Start</label>
+              <label className="font-semibold">xInitial 0</label>
               <input
                 type="number"
                 name="xstart"
                 className="min-[340px]:w-[150px] min-[667px]:w-[280px] md:w-[300px] lg:w-[200px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
                 placeholder="1.00"
-                onInput={handleSetXStart}
-                value={xStart}
+                onInput={handleSetxInitial0}
+                value={xInitial0}
               />
             </div>
             <div className="flex flex-col gap-2 min-[340px]:items-center lg:justify-start lg:items-start">
-              <label className="font-semibold">X End</label>
+              <label className="font-semibold">xInitial 1</label>
               <input
                 type="number"
-                name="xend"
+                name="xstart"
                 className="min-[340px]:w-[150px] min-[667px]:w-[280px] md:w-[300px] lg:w-[200px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
-                placeholder="10.00"
-                onInput={handleSetXEnd}
-                value={xEnd}
+                placeholder="1.00"
+                onInput={handleSetxInitial1}
+                value={xInitial1}
               />
             </div>
             <div className="flex flex-col gap-2 min-[340px]:items-center lg:justify-start lg:items-start">
@@ -104,17 +104,17 @@ function Graphicalmethods() {
         <div className="min-[340px]:w-full lg:w-[85%] xl:w-[73.5%] h-[550px] rounded-lg pt-5 px-5 flex flex-col bg-white">
           <span className="text-gray-700 font-semibold">Graph</span>
           <div className="w-full h-full">
-            <Graph data={Data as GraphicalResponse} />
+            <Graph data={Data as SecantResponse} />
           </div>
         </div>
       </div>
 
       <div className="w-full flex flex-col my-10">
         <span className="my-2 font-semibold">TABLE</span>
-        <Table data={Data as GraphicalResponse} />
+        <Table data={Data as SecantResponse} />
       </div>
     </div>
   );
 }
 
-export default Graphicalmethods;
+export default Secant;

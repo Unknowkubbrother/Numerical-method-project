@@ -25,7 +25,7 @@ function mathui({ equation }: { equation: string } ) {
         {location.pathname.split("/")[3] != "onepoint" ? (
           <MathEquation equation={"f(x)"} />
         ) : (
-          <MathEquation equation={"x_{n+1}"} />
+          <MathEquation equation={"x_{+1}"} />
         )}{" "}
       </span>{" "}
       =
