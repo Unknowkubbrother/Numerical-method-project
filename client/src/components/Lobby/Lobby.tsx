@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState,useEffect } from 'react'
 import {mainMenu} from '../../Configs/Configs'
 import { Outlet, useNavigate } from 'react-router-dom'
@@ -18,7 +17,7 @@ function Lobby() {
     
     useEffect(() => {
         navigate('/lobby/root/graphical')
-      }, []);
+      }, );
 
 
   return (
