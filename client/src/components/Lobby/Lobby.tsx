@@ -30,7 +30,7 @@ function Lobby() {
             })}
         </div>
 
-        <div className='min-[340px]:w-full lg:w-[90%] xl:w-[70%] m-auto'>
+        <div className='min-[340px]:w-full lg:w-[95%] xl:w-[70%] m-auto'>
             <Outlet />
         </div>
 
