@@ -35,28 +35,28 @@ export const mainMenu = [
     menu: [
     ],
   },
-  {
-    title: "Interpolation",
-    path: "/lobby/root",
-    menu: [
-    ],
-  },
-  {
-    title: "Extrapolation",
-    path: "/lobby/root",
-    menu: [
-    ],
-  },
-  {
-    title: "Integration",
-    path: "/lobby/root",
-    menu: [
-    ],
-  },
-  {
-    title: "Differentiation",
-    path: "/lobby/root",
-    menu: [
-    ],
-  },
+  // {
+  //   title: "Interpolation",
+  //   path: "/lobby/root",
+  //   menu: [
+  //   ],
+  // },
+  // {
+  //   title: "Extrapolation",
+  //   path: "/lobby/root",
+  //   menu: [
+  //   ],
+  // },
+  // {
+  //   title: "Integration",
+  //   path: "/lobby/root",
+  //   menu: [
+  //   ],
+  // },
+  // {
+  //   title: "Differentiation",
+  //   path: "/lobby/root",
+  //   menu: [
+  //   ],
+  // },
 ];

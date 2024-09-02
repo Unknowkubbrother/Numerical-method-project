@@ -31,7 +31,7 @@ function Home() {
       <div className="w-full h-full flex min-[340px]:flex-col lg:flex-row min-[340px]:mt-[200px] min-[340px]:min-[340px]:items-center lg:justify-around lg:items-center lg:px-[15rem] lg:m-0">
         {/* Left */}
         <div className="flex justify-center flex-col gap-5 lg:scale-105">
-          <p className="text-2xl text-start">ระบบคำนวณสมการเป็นกราฟ</p>
+          <p className="text-2xl text-start">ระบบคำนวณเกี่ยวกับ</p>
           <h1 className="min-[340px]:text-2xl lg:text-5xl font-bold text-center flex gap-2">
             <span >Numerical</span>
             <span>Methods</span>
