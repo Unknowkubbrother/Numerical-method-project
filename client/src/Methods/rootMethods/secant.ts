@@ -13,6 +13,10 @@ export interface SecantResponse {
         y: number ;
         error?: number ;
     };
+    plot:{
+        x: number;
+        y: number;
+    }[];
 	iter: number;
 	iterations?: { 
         x: number ;
@@ -31,6 +35,7 @@ export function SecantMethod (xInitial0: number, xInitial1: number, func: string
             x: 0,
             y: 0,
         },
+        plot:[],
         iter: 0,
         iterations: [],
         statusCode: 400
@@ -60,14 +65,22 @@ export function SecantMethod (xInitial0: number, xInitial1: number, func: string
         return x1 - ((calFunc(func, x1) * (x0 - x1)) / (calFunc(func, x0) - calFunc(func, x1)));
     }
 
+    result.plot.push({x: x0, y: 0} as { x: number, y: number });
+    result.plot.push({x: x0, y: calFunc(func,x0)} as { x: number, y: number });
+    result.plot.push({x: x1, y: calFunc(func,x1)} as { x: number, y: number });
+    result.plot.push({x: x1, y: 0} as { x: number, y: number });
+    result.plot.push({x: x1, y: calFunc(func,x1)} as { x: number, y: number });
     do{
         oldX = x1;
         x1 = calX1(x0, x1, func);
-        error = abs(x1 - oldX);
+        error = abs((x1 - oldX) / x1) * 100;
         x0 = oldX;
 
         result.iter++;
         result.iterations?.push({ x: x1, y: calFunc(func,x1), error: error} as { x: number, y:number, error: number});
+        result.plot.push({x: x1, y: 0} as { x: number, y: number });
+        result.plot.push({x: x1, y: calFunc(func,x1)} as { x: number, y: number });
+        result.plot.push({x: x0, y: calFunc(func,x0)} as { x: number, y: number });
 
       }while(error != 0 && error > errorFactor && result.iter < MAX_ITER);
 

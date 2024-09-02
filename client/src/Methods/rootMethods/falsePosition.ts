@@ -56,7 +56,7 @@ export function falsePositionMethod (xL: number, xR: number, func: string, error
         const funcL :number = evaluate(func, {x: xL});
         const funcR :number = evaluate(func, {x: xR});
         x1 = (xL * funcR - xR * funcL) / (funcR - funcL);
-        const error: number = abs(x1 - oldX1);
+        const error: number = abs((x1 - oldX1)/x1)*100;
         funcX1 = evaluate(func, {x: x1});
     
         if (error == 0 || error < errorFactor) {

@@ -53,7 +53,7 @@ export function bisectionMethod (xL: number, xR: number, func: string, errorFact
 
     while (result.iter < MAX_ITER) {
         xM = (xL + xR) / 2;
-        const error : number = abs((xM - oldXm));
+        const error : number = abs((xM - oldXm)/xM)*100;
         funcM = evaluate(func, {x: Number(xM)});
 
         if (error == 0 || error < errorFactor){

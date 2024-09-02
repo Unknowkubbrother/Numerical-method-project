@@ -30,7 +30,7 @@ function Table(props : {data : GraphicalResponse | BisectionResponse | FalsePosi
                   <td>{index}</td>
                   <td>{round(item?.x,6)}</td>
                   <td>{round(item?.y,6)}</td>
-                  <td>{(item?.error) ? (round(item?.error * 100,6)) + '%' : "NaN"}</td>
+                  <td>{(item?.error) ? (round(item?.error,6)) + '%' : "NaN"}</td>
                 </tr>
               );
             }) : 

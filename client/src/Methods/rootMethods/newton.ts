@@ -12,6 +12,10 @@ export interface NewTonResponse {
         y: number;
         error?: number;
     };
+    plot:{
+        x: number;
+        y: number;
+    }[];
 	iter: number;
 	iterations?: { 
         x: number;
@@ -30,6 +34,7 @@ export function NewTonMethod (xInitial: number, func: string, errorFactor: numbe
             x: 0,
             y: 0
         },
+        plot:[],
         iter: 0,
         iterations: [],
         statusCode: 400
@@ -61,9 +66,11 @@ export function NewTonMethod (xInitial: number, func: string, errorFactor: numbe
     do{
         oldX = x;
 
+        result.plot.push({x: x, y: 0} as { x: number, y: number });
+        result.plot?.push({ x: x, y: calFunc(func, x)} as { x: number, y: number});
         x = oldX - (calFunc(func, oldX) / calFuncdiff(func, oldX));
 
-        error = abs(x - oldX);
+        error = abs((x - oldX)/x) * 100;
 
         result.iter++;
         result.iterations?.push({ x: oldX, y: x , error: error} as { x: number; y: number , error: number});

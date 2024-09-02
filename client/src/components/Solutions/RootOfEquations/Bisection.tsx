@@ -104,7 +104,7 @@ function Bisection() {
         <div className="min-[340px]:w-full lg:w-[85%] xl:w-[73.5%] h-[550px] rounded-lg pt-5 px-5 flex flex-col bg-white">
           <span className="text-gray-700 font-semibold">Graph</span>
           <div className="w-full h-full">
-            <Graph data={Data as BisectionResponse} />
+            <Graph data={Data as BisectionResponse} func={Data ? equation : null}/>
           </div>
         </div>
       </div>
