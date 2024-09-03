@@ -1,12 +1,19 @@
 import { useState } from "react";
 import React from "react";
 import Graph from "../../ui/Graph";
-import { NewTonMethod , NewTonResponse} from "../../../Methods/rootMethods/newton";
+import {
+  NewTonMethod,
+  NewTonResponse,
+} from "../../../Methods/rootMethods/newton";
 import Table from "../../ui/Table";
 import { useOutletContext } from "react-router-dom";
-import {round} from 'mathjs'
+import { round } from "mathjs";
+import { useContext } from "react";
+import { MyFunctionContext } from "../../../App";
+import Swal from "sweetalert2";
 
 function Newton() {
+  const { setloadingSecond } = useContext(MyFunctionContext);
   // Assuming the context provides a string for the equation, adjust the type as necessary
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [equation, setEquation] =
@@ -28,12 +35,41 @@ function Newton() {
   };
 
   const sendRequest = async () => {
-    const result: NewTonResponse = await NewTonMethod(
-      xInitial,
-      equation,
-      errorfactor
-    );
-    setData(result);
+    setloadingSecond(true);
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(NewTonMethod(xInitial, equation, errorfactor));
+      }, 1000);
+    })
+      .then((result: unknown) => {
+        const graphicalResponse = result as NewTonResponse;
+        if (graphicalResponse.statusCode === 200) {
+          setData(graphicalResponse);
+          Swal.fire({
+            title: "Success!",
+            text: "Your have benn success.",
+            icon: "success",
+          });
+        } else {
+          setData(null);
+          Swal.fire({
+            title: "Error!",
+            text: graphicalResponse.error,
+            icon: "error",
+          });
+          console.error("Error loading data:", graphicalResponse.error);
+        }
+        setloadingSecond(false);
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error!",
+          text: "An error occured while processing your request.",
+          icon: "error",
+        });
+        console.error("Error loading data:", error);
+        setloadingSecond(false);
+      });
   };
 
   return (
@@ -88,21 +124,26 @@ function Newton() {
         <div className="min-[340px]:w-full lg:w-[85%] xl:w-[73.5%] h-[550px] rounded-lg pt-5 px-5 flex flex-col bg-white">
           <span className="text-gray-700 font-semibold">Graph</span>
           <div className="w-full h-full">
-            <Graph data={Data as NewTonResponse} func={Data ? equation : null}/>
+            <Graph
+              data={Data as NewTonResponse}
+              func={Data ? equation : null}
+            />
           </div>
         </div>
       </div>
 
-      {Data && 
-      <div className="w-[65%] bg-background my-10 m-auto rounded-xl text-center p-3">
+      {Data && (
+        <div className="w-[65%] bg-background my-10 m-auto rounded-xl text-center p-3">
           <h1 className="font-semibold">Result</h1>
           <div className="w-full flex gap-5 justify-center items-center m-2 flex-wrap">
-            <span>x = {String(round(Data?.result.x || 0,6))}</span>
+            <span>x = {String(round(Data?.result.x || 0, 6))}</span>
             <span>y = {String(round(Data?.result.y || 0, 6))}</span>
-            <span>Error = {String(round(Data?.result.error || 0,6)) + '%'}</span>
+            <span>
+              Error = {String(round(Data?.result.error || 0, 6)) + "%"}
+            </span>
           </div>
-      </div>
-      }
+        </div>
+      )}
 
       <div className="w-full flex flex-col my-10">
         <span className="my-2 font-semibold">TABLE</span>
@@ -112,4 +153,4 @@ function Newton() {
   );
 }
 
-export default Newton
+export default Newton;

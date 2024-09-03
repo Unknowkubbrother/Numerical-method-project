@@ -5,8 +5,13 @@ import { falsePositionMethod , FalsePositionResponse} from "../../../Methods/roo
 import Table from "../../ui/Table";
 import { useOutletContext } from "react-router-dom";
 import {round} from 'mathjs'
+import { useContext } from "react";
+import { MyFunctionContext } from "../../../App";
+import Swal from "sweetalert2";
+
 
 function FalsePosition() {
+  const { setloadingSecond } = useContext(MyFunctionContext);
   // Assuming the context provides a string for the equation, adjust the type as necessary
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [equation, setEquation] =
@@ -31,15 +36,43 @@ function FalsePosition() {
   const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
     seterrorfacoter(Number(e.target.value));
   };
-
+  
   const sendRequest = async () => {
-    const result: FalsePositionResponse = await falsePositionMethod(
-      xL,
-      xR,
-      equation,
-      errorfactor
-    );
-    setData(result);
+    setloadingSecond(true);
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(falsePositionMethod(xL,xR,equation,errorfactor));
+      }, 1000);
+    })
+      .then((result: unknown) => {
+        const graphicalResponse = result as FalsePositionResponse;
+        if (graphicalResponse.statusCode === 200) {
+          setData(graphicalResponse);
+          Swal.fire({
+            title: "Success!",
+            text: "Your have benn success.",
+            icon: "success",
+          });
+        } else {
+          setData(null);
+          Swal.fire({
+            title: "Error!",
+            text: graphicalResponse.error,
+            icon: "error",
+          });
+          console.error("Error loading data:", graphicalResponse.error);
+        }
+        setloadingSecond(false);
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error!",
+          text: "An error occured while processing your request.",
+          icon: "error",
+        });
+        console.error("Error loading data:", error);
+        setloadingSecond(false);
+      });
   };
 
   return (
