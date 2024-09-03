@@ -7,6 +7,7 @@ import { useOutletContext } from "react-router-dom";
 import { round } from "mathjs";
 import {useContext} from "react";
 import { MyFunctionContext } from "../../../App";
+import Swal from "sweetalert2";
 
 function Graphicalmethods() {
   const {setloadingSecond} = useContext(MyFunctionContext);
@@ -47,13 +48,28 @@ function Graphicalmethods() {
       const graphicalResponse = result as GraphicalResponse;
       if (graphicalResponse.statusCode === 200) {
         setData(graphicalResponse);
+        Swal.fire({
+          title: "Success!",
+          text: "Your have benn success.",
+          icon: "success"
+        });
       }else{
         setData(null);
+        Swal.fire({
+          title: "Error!",
+          text: graphicalResponse.error,
+          icon: "error"
+        });
         console.error("Error loading data:", graphicalResponse.error);
       }
       setloadingSecond(false);
     })
     .catch((error) => {
+      Swal.fire({
+        title: "Error!",
+        text: "An error occured while processing your request.",
+        icon: "error"
+      });
       console.error("Error loading data:", error);
       setloadingSecond(false);
     });
