@@ -4,6 +4,7 @@ import Graph from "../../ui/Graph";
 import { bisectionMethod , BisectionResponse} from "../../../Methods/rootMethods/bisection";
 import Table from "../../ui/Table";
 import { useOutletContext } from "react-router-dom";
+import {round} from 'mathjs'
 
 function Bisection() {
   // Assuming the context provides a string for the equation, adjust the type as necessary
@@ -100,7 +101,7 @@ function Bisection() {
             </button>
           </div>
         </div>
-
+    
         <div className="min-[340px]:w-full lg:w-[85%] xl:w-[73.5%] h-[550px] rounded-lg pt-5 px-5 flex flex-col bg-white">
           <span className="text-gray-700 font-semibold">Graph</span>
           <div className="w-full h-full">
@@ -108,6 +109,17 @@ function Bisection() {
           </div>
         </div>
       </div>
+
+      {Data && 
+      <div className="w-[65%] bg-background my-10 m-auto rounded-xl text-center p-3">
+          <h1 className="font-semibold">Result</h1>
+          <div className="w-full flex gap-5 justify-center items-center m-2 flex-wrap">
+            <span>x = {String(round(Data?.result.x || 0,6))}</span>
+            <span>y = {String(round(Data?.result.y || 0, 6))}</span>
+            <span>Error = {String(round(Data?.result.error || 0,6)) + '%'}</span>
+          </div>
+      </div>
+      }
 
       <div className="w-full flex flex-col my-10">
         <span className="my-2 font-semibold">TABLE</span>

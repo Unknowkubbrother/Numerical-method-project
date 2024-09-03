@@ -4,6 +4,7 @@ import Graph from "../../ui/Graph";
 import { falsePositionMethod , FalsePositionResponse} from "../../../Methods/rootMethods/falsePosition";
 import Table from "../../ui/Table";
 import { useOutletContext } from "react-router-dom";
+import {round} from 'mathjs'
 
 function FalsePosition() {
   // Assuming the context provides a string for the equation, adjust the type as necessary
@@ -108,6 +109,17 @@ function FalsePosition() {
           </div>
         </div>
       </div>
+
+      {Data && 
+      <div className="w-[65%] bg-background my-10 m-auto rounded-xl text-center p-3">
+          <h1 className="font-semibold">Result</h1>
+          <div className="w-full flex gap-5 justify-center items-center m-2 flex-wrap">
+            <span>x = {String(round(Data?.result.x || 0,6))}</span>
+            <span>y = {String(round(Data?.result.y || 0, 6))}</span>
+            <span>Error = {String(round(Data?.result.error || 0,6)) + '%'}</span>
+          </div>
+      </div>
+      }
 
       <div className="w-full flex flex-col my-10">
         <span className="my-2 font-semibold">TABLE</span>

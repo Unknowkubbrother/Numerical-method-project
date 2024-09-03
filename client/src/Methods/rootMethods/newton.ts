@@ -73,7 +73,7 @@ export function NewTonMethod (xInitial: number, func: string, errorFactor: numbe
         error = abs((x - oldX)/x) * 100;
 
         result.iter++;
-        result.iterations?.push({ x: oldX, y: x , error: error} as { x: number; y: number , error: number});
+        result.iterations?.push({ x: oldX, y: calFunc(func,oldX) , error: error} as { x: number; y: number , error: number});
 
       }while(error != 0 && error > errorFactor && result.iter < MAX_ITER);
 

@@ -1,8 +1,12 @@
 // import React from 'react'
 import Chart from "react-apexcharts";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {useContext} from "react";
+import {MyFunctionContext} from "../../App";
 
 function Home() {
+  const navigate = useNavigate();
+  const {setLoading} = useContext(MyFunctionContext);
   const state = {
     options: {
       chart: {
@@ -26,6 +30,11 @@ function Home() {
     ],
   };
 
+  const onClickToLobby = () => {
+    navigate("/lobby");
+    setLoading(true);
+  }
+
   return (
     <div className="w-full h-screen overflow-x">
       <div className="w-full h-full flex min-[340px]:flex-col lg:flex-row min-[340px]:mt-[200px] min-[340px]:min-[340px]:items-center lg:justify-around lg:items-center lg:px-[7rem] xl:px-[15rem] lg:m-0 ">
@@ -37,9 +46,9 @@ function Home() {
             <span>Methods</span>
           </h1>
           <div className="flex gap-5 mt-3">
-            <Link to="../lobby" className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500">
+            <button className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500" onClick={onClickToLobby}>
               Get Started
-            </Link>
+            </button>
             <button className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500">
               Document
             </button>

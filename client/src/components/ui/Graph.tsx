@@ -21,20 +21,24 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
         width: number;
     };
   }>>([]);
+  const [Result, setResult] = useState<{x: number[], y: number[]}>({x:[],y:[]});
 
   useEffect(() => {
-    let result;
+    let data;
     if (location.pathname.split("/")[3] != "onepoint" && location.pathname.split("/")[3] != "newton" && location.pathname.split("/")[3] != "secant"){
-        result = props?.data?.iterations?.map((item) => {
+      data = props?.data?.iterations?.map((item) => {
         return {x:item.x,y:item.y}
       }) || [];
       // result.sort((a, b) => a.x - b.x);
     }else{
-        result = (props?.data as OnePointResponse | NewTonResponse | SecantResponse)?.plot?.map((item) => {
+      data = (props?.data as OnePointResponse | NewTonResponse | SecantResponse)?.plot?.map((item) => {
         return {x:item.x,y:item.y}
       }) || [];
     }
-    setData({x:result.map((item) => item.x), y:result.map((item) => item.y)})
+    setData({x:data.map((item) => item.x), y:data.map((item) => item.y)})
+    const result = [{x: props?.data?.result?.x, y: props?.data?.result?.y}];
+    setResult({x:result.map((item) => item.x), y:result.map((item) => item.y)})
+    
 
     if(props.func){
       const xMainValues = location.pathname.split("/")[3] != "onepoint" ? range(-10, 10, 0.002).toArray() as number[] : range(0, 10, 0.002).toArray() as number[];
@@ -78,6 +82,15 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
       <Plot className='w-full h-[98%] justify-center items-center'
         data={
           [
+          {
+            ...Result,
+            mode: 'markers',
+            name: 'Result',
+            marker: {
+              color: '#7b00ff',
+              size: 10,
+            },
+          },
           {
             ...Data,
             mode: 'lines+markers',

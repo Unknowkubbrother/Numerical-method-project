@@ -4,6 +4,8 @@ import { mainMenu } from "../../../Configs/Configs";
 import { Outlet, useNavigate } from "react-router-dom";
 import MathUI from "../../ui/mathui";
 
+
+
 interface MenuItem {
   title: string;
   menu: {
@@ -59,7 +61,7 @@ function Root() {
         </div>
       </div>
       <div className="min-[340px]:w-[90%] lg:w-full m-auto">
-        <Outlet context={[equation, setEquation]} />
+        <Outlet context={[equation, setEquation]}/>
       </div>
     </>
   );

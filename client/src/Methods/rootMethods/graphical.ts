@@ -85,9 +85,9 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
     }
 
     result.result = {
-        x: x,
-        y: y,
-        error: abs(y)
+        x: result.iterations?.[result.iterations.length - 1]?.x ?? 0,
+        y: result.iterations?.[result.iterations.length - 1]?.y ?? 0,
+        error: result.iterations?.[result.iterations.length - 1]?.error ?? 0,
     };
 
     result.statusCode = 200;

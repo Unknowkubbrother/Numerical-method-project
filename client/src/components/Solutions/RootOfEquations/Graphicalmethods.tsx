@@ -4,12 +4,17 @@ import Graph from "../../ui/Graph";
 import { graphicalMethod , GraphicalResponse} from "../../../Methods/rootMethods/graphical";
 import Table from "../../ui/Table";
 import { useOutletContext } from "react-router-dom";
+import { round } from "mathjs";
+import {useContext} from "react";
+import { MyFunctionContext } from "../../../App";
 
 function Graphicalmethods() {
+  const {setloadingSecond} = useContext(MyFunctionContext);
   // Assuming the context provides a string for the equation, adjust the type as necessary
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [equation, setEquation] =
     useOutletContext<[string, React.Dispatch<React.SetStateAction<string>>]>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [xStart, setXStart] = useState<number>(0);
   const [xEnd, setXEnd] = useState<number>(0);
   const [errorfactor, seterrorfacoter] = useState<number>(0.000001);
@@ -32,13 +37,25 @@ function Graphicalmethods() {
   };
 
   const sendRequest = async () => {
-    const result: GraphicalResponse = await graphicalMethod(
-      xStart,
-      xEnd,
-      equation,
-      errorfactor
-    );
-    setData(result);
+    setloadingSecond(true);
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(graphicalMethod(xStart, xEnd, equation, errorfactor));
+      }, 1000);
+    })
+    .then((result: unknown) => {
+      const graphicalResponse = result as GraphicalResponse;
+      if (graphicalResponse.statusCode === 200) {
+        setData(graphicalResponse);
+      }else{
+        console.error("Error loading data:", graphicalResponse.error);
+      }
+      setloadingSecond(false);
+    })
+    .catch((error) => {
+      console.error("Error loading data:", error);
+      setloadingSecond(false);
+    });
   };
 
   return (
@@ -108,6 +125,17 @@ function Graphicalmethods() {
           </div>
         </div>
       </div>
+
+      {Data && 
+      <div className="w-[65%] bg-background my-10 m-auto rounded-xl text-center p-3">
+          <h1 className="font-semibold">Result</h1>
+          <div className="w-full flex gap-5 justify-center items-center m-2 flex-wrap">
+            <span>x = {String(round(Data?.result.x || 0,6))}</span>
+            <span>y = {String(round(Data?.result.y || 0, 6))}</span>
+            <span>Error = {String(round(Data?.result.error || 0,6)) + '%'}</span>
+          </div>
+      </div>
+      }
 
       <div className="w-full flex flex-col my-10">
         <span className="my-2 font-semibold">TABLE</span>
