@@ -40,12 +40,14 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
     setResult({x:result.map((item) => item.x), y:result.map((item) => item.y)})
     
 
-    if(props.func){
+    if(props.func && data){
       const xMainValues = location.pathname.split("/")[3] != "onepoint" ? range(-10, 10, 0.002).toArray() as number[] : range(0, 10, 0.002).toArray() as number[];
       const yMainValues = xMainValues.map(function (x) {
         return evaluate(props?.func ?? '',{x: x}) as number;
       });
       setDataMain({x:xMainValues,y:yMainValues});
+    }else{
+      setDataMain({x:[],y:[]});
     }
 
     if (location.pathname.split("/")[3] == "onepoint" && props.func){

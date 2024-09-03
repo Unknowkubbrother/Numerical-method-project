@@ -48,6 +48,7 @@ function Graphicalmethods() {
       if (graphicalResponse.statusCode === 200) {
         setData(graphicalResponse);
       }else{
+        setData(null);
         console.error("Error loading data:", graphicalResponse.error);
       }
       setloadingSecond(false);
