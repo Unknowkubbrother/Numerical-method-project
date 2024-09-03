@@ -51,7 +51,8 @@ export function SecantMethod (xInitial0: number, xInitial1: number, func: string
         return result;
     }
 
-    let x0: number = xInitial0;
+    try{
+        let x0: number = xInitial0;
     let x1: number = xInitial1;
     let error:number;
     let oldX: number;
@@ -89,6 +90,10 @@ export function SecantMethod (xInitial0: number, xInitial1: number, func: string
         y: result.iterations?.[result.iterations.length - 1].y ?? 0,
         error: result.iterations?.[result.iterations.length - 1].error ?? 0
       };
+    }catch(e){
+        result.error = "Invalid function";
+        return result;
+    }
 
     
     result.statusCode = 200;

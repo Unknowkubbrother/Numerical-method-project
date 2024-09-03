@@ -47,7 +47,8 @@ export function falsePositionMethod (xL: number, xR: number, func: string, error
         return result;
     }
 
-    let x1 :number;
+    try{
+        let x1 :number;
     let oldX1: number = 0;
     let funcX1 :number;
     const MAX_ITER : number = 1000;
@@ -84,6 +85,10 @@ export function falsePositionMethod (xL: number, xR: number, func: string, error
         y: result.iterations?.[result.iterations.length - 1].y ?? 0,
         error: result.iterations?.[result.iterations.length - 1].error ?? 0
       };
+    }catch(e){
+        result.error = "Invalid function";
+        return result;
+    }
     
     result.statusCode = 200;
 

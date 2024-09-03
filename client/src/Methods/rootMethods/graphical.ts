@@ -25,7 +25,6 @@ export interface GraphicalResponse {
   
 
 export function graphicalMethod (xStart: number, xEnd: number, func: string, errorFactor: number) : GraphicalResponse{
-
     const result : GraphicalResponse = {
         result: {
             x: 0,
@@ -51,7 +50,8 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
         return result;
     }
 
-    let step : number = 1;
+    try{
+        let step : number = 1;
     let x : number = xStart;
     const MAX_ITER : number = 1000;
     let y : number = 0;
@@ -82,13 +82,17 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
 
         oldY = y;
         
-    }
+        }
 
-    result.result = {
-        x: result.iterations?.[result.iterations.length - 1]?.x ?? 0,
-        y: result.iterations?.[result.iterations.length - 1]?.y ?? 0,
-        error: result.iterations?.[result.iterations.length - 1]?.error ?? 0,
-    };
+        result.result = {
+            x: result.iterations?.[result.iterations.length - 1]?.x ?? 0,
+            y: result.iterations?.[result.iterations.length - 1]?.y ?? 0,
+            error: result.iterations?.[result.iterations.length - 1]?.error ?? 0,
+        };
+    }catch(e){
+        result.error = "Invalid function";
+        return result;
+    }
 
     result.statusCode = 200;
 

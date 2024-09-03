@@ -55,7 +55,8 @@ export function OnepointMethod (xInitial: number, func: string, errorFactor: num
         return result;
     }
 
-      let x : number = xInitial;
+    try{
+        let x : number = xInitial;
       let oldX : number;
       let error: number;
       const MAX_ITER : number = 1000;
@@ -85,6 +86,10 @@ export function OnepointMethod (xInitial: number, func: string, errorFactor: num
         y: result.iterations?.[result.iterations.length - 1].y ?? 0,
         error: result.iterations?.[result.iterations.length - 1].error ?? 0
       };
+    }catch(e){
+        result.error = "Invalid function";
+        return result;
+    }
     
     result.statusCode = 200;
 
