@@ -5,6 +5,8 @@ import { GaussJordanRequest, GaussJordanResponse, GaussJordanMethod} from '../fu
 import { MatrixInversionMethod, MatrixInversionRequest, MatrixInversionResponse } from '../functions/linearMethods/matrixInversion';
 import {LudecompositionRequest, LudecompositionResponse, LudecompositionMethod} from '../functions/linearMethods/Ludecomposition';
 import {CholeskydecompositionRequest, CholeskydecompositionResponse, CholeskydecompositionMethod} from '../functions/linearMethods/Choleskydecomposition';
+import {JacobiRequest, JacobiResponse, JacobiMethod} from '../functions/linearMethods/Jacobi';
+import {GaussSeiDelMethod,GaussSeiDelRequest,GaussSeiDelResponse} from '../functions/linearMethods/guassseidel';
 
 export const cramer = async (req: express.Request, res: express.Response) => {
     try{
@@ -102,3 +104,35 @@ export const choleskydecomposition = async (req: express.Request, res: express.R
         return res.sendStatus(400);
     }
 }
+
+export const jacobi = async (req: express.Request, res: express.Response) => {
+    try{
+
+        const {matrixA, arrB, initialX, errorFactor} : JacobiRequest = req.body;
+
+        let result : JacobiResponse = JacobiMethod(matrixA, arrB, initialX, errorFactor);
+
+        return res.status(result.statusCode).json(result).end();
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+export const guassseidel = async (req: express.Request, res: express.Response) => {
+    try{
+
+        const {matrixA, arrB, initialX, errorFactor} : GaussSeiDelRequest = req.body;
+
+        let result : GaussSeiDelResponse = GaussSeiDelMethod(matrixA, arrB, initialX, errorFactor);
+
+        return res.status(result.statusCode).json(result).end();
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+
