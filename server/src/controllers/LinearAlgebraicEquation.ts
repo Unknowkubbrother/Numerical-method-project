@@ -7,6 +7,7 @@ import {LudecompositionRequest, LudecompositionResponse, LudecompositionMethod} 
 import {CholeskydecompositionRequest, CholeskydecompositionResponse, CholeskydecompositionMethod} from '../functions/linearMethods/Choleskydecomposition';
 import {JacobiRequest, JacobiResponse, JacobiMethod} from '../functions/linearMethods/Jacobi';
 import {GaussSeiDelMethod,GaussSeiDelRequest,GaussSeiDelResponse} from '../functions/linearMethods/guassseidel';
+import {ConjugateMethods,ConjugateRequest,ConjugateResponse} from '../functions/linearMethods/conjugate';
 
 export const cramer = async (req: express.Request, res: express.Response) => {
     try{
@@ -136,3 +137,18 @@ export const guassseidel = async (req: express.Request, res: express.Response) =
 }
 
 
+
+export const conjugate = async (req: express.Request, res: express.Response) => {
+    try{
+
+        const {matrixA, arrB, initialX, errorFactor} : ConjugateRequest = req.body;
+
+        let result : ConjugateResponse = ConjugateMethods(matrixA, arrB, initialX, errorFactor);
+
+        return res.status(result.statusCode).json(result).end();
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
