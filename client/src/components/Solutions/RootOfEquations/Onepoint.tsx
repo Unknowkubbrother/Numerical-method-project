@@ -27,11 +27,11 @@ function Onepoint() {
   };
 
   const handleSetxInitial = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setxInitial(Number(e.target.value));
+    setxInitial(e.target.value as unknown as number);
   };
 
   const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    seterrorfacoter(Number(e.target.value));
+    seterrorfacoter(e.target.value as unknown as number);
   };
 
   const sendRequest = async () => {

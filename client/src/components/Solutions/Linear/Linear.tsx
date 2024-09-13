@@ -1,22 +1,18 @@
+import TableMatrix from '../../ui/TableMatrix'
+import { useState } from 'react'
 
 function Linear() {
-  const array = [[1,2,3],[4,5,6],[7,8,9]];
+  const [countMatrix, setCountMatrix] = useState(3)
+
+  const handleSetCountMatrix = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCountMatrix(e.target.value as unknown as number);
+  };
+  
   return (
-    <div className='w-full h-[500px] bg-white flex justify-center items-center'>
-      <div className={`w-[90%] h-[90%] p-5 grid gap-4 grid-flow-col auto-cols-auto`}>
-          {array.map((_,idx1) => {
-              return (
-                array[idx1].map((_,idx2) => {
-                  return (
-                    <div className='w-full h-[100px] bg-sky-500'>
-                      {array[idx1][idx2]}
-                    </div>
-                  )
-                })
-              )
-      })}
-       
-      </div>
+    <div className='w-full flex justify-center items-center flex-col'>
+      <input type="number" className='mt-10 rounded-md px-5 py-2 w-[200px] text-center' placeholder='3' value={countMatrix}
+      onInput={handleSetCountMatrix}/>
+      <TableMatrix count={countMatrix}/>
     </div>
   )
 }

@@ -28,15 +28,15 @@ function Bisection() {
   };
 
   const handleSetXL = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setxL(Number(e.target.value));
+    setxL(e.target.value as unknown as number);
   };
 
   const handleSetXR = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setxR(Number(e.target.value));
+    setxR(e.target.value as unknown as number);
   };
 
   const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    seterrorfacoter(Number(e.target.value));
+    seterrorfacoter(e.target.value as unknown as number);
   };
 
   const sendRequest = async () => {
