@@ -75,6 +75,9 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
       }));
       setDotplotonepoint(datadot);
   
+    }else{
+      setOnepointX({x:[],y:[]});
+      setDotplotonepoint([]);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[props?.data])
