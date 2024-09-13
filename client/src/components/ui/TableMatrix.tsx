@@ -38,6 +38,12 @@ function TableMatrix(props : {count : number}) {
                 newMatrixValues[row][col] = value;
                 return newMatrixValues;
             });
+        }else{
+            setMatrix(v => {
+                const newMatrixValues = v.map(row => [...row]);
+                newMatrixValues[row][col] = 0;
+                return newMatrixValues;
+            });
         }
     };
 
