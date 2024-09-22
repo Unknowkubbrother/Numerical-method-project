@@ -26,15 +26,15 @@ function FalsePosition() {
   };
 
   const handleSetXL = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setxL(e.target.value as unknown as number);
+    setxL(Number(e.target.value));
   };
 
   const handleSetXR = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setxR(e.target.value as unknown as number);
+    setxR(Number(e.target.value));
   };
 
   const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    seterrorfacoter(e.target.value as unknown as number);
+    seterrorfacoter(Number(e.target.value));
   };
   
   const sendRequest = async () => {

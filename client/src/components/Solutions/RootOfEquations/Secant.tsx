@@ -28,15 +28,15 @@ function Secant() {
   };
 
   const handleSetxInitial0 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setxInitial0(e.target.value as unknown as number);
+    setxInitial0(Number(e.target.value));
   };
 
   const handleSetxInitial1 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setxInitial1(e.target.value as unknown as number);
+    setxInitial1(Number(e.target.value));
   };
 
   const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    seterrorfacoter(e.target.value as unknown as number);
+    seterrorfacoter(Number(e.target.value));
   };
 
   const sendRequest = async () => {
