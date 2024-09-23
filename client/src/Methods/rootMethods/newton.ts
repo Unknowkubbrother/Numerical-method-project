@@ -28,7 +28,7 @@ export interface NewTonResponse {
   
 
 export function NewTonMethod (xInitial: number, func: string, errorFactor: number) : NewTonResponse{
-
+    xInitial = Number(xInitial);
     const result : NewTonResponse = {
         result: {
             x: 0,

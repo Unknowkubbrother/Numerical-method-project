@@ -25,6 +25,8 @@ export interface GraphicalResponse {
   
 
 export function graphicalMethod (xStart: number, xEnd: number, func: string, errorFactor: number) : GraphicalResponse{
+    xStart = Number(xStart);
+    xEnd = Number(xEnd);
     const result : GraphicalResponse = {
         result: {
             x: 0,

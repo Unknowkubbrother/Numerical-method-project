@@ -25,7 +25,8 @@ export interface FalsePositionResponse {
   
 
 export function falsePositionMethod (xL: number, xR: number, func: string, errorFactor: number) : FalsePositionResponse{
-
+    xL = Number(xL);
+    xR = Number(xR);
     const result : FalsePositionResponse = {
         result: {
             x: 0,

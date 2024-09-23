@@ -25,7 +25,8 @@ export interface BisectionResponse {
   
 
 export function bisectionMethod (xL: number, xR: number, func: string, errorFactor: number) : BisectionResponse{
-
+    xL = Number(xL);
+    xR = Number(xR);
     const result : BisectionResponse = {
         result: {
             x: 0,

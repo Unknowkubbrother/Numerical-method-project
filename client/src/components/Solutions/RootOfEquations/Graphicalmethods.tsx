@@ -26,15 +26,15 @@ function Graphicalmethods() {
   };
 
   const handleSetXStart = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setXStart(Number(e.target.value));
+    setXStart(e.target.value as unknown as number);
   };
 
   const handleSetXEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setXEnd(Number(e.target.value));
+    setXEnd(e.target.value as unknown as number );
   };
 
   const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    seterrorfacoter(Number(e.target.value));
+    seterrorfacoter(e.target.value as unknown as number);
   };
 
   const sendRequest = async () => {

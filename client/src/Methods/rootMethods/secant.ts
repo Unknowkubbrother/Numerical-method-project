@@ -29,7 +29,8 @@ export interface SecantResponse {
   
 
 export function SecantMethod (xInitial0: number, xInitial1: number, func: string, errorFactor: number) : SecantResponse{
-
+    xInitial0 = Number(xInitial0);
+    xInitial1 = Number(xInitial1);
     const result : SecantResponse = {
         result: {
             x: 0,

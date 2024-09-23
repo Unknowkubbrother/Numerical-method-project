@@ -5,7 +5,7 @@ function Linear() {
   const [countMatrix, setCountMatrix] = useState(3)
 
   const handleSetCountMatrix = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCountMatrix(Number(e.target.value));
+    setCountMatrix(e.target.value as unknown as number );
   };
   
   return (
