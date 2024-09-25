@@ -1,45 +1,44 @@
 import {useEffect,useState} from 'react'
 import { BlockMath } from "react-katex";
 
-function TableMatrix(props : {count : number}) {
+function TableMatrix(props : {row : number, col : number}) {
     const [TablematrixA, setTableMatrixA] = useState<JSX.Element[]>([]);
     const [TableArrX, setTableArrX] = useState<JSX.Element[]>([]);
     const [TableArrB, setTableArrB] = useState<JSX.Element[]>([]);
     const [matrixA, setMatrixA] = useState<number[][]>([]);
     const [arrB, setArrB] = useState<number[]>([]);
 
-    const createMatrix= (matrixSize: number) => {
-        const matrix = new Array(Number(matrixSize)).fill(0);
-        for (let i = 0; i < matrixSize; i++) {
-            matrix[i] = new Array(Number(matrixSize)).fill(0);
+    const createMatrix= (rowSize: number, colSize: number) => {
+        const matrix = new Array(Number(rowSize)).fill(0);
+        for (let i = 0; i < rowSize; i++) {
+            matrix[i] = new Array(Number(colSize)).fill(0);
         }
         return matrix;
     };
     
-    const createTableMatrixA = async (count : number) => {
+    const createTableMatrixA = async (row : number, col : number) => {
         await setTableMatrixA([]);
-        await setMatrixA(createMatrix(count));
-        if(count > 0 && count <= 10){
+        await setMatrixA(createMatrix(row,col));
+        if(row > 0 && row <= 10 && col > 0 && col <= 10){
             setTimeout(() => {
                 const tempTablematrix = [];
-                for (let i = 0; i < count; i++) {
-                    const col = [];
-                    for (let j = 0; j < count ; j++) {
-                        col.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={j} placeholder={`a${i+1}${j+1}`} onInput={(event : React.ChangeEvent<HTMLInputElement> ) => onInputMartrixA(event, i, j)}/>);
+                for (let i = 0; i < row; i++) {
+                    const colelement = [];
+                    for (let j = 0; j < col ; j++) {
+                        colelement.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={j} placeholder={`a${i+1}${j+1}`} onInput={(event : React.ChangeEvent<HTMLInputElement> ) => onInputMartrixA(event, i, j)}/>);
                     }
-                    tempTablematrix.push(<div className='flex justify-center items-center gap-2 mt-2' key={i}>{col}</div>);
+                    tempTablematrix.push(<div className='flex justify-center items-center gap-2 mt-2' key={i}>{colelement}</div>);
                 }
                 setTableMatrixA(tempTablematrix);
             }, 0.001);
         }
     };
-    const createArrX = async(count : number)=>{
+    const createArrX = async(row : number)=>{
         await setTableArrX([]);
-        console.log(arrB);
-        if(count > 0 && count <= 10){
+        if(row > 0 && row <= 10 && props.col > 0 && props.col <= 10){
             setTimeout(() => {
                 const tempArr = [];
-                for (let i = 0; i < count; i++) {
+                for (let i = 0; i < row; i++) {
                     tempArr.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' disabled key={i} placeholder={`x${i+1}`}/>);
                 }
                 setTableArrX(tempArr);
@@ -49,14 +48,14 @@ function TableMatrix(props : {count : number}) {
     }
     
 
-    const createArrB = async(count : number)=>{
+    const createArrB = async(row: number)=>{
         await setTableArrB([]);
-        await setArrB(new Array(Number(count)).fill(0));
+        await setArrB(new Array(Number(row)).fill(0));
         console.log(arrB);
-        if(count > 0 && count <= 10){
+        if(row > 0 && row <= 10 && props.col > 0 && props.col <= 10){
             setTimeout(() => {
                 const tempArr = [];
-                for (let i = 0; i < count; i++) {
+                for (let i = 0; i < row; i++) {
                     tempArr.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={i} placeholder={`b${i+1}`} onInput={(event : React.ChangeEvent<HTMLInputElement> ) => onInputArrB(event, i)}/>);
                 }
                 setTableArrB(tempArr);
@@ -99,11 +98,23 @@ function TableMatrix(props : {count : number}) {
         }
     };
 
+    const clearMatrix = () => {
+        setArrB([]);
+        setTableArrB([]);
+        setTableArrX([]);
+        setTableMatrixA([]);
+        setMatrixA([]);
+    }
+
     useEffect(() => {
-            createTableMatrixA(props.count);
-            createArrX(props.count);
-            createArrB(props.count);
-    }, [props.count]);
+            if (props.row && props.col) {
+                createTableMatrixA(props.row, props.col);
+                createArrX(props.row);
+                createArrB(props.row);
+            }else{
+                clearMatrix();
+            }
+    }, [props.row, props.col]);
 
     useEffect(() => {
         console.log(matrixA, arrB);
