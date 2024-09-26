@@ -14,6 +14,7 @@ import Newton from './components/Solutions/RootOfEquations/Newton.tsx'
 import Secant from './components/Solutions/RootOfEquations/Secant.tsx';
 import Linear from './components/Solutions/Linear/Linear.tsx'
 import Cramer from './components/Solutions/Linear/Cramer.tsx';
+import GaussElimination from './components/Solutions/Linear/GaussElimination.tsx';
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
               {
                 path: 'cramer',
                 element: <Cramer />
+              },
+              {
+                path: 'gausselimination',
+                element: <GaussElimination />
               }
             ]
           }

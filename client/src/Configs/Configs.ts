@@ -36,7 +36,11 @@ export const mainMenu = [
       {
         title: 'cramer',
         path: '/lobby/linear/cramer'
-      }
+      },
+      {
+        title: 'gausselimination',
+        path: '/lobby/linear/gausselimination'
+      },
     ],
   },
   // {

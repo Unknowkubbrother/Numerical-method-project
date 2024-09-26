@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import {round} from 'mathjs';
 
 export interface GaussEliminationRequest {
     matrixA: number[][], 
@@ -7,23 +7,38 @@ export interface GaussEliminationRequest {
 
 export interface GaussEliminationResponse {
     result: number[];
-    matrixAList: number[][][];
-    arrBList: number[][];
+    default: {
+        matrixA: number[][],
+        arrB: number[]
+    };
+    iterations: GaussIteraions[];
 	error?: string;
     statusCode: number;
+}
+
+interface GaussIteraions {
+    type: "forward" | "backsub",
+    i: number,
+    j: number,
+    matrixA?: number[][],
+    arrB?: number[],  
+    value?: number, 
+    sumIdx?: number[]   
 }
   
 
 export function GaussEliminationMethod (matrixA: number[][], arrB: number[]) : GaussEliminationResponse{
 
     const result: GaussEliminationResponse = { 
+        default: {
+            matrixA: matrixA.map((arr) => [...arr]),
+            arrB: [...arrB]
+        },
         result: [],
-        matrixAList: [],
-        arrBList: [],
+        iterations: [],
         statusCode: 400
     };
 
-    const tempmatrixA = matrixA.map((arr) => [...arr]);
     
     for(let i = 0; i < matrixA.length; i++){
         for(let j = 0; j < matrixA.length; j++){
@@ -39,8 +54,13 @@ export function GaussEliminationMethod (matrixA: number[][], arrB: number[]) : G
                         return value - tempMatrixA[index];
                     });
                     arrB[i] = arrB[i] - temparrB;
-                    result.matrixAList.push(matrixA.map((arr) => [...arr]));
-                    result.arrBList.push([...arrB]);
+                    result.iterations.push({
+                        type: "forward",
+                        i: i,
+                        j: j,
+                        matrixA: matrixA.map((arr) => [...arr]),
+                        arrB: [...arrB]
+                    });
                 }
             }
         }
@@ -48,15 +68,22 @@ export function GaussEliminationMethod (matrixA: number[][], arrB: number[]) : G
     
     for(let i = matrixA.length - 1; i >= 0; i--){
         let sum = 0;
+        const sumIdx: number[] = [];
         for(let j = matrixA.length - 1; j > i; j--){
+            sumIdx.push(j);
             sum += matrixA[i][j] * result.result[j];
         }
+        result.iterations.push({
+            type: "backsub",
+            i: i,
+            j: i,
+            value: (arrB[i] - sum) / matrixA[i][i],
+            sumIdx: sumIdx
+        });
         result.result[i] = (arrB[i] - sum) / matrixA[i][i];
-        result.result[i] = math.round(result.result[i], 6);
+        result.result[i] = round(result.result[i], 6);
     }
 
-
-    console.log(math.multiply(tempmatrixA, result.result));
     
     result.statusCode = 200;
 

@@ -106,7 +106,9 @@ function Cramer() {
         <div
           className="w-full rounded-md h-content bg-background flex flex-col justify-start items-center p-10"
         >
-            {Result && renderResult()}
+            {Result ? renderResult() : 
+             <div className="font-semibold">Enter Matrix</div>
+            }
         </div>
       </div>
     </div>
