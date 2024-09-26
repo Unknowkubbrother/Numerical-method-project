@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react'
 import { BlockMath } from "react-katex";
 
-function TableMatrix(props : {row : number, col : number}) {
+function TableMatrix(props : {row : number, col : number, getValues: (matrixA:number[][], arrB:number[]) => void}) {
     const [TablematrixA, setTableMatrixA] = useState<JSX.Element[]>([]);
     const [TableArrX, setTableArrX] = useState<JSX.Element[]>([]);
     const [TableArrB, setTableArrB] = useState<JSX.Element[]>([]);
@@ -33,12 +33,12 @@ function TableMatrix(props : {row : number, col : number}) {
             }, 0.001);
         }
     };
-    const createArrX = async(row : number)=>{
+    const createArrX = async(col : number)=>{
         await setTableArrX([]);
-        if(row > 0 && row <= 10 && props.col > 0 && props.col <= 10){
+        if(col > 0 && col <= 10 && props.row > 0 && props.row <= 10){
             setTimeout(() => {
                 const tempArr = [];
-                for (let i = 0; i < row; i++) {
+                for (let i = 0; i < col; i++) {
                     tempArr.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' disabled key={i} placeholder={`x${i+1}`}/>);
                 }
                 setTableArrX(tempArr);
@@ -109,7 +109,7 @@ function TableMatrix(props : {row : number, col : number}) {
     useEffect(() => {
             if (props.row && props.col) {
                 createTableMatrixA(props.row, props.col);
-                createArrX(props.row);
+                createArrX(props.col);
                 createArrB(props.row);
             }else{
                 clearMatrix();
@@ -117,7 +117,7 @@ function TableMatrix(props : {row : number, col : number}) {
     }, [props.row, props.col]);
 
     useEffect(() => {
-        console.log(matrixA, arrB);
+        props.getValues(matrixA,arrB);
     }, [matrixA,arrB]);
 
   return (

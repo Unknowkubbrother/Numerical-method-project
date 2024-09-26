@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import {det} from 'mathjs';
 
 export interface CramerRequest {
     matrixA: number[][], 
@@ -6,6 +6,7 @@ export interface CramerRequest {
 }
 
 export interface CramerResponse {
+    defaultMatrixA: number[][];
     result: number[];
     matrixAList: number[][][];
     detA: number;
@@ -16,8 +17,8 @@ export interface CramerResponse {
   
 
 export function CramerMethod (matrixA: number[][], arrB: number[]) : CramerResponse{
-
     const result: CramerResponse = { 
+        defaultMatrixA: matrixA,
         result: [],
         matrixAList: [],
         detA: 0,
@@ -25,29 +26,37 @@ export function CramerMethod (matrixA: number[][], arrB: number[]) : CramerRespo
         statusCode: 400
     };
 
-    const detA = math.det(matrixA);
-    if(detA === 0){
-        result.error = "Determinant of matrix A is 0";
+    try{
+    
+        const detA = det(matrixA);
+        if(detA === 0){
+            result.error = "Determinant of matrix A is 0";
+            return result;
+        }
+    
+    
+        result.detA = detA;
+        for(let i = 0; i < matrixA.length; i++){
+            const tempMatrix: number[][] = matrixA.map((arr) => [...arr]);
+            for(let j = 0; j < matrixA.length; j++){
+                tempMatrix[j][i] = arrB[j];
+            }
+            result.matrixAList.push(tempMatrix);
+        }
+    
+        for(let i = 0; i < result.matrixAList.length; i++){
+            result.detAi.push(det(result.matrixAList[i]));
+            result.result.push(result.detAi[i] / detA);
+        }
+        
+        result.statusCode = 200;
+    
+        return result;
+    }catch(e){
+        result.error = "Error Matrix Size";
+        result.statusCode = 400;
         return result;
     }
-
-    result.detA = detA;
-    for(let i = 0; i < matrixA.length; i++){
-        const tempMatrix: number[][] = matrixA.map((arr) => [...arr]);
-        for(let j = 0; j < matrixA.length; j++){
-            tempMatrix[j][i] = arrB[j];
-        }
-        result.matrixAList.push(tempMatrix);
-    }
-
-    for(let i = 0; i < result.matrixAList.length; i++){
-        result.detAi.push(math.det(result.matrixAList[i]));
-        result.result.push(result.detAi[i] / detA);
-    }
-    
-    result.statusCode = 200;
-
-    return result;
 
 
 

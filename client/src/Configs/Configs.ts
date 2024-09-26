@@ -31,8 +31,12 @@ export const mainMenu = [
   },
   {
     title: "Linear Algebraic Equation",
-    path: "/lobby/linear",
+    path: "../lobby/linear",
     menu: [
+      {
+        title: 'cramer',
+        path: '/lobby/linear/cramer'
+      }
     ],
   },
   // {

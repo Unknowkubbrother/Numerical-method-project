@@ -52,7 +52,7 @@ function Bisection() {
           setData(graphicalResponse);
           Swal.fire({
             title: "Success!",
-            text: "Your have benn success.",
+            text: "Your have been success.",
             icon: "success",
           });
         } else {
