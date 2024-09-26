@@ -24,6 +24,7 @@ function GaussElimination() {
     })
       .then((result: unknown) => {
         const GaussEliminationResponse = result as GaussEliminationResponse;
+        console.log(Data);
         if (GaussEliminationResponse.statusCode === 200) {
           setResult(GaussEliminationResponse);
           Swal.fire({
