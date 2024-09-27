@@ -10,7 +10,7 @@ function Navbar() {
   }
 
   return (
-    <nav className='fixed top-0 left-0 flex justify-between items-center w-full px-5 py-5 backdrop-blur'>
+    <nav className='fixed top-0 left-0 flex justify-between items-center w-full px-5 py-5 backdrop-blur z-50'>
         <div className='flex justify-center items-center gap-2'>
           <div className='w-[50px] h-[50px] cursor-pointer' onClick={() => setPage('/home')}>
             <img src={logo} alt="logo"/>
