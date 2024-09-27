@@ -57,7 +57,7 @@ function Cramer() {
   const renderResult = () => {
     return (
       <div className="w-full flex flex-col gap-3">
-        <BlockMath math="Result"/>
+        <BlockMath math="\color{#05acfa}\underline{Result}"/>
         <div className="flex gap-3 justify-center items-center">
             <BlockMath math={`\\therefore`}/>
             <BlockMath math="("/>
@@ -67,10 +67,10 @@ function Cramer() {
                 )
             })}
             <BlockMath math=") \kern{5px} = "/>
-            <BlockMath math="( "/>
+            <BlockMath math="("/>
             {Result?.result.map((result,index) => {
                 return (
-                  <BlockMath key={index} math={`${round(result,6)}${index < Result.result.length - 1 ? ',' : ''}`}/>
+                  <BlockMath key={index} math={`\\small ${round(result,6)}${index < Result.result.length - 1 ? ',' : ''}`}/>
                 )
             })}
             <BlockMath math=")"/>

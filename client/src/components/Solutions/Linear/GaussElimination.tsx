@@ -24,7 +24,6 @@ function GaussElimination() {
     })
       .then((result: unknown) => {
         const GaussEliminationResponse = result as GaussEliminationResponse;
-        console.log(Data);
         if (GaussEliminationResponse.statusCode === 200) {
           setResult(GaussEliminationResponse);
           Swal.fire({
@@ -58,7 +57,7 @@ function GaussElimination() {
     return (
        <div className="w-[70%] flex justify-center items-center flex-col">
         <div className="w-full">
-            <BlockMath math='\underline{Result}' />
+            <BlockMath math='\color{#05acfa}\underline{Result}' />
             <div className="flex gap-3 justify-center items-center">
             <BlockMath math={`\\therefore`}/>
             <BlockMath math="("/>
@@ -77,7 +76,9 @@ function GaussElimination() {
             <BlockMath math=")"/>
         </div>
         </div>
-         <BlockMath math='\underline{Forward}' />
+         <div className="w-full flex">
+          <BlockMath math='\color{#02fa61} Forward' />
+         </div>
             <div className="flex flex-wrap justify-center items-center gap-10">
                 {/* // default */}
                 {Result && (
@@ -116,10 +117,47 @@ function GaussElimination() {
                         )}
                     </div>
                     
-                    // backsub
                 )}
             </div>
             ))}
+            <div className="w-full flex justify-center items-center flex-col">
+                <div className="w-full flex">
+                  <BlockMath math='\color{#02fa61} Back \kern{3px} Subtiution' />
+                </div>
+                {Result?.iterations.map((iteration, index) => {
+                    const lastForward = Result?.iterations.filter((value) => value.type === "forward").pop();
+                    if (iteration.type === "backsub" && lastForward ?.matrixA && lastForward?.arrB) {
+                      return (
+                        <div key={index} className="font-semibold text-sm flex gap-3 justify-center items-center">
+                          <BlockMath math={`
+                            x_{${iteration.i+1}} = \\frac{b_{${iteration.i+1}}
+                            ${iteration.sumIdx !== undefined && iteration.sumIdx?.length > 0 ?
+                              `- ${iteration.sumIdx?.map((value)=>{
+                                return `a_{${iteration.i+1}${value+1}} x_{${value}}`
+                              }).join(' - ')}`
+                              :
+                              ''
+                            }
+                            }{a_{${iteration.i+1}${iteration.i+1}}}
+                          `}/>
+                          <BlockMath math={
+                            `= \\kern{3px} \\small\\frac
+                            {${lastForward?.arrB[iteration.i]}
+                            ${iteration.sumIdx !== undefined && iteration.sumIdx?.length > 0 ?
+                              `- ${iteration.sumIdx?.map((value)=>{
+                                return `(${lastForward?.matrixA?.[iteration.i]?.[value] ?? ''} \\times ${Result?.result[value]})`
+                              }).join(' - ')}`
+                              :
+                              ''
+                            }}
+                            {${lastForward?.matrixA[iteration.i][iteration.i]}}
+                             \\kern{3px} = \\kern{3px} ${iteration.value !== undefined ? round(iteration.value, 6) : ''}`}/>
+                        </div>
+                      )
+                    }
+                }
+                )}
+            </div>
         </div>
        </div>
     )
