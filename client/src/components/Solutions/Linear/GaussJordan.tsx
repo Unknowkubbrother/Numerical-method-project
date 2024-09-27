@@ -87,10 +87,16 @@ const renderResult = () => {
                     <div key={index} className="font-semibold text-sm">
                         <div className="flex gap-5">
                             {(index > 0) ?
-                                (iteration.i !== undefined && iteration.j !== undefined) &&
-                                <BlockMath math={`\\Large \\xrightarrow{
-                                    {R_{${iteration.i + 1}} = R_{${iteration.i+1}} - (\\frac{R_{${iteration.j+1}}}{${(iteration.matrixA ?? [])[iteration.j][iteration.j]}})  \\kern{3px} \\times}  \\kern{3px} (${Result?.iterations[index - 1]?.matrixA?.[iteration.i]?.[iteration.j] ?? ''})}`
-                                } />
+                                (iteration.i !== undefined && iteration.j !== undefined ) && (
+                                    (iteration.type == 'forward') ?
+                                        <BlockMath math={`\\Large \\xrightarrow{
+                                            {R_{${iteration.i + 1}} = R_{${iteration.i+1}} - (\\frac{R_{${iteration.j+1}}}{${(iteration.matrixA ?? [])[iteration.j][iteration.j]}})  \\kern{3px} \\times}  \\kern{3px} (${Result?.iterations[index - 1]?.matrixA?.[iteration.i]?.[iteration.j] ?? ''})}`
+                                        } />
+                                    :
+                                    <BlockMath math={`\\Large \\xrightarrow{
+                                        R_{${iteration.i + 1}} = \\frac{R_{${iteration.i+1}}}{${Result?.iterations[index - 1]?.matrixA?.[iteration.i]?.[iteration.j] ?? ''}}}`
+                                    } />
+                                )
                                 :
                                 (iteration.i !== undefined && iteration.j !== undefined) &&
                                 <BlockMath math={`\\Large \\xrightarrow{

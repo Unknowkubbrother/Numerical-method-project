@@ -17,6 +17,7 @@ export interface GaussJordanResponse {
 }
 
 interface GaussIteraions {
+    type: "forward" | "backsub";
     i?: number;
     j?: number;
     matrixA?: number[][];
@@ -54,6 +55,7 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
                     });
                     arrB[i] = arrB[i] - temparrB;
                     result.iterations.push({
+                        type: "forward",
                         i: i,
                         j: j,
                         matrixA: round(matrixA.map((arr) => [...arr]),6),
@@ -80,6 +82,7 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
                     });
                     arrB[i] = arrB[i] - temparrB;
                     result.iterations.push({
+                        type: "forward",
                         i: i,
                         j: j,
                         matrixA: round(matrixA.map((arr) => [...arr]),6),
@@ -95,6 +98,7 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
         arrB[i] /= matrixA[i][i];
         matrixA[i][i] /= matrixA[i][i];
         result.iterations.push({
+            type: "backsub",
             i: i,
             j: i,
             matrixA: round(matrixA.map((arr) => [...arr]),6),

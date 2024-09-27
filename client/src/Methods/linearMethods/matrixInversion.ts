@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import { round } from "mathjs";
 
 export interface MatrixInversionRequest {
     matrixA: number[][], 
@@ -7,30 +7,104 @@ export interface MatrixInversionRequest {
 
 export interface MatrixInversionResponse {
     result: number[];
-    matrixAInverse: number[][];
+    default: {
+        matrixA: number[][];
+        arrB: number[];
+      };
+    iterations: GaussIteraions[];
 	error?: string;
     statusCode: number;
 }
+
+interface GaussIteraions {
+    type: "forward" | "backsub";
+    i?: number;
+    j?: number;
+    matrixA?: number[][];
+    arrB?: number[];
+  }
+  
   
 
 export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : MatrixInversionResponse{
 
-    const result: MatrixInversionResponse = { 
+    const result: MatrixInversionResponse = {
+        default: {
+          matrixA: matrixA.map((arr) => [...arr]),
+          arrB: [...arrB],
+        },
         result: [],
-        matrixAInverse: [],
-        statusCode: 400
-    };
+        iterations: [],
+        statusCode: 400,
+      };
 
-    const matrixAInverse = math.inv(matrixA);
-    result.matrixAInverse = matrixAInverse.map((arr : number[]) => 
-        arr.map((value : number) => math.round(value, 6))
-    );
-    for(let i = 0; i < arrB.length; i++){
-        let sum = 0;
+    for(let i = 0; i < matrixA.length; i++){
         for(let j = 0; j < matrixA.length; j++){
-            sum += matrixAInverse[i][j] * arrB[j];
+            if (i>j){
+                    if (matrixA[i][j] == 0){
+                        continue;
+                    }
+                    let tempMatrixA = [...matrixA[j]];
+                    let temparrB = arrB[j];
+                    tempMatrixA = tempMatrixA.map((value) => {
+                        return (value / matrixA[j][j]) * matrixA[i][j];
+                    });
+                    temparrB = (temparrB / matrixA[j][j]) * matrixA[i][j];
+                    matrixA[i] = matrixA[i].map((value, index) => {
+                        return value - tempMatrixA[index];
+                    });
+                    arrB[i] = arrB[i] - temparrB;
+                    result.iterations.push({
+                        type: "forward",
+                        i: i,
+                        j: j,
+                        matrixA: round(matrixA.map((arr) => [...arr]),6),
+                        arrB: (round([...arrB],6)),
+                    });
+            }
         }
-        result.result.push(math.round(sum, 6));
+    }
+
+    for(let i = matrixA.length - 1; i >= 0; i--){
+        for(let j =  matrixA.length - 1; j >= 0; j--){
+            if (i<j){
+                    if (matrixA[i][j] == 0){
+                        continue;
+                    }
+                    let tempMatrixA = [...matrixA[j]];
+                    let temparrB = arrB[j];
+                    tempMatrixA = tempMatrixA.map((value) => {
+                        return (value / matrixA[j][j]) * matrixA[i][j];
+                    });
+                    temparrB = (temparrB / matrixA[j][j]) * matrixA[i][j];
+                    matrixA[i] = matrixA[i].map((value, index) => {
+                        return value - tempMatrixA[index];
+                    });
+                    arrB[i] = arrB[i] - temparrB;
+                    result.iterations.push({
+                        type: "forward",
+                        i: i,
+                        j: j,
+                        matrixA: round(matrixA.map((arr) => [...arr]),6),
+                        arrB: round([...arrB],6),
+                    });
+            }
+        }
+    }
+
+    for(let i = 0; i < matrixA.length; i++){
+        result.result[i] = arrB[i]  / matrixA[i][i];
+        result.result[i] = round(result.result[i], 6);
+        arrB[i] /= matrixA[i][i];
+        matrixA[i][i] /= matrixA[i][i];
+        result.iterations.push({
+            type: "backsub",
+            i: i,
+            j: i,
+            matrixA: round(matrixA.map((arr) => [...arr]),6),
+            arrB: (round([...arrB],6)),
+        });
+
     }
     
     result.statusCode = 200;
