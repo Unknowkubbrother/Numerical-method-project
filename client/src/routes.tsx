@@ -15,6 +15,7 @@ import Secant from './components/Solutions/RootOfEquations/Secant.tsx';
 import Linear from './components/Solutions/Linear/Linear.tsx'
 import Cramer from './components/Solutions/Linear/Cramer.tsx';
 import GaussElimination from './components/Solutions/Linear/GaussElimination.tsx';
+import GaussJordan from './components/Solutions/Linear/GaussJordan.tsx';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
               {
                 path: 'gausselimination',
                 element: <GaussElimination />
+              },
+              {
+                path: 'gaussjordan',
+                element: <GaussJordan />
               }
             ]
           }

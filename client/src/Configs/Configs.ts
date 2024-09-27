@@ -41,6 +41,10 @@ export const mainMenu = [
         title: 'gausselimination',
         path: '/lobby/linear/gausselimination'
       },
+      {
+        path: '/lobby/linear/gaussjordan',
+        title: 'gaussjordan'
+      }
     ],
   },
   // {

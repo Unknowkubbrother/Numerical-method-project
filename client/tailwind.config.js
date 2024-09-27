@@ -19,6 +19,7 @@ export default {
       pink: colors.fuchsia,
       sky: colors.sky,
       zinc: colors.zinc,
+      rose: colors.rose,
     },
     extend: {},
   },

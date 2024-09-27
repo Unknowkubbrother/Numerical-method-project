@@ -1,5 +1,3 @@
-// import type { MathArray, Matrix } from 'mathjs';
-
 export const DetFormat = (matrix: number[][]) => {
   let str = "";
   for (let i = 0; i < matrix.length; i++) {
@@ -56,3 +54,21 @@ export const GaussFormat = (matrix: number[][], arrB: number[], hightlight: {row
           \\end{array} 
           \\end{bmatrix}`;
 };
+
+
+export const MatrixFormat = (matrix:number[][]) => {
+  let str = "";
+  for(let i = 0; i < matrix.length; i++){
+    for(let j = 0; j < matrix[i].length; j++){
+      str += matrix[i][j] + " ";
+      if(j !== matrix[i].length - 1){
+        str += "& ";
+      }
+    }
+    if(i !== matrix.length - 1){
+      str += "\\\\\\\\ ";
+    }
+  }
+  return `\\begin{bmatrix} \\kern{5px} ${str} \\kern{5px} \\end{bmatrix}`;
+
+}

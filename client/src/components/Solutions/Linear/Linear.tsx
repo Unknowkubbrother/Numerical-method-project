@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
 import TableMatrix from "../../ui/TableMatrix";
 import { mainMenu } from "../../../Configs/Configs";
 import { useNavigate,Outlet } from "react-router-dom";
@@ -9,6 +9,10 @@ interface MenuItem {
     title: string;
     path: string;
   }[];
+}
+
+interface ref{
+  clearMatrix: () => void;
 }
 
 
@@ -36,6 +40,14 @@ function Linear() {
   const getValues = (matrixA:number[][], arrB:number[]) =>{
     setData({matrixA, arrB});
   }
+
+  const ref = useRef<ref>(null);
+
+  const clearMatrix = async () => {
+    await setCountRow(3);
+    await setCountCol(3);
+    await ref.current?.clearMatrix();
+  };
 
 
   return (
@@ -78,10 +90,11 @@ function Linear() {
           value={countCol}
           onChange={handleSetCountCol}
         />
+        <button className="btn bg-rose-400 hover:bg-rose-600 text-white" onClick={clearMatrix}><i className="fa-solid fa-rotate-left"></i></button>
       </div>
       <div className="flex justify-center items-center">
         <div className="flex flex-col justify-center items-center">
-          <TableMatrix row={countRow} col={countCol} getValues={getValues}/>
+          <TableMatrix row={countRow} col={countCol} getValues={getValues} ref={ref}/>
         </div>
       </div>
       <div className="min-[340px]:w-[90%] lg:w-full m-auto">

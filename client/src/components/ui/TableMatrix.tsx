@@ -1,7 +1,14 @@
-import {useEffect,useState} from 'react'
+import {useEffect,useState, useImperativeHandle, forwardRef} from 'react'
 import { BlockMath } from "react-katex";
+import Swal from "sweetalert2";
 
-function TableMatrix(props : {row : number, col : number, getValues: (matrixA:number[][], arrB:number[]) => void}) {
+interface TableMatrixProps {
+    row : number;
+    col : number;
+    getValues: (matrixA:number[][], arrB:number[]) => void;
+}
+
+const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
     const [TablematrixA, setTableMatrixA] = useState<JSX.Element[]>([]);
     const [TableArrX, setTableArrX] = useState<JSX.Element[]>([]);
     const [TableArrB, setTableArrB] = useState<JSX.Element[]>([]);
@@ -97,6 +104,19 @@ function TableMatrix(props : {row : number, col : number, getValues: (matrixA:nu
         }
     };
 
+    useImperativeHandle(ref, () => ({
+
+        clearMatrix() {
+            initialMatrix();
+            Swal.fire({
+                title: "Success!",
+                text: "Clear Matrix Success!.",
+                icon: "success",
+              });
+        }
+    
+    }));
+
     const clearMatrix = () => {
         setArrB([]);
         setTableArrB([]);
@@ -104,15 +124,19 @@ function TableMatrix(props : {row : number, col : number, getValues: (matrixA:nu
         setTableMatrixA([]);
         setMatrixA([]);
     }
+    
+    const initialMatrix = () => {
+        if (props.row && props.col) {
+            createTableMatrixA(props.row, props.col);
+            createArrX(props.col);
+            createArrB(props.row);
+        }else{
+            clearMatrix();
+        }
+    }
 
     useEffect(() => {
-            if (props.row && props.col) {
-                createTableMatrixA(props.row, props.col);
-                createArrX(props.col);
-                createArrB(props.row);
-            }else{
-                clearMatrix();
-            }
+        initialMatrix();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.row, props.col]);
 
@@ -142,6 +166,6 @@ function TableMatrix(props : {row : number, col : number, getValues: (matrixA:nu
         </div>
     </div>
   )
-}
+})
 
-export default TableMatrix
+export default TableMatrix;
