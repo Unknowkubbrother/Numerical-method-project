@@ -133,28 +133,28 @@ function GaussElimination() {
                       return (
                         <div key={index} className="font-semibold text-sm flex gap-3 justify-center items-center">
                           <BlockMath math={`
-                            x_{${iteration.i+1}} = \\frac{{b_{${iteration.i+1}}^$400{iteration.i}}
-                            ${iteration.sumIdx !== undefined && iteration.sumIdx?.length > 0 ?
-                              `- ${iteration.sumIdx?.map((value)=>{
-                                return `{a_{${iteration.i+1}${value+1}}^${iteration.i}} x_{${value}}`
-                              }).join(' - ')}`
-                              :
-                              ''
-                            }
-                            }{{a_{${iteration.i+1}${iteration.i+1}}^${iteration.i}}}
+                          x_{${iteration.i+1}} = \\frac{b_{${iteration.i+1}}^${iteration.i}
+                          ${iteration.sumIdx !== undefined && iteration.sumIdx?.length > 0 ?
+                            `- ${iteration.sumIdx?.map((value)=>{
+                            return `a_{${iteration.i+1}${value+1}}^${iteration.i} x_{${value}}`
+                            }).join(' - ')}`
+                            :
+                            ''
+                          }
+                          }{a_{${iteration.i+1}${iteration.i+1}}^${iteration.i}}
                           `}/>
                           <BlockMath math={
-                            `= \\kern{3px} \\small\\frac
-                            {${lastForward?.arrB[iteration.i]}
-                            ${iteration.sumIdx !== undefined && iteration.sumIdx?.length > 0 ?
-                              `- ${iteration.sumIdx?.map((value)=>{
-                                return `(${lastForward?.matrixA?.[iteration.i]?.[value] ?? ''} \\times ${Result?.result[value]})`
-                              }).join(' - ')}`
-                              :
-                              ''
-                            }}
-                            {${lastForward?.matrixA[iteration.i][iteration.i]}}
-                             \\kern{3px} = \\kern{3px} ${iteration.value !== undefined ? round(iteration.value, 6) : ''}`}/>
+                          `= \\kern{3px} \\small\\frac
+                          {${lastForward?.arrB[iteration.i]}
+                          ${iteration.sumIdx !== undefined && iteration.sumIdx?.length > 0 ?
+                            `- ${iteration.sumIdx?.map((value)=>{
+                            return `(${lastForward?.matrixA?.[iteration.i]?.[value] ?? ''} \\times ${Result?.result[value]})`
+                            }).join(' - ')}`
+                            :
+                            ''
+                          }}
+                          {${lastForward?.matrixA[iteration.i][iteration.i]}}
+                           \\kern{3px} = \\kern{3px} ${iteration.value !== undefined ? round(iteration.value, 6) : ''}`}/>
                         </div>
                       )
                     }

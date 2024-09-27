@@ -96,8 +96,8 @@ export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : Mat
         }
     }
 
-    for(let i = matrixA.length - 1; i >= 0; i--){
-        for(let j =  matrixA.length - 1; j >= 0; j--){
+    for(let i = matrixA[0].length - 1; i >= 0; i--){
+        for(let j =  matrixA[0].length - 1; j >= 0; j--){
             if (i<j){
                     if (matrixA[i][j] == 0){
                         continue;
@@ -127,7 +127,7 @@ export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : Mat
         }
     }
 
-    for(let i = 0; i < matrixA.length; i++){
+    for(let i = 0; i < matrixA[0].length; i++){
         matrixAIn[i] = matrixAIn[i].map((value) => {
             return value / matrixA[i][i];
         });
@@ -139,12 +139,12 @@ export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : Mat
             matrixA: round(matrixA.map((arr) => [...arr]),6),
             matrixAIn: round(matrixAIn.map((arr) => [...arr]),6),
         });
-
     }
+
 
     result.result.arrB = arrB;
     result.result.matrixAIn = round(matrixAIn,6);
-    result.result.x = multiply(matrixAIn, arrB);
+    result.result.x = multiply(matrixAIn, arrB).slice(0, matrixA[0].length);
     
     result.statusCode = 200;
 

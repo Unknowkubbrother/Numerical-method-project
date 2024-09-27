@@ -38,8 +38,8 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
         statusCode: 400,
       };
 
-    for(let i = 0; i < matrixA[0].length; i++){
-        for(let j = 0; j < matrixA[0].length; j++){
+    for(let i = 0; i < matrixA.length; i++){
+        for(let j = 0; j < matrixA.length; j++){
             if (i>j){
                     if (matrixA[i][j] == 0){
                         continue;
