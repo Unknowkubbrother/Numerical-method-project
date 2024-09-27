@@ -54,7 +54,6 @@ function GaussJordan() {
   };
 
 const renderResult = () => {
-    console.log(Result);
     return (
         <div className="w-[70%] flex justify-center items-center flex-col">
             <div className="w-full">

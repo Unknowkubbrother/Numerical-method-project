@@ -38,8 +38,8 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
         statusCode: 400,
       };
 
-    for(let i = 0; i < matrixA.length; i++){
-        for(let j = 0; j < matrixA.length; j++){
+    for(let i = 0; i < matrixA[0].length; i++){
+        for(let j = 0; j < matrixA[0].length; j++){
             if (i>j){
                     if (matrixA[i][j] == 0){
                         continue;
@@ -65,8 +65,8 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
         }
     }
 
-    for(let i = matrixA.length - 1; i >= 0; i--){
-        for(let j =  matrixA.length - 1; j >= 0; j--){
+    for(let i = matrixA[0].length - 1; i >= 0; i--){
+        for(let j =  matrixA[0].length - 1; j >= 0; j--){
             if (i<j){
                     if (matrixA[i][j] == 0){
                         continue;
@@ -92,7 +92,7 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
         }
     }
 
-    for(let i = 0; i < matrixA.length; i++){
+    for(let i = 0; i < matrixA[0].length; i++){
         result.result[i] = arrB[i]  / matrixA[i][i];
         result.result[i] = round(result.result[i], 6);
         arrB[i] /= matrixA[i][i];

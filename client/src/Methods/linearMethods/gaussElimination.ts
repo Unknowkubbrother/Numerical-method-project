@@ -67,10 +67,10 @@ export function GaussEliminationMethod(
     }
   }
 
-  for (let i = matrixA.length - 1; i >= 0; i--) {
+  for (let i = matrixA[0].length - 1; i >= 0; i--) {
     let sum = 0;
     const sumIdx: number[] = [];
-    for (let j = matrixA.length - 1; j > i; j--) {
+    for (let j = matrixA[0].length - 1; j > i; j--) {
       sumIdx.push(j);
       sum += matrixA[i][j] * result.result[j];
     }

@@ -144,7 +144,7 @@ export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : Mat
 
     result.result.arrB = arrB;
     result.result.matrixAIn = round(matrixAIn,6);
-    result.result.x = round(multiply(matrixAIn, arrB));
+    result.result.x = multiply(matrixAIn, arrB);
     
     result.statusCode = 200;
 
