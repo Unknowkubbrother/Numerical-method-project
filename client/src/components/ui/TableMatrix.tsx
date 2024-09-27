@@ -51,7 +51,6 @@ function TableMatrix(props : {row : number, col : number, getValues: (matrixA:nu
     const createArrB = async(row: number)=>{
         await setTableArrB([]);
         await setArrB(new Array(Number(row)).fill(0));
-        console.log(arrB);
         if(row > 0 && row <= 10 && props.col > 0 && props.col <= 10){
             setTimeout(() => {
                 const tempArr = [];
@@ -114,10 +113,12 @@ function TableMatrix(props : {row : number, col : number, getValues: (matrixA:nu
             }else{
                 clearMatrix();
             }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.row, props.col]);
 
     useEffect(() => {
         props.getValues(matrixA,arrB);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [matrixA,arrB]);
 
   return (

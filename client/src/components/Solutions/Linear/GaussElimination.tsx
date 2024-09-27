@@ -80,14 +80,16 @@ function GaussElimination() {
           <BlockMath math='\color{#02fa61} Forward' />
          </div>
             <div className="flex flex-wrap justify-center items-center gap-10">
+              
                 {/* // default */}
                 {Result && (
                     <BlockMath math={GaussFormat(Result.default.matrixA, Result.default.arrB,
                         [{ row: Result.iterations[0].i, col: Result.iterations[0].j }])}
                     />
                 )}
+
+                {/* // forward */}
             {Result?.iterations.map((iteration, index) => (
-                // forward
                 <div key={index} className="font-semibold text-sm">
                     {iteration.type === "forward" && (
                     <div className="flex gap-5">
@@ -97,7 +99,6 @@ function GaussElimination() {
                             }/>
                         : <BlockMath math={`\\underrightarrow{
                             R_{${iteration.i+1}} = R_{${iteration.i+1}} - (\\frac{R_{${iteration.j+1}}}{${(iteration.matrixA ?? [])[iteration.j][iteration.j]}})  \\kern{3px} \\times  \\kern{3px}} (${Result?.default.matrixA[iteration.i][iteration.j]})`
-
                             }/>
                         }
 
@@ -120,6 +121,8 @@ function GaussElimination() {
                 )}
             </div>
             ))}
+
+            {/* // backsub */}
             <div className="w-full flex justify-center items-center flex-col">
                 <div className="w-full flex">
                   <BlockMath math='\color{#02fa61} Back \kern{3px} Subtiution' />
