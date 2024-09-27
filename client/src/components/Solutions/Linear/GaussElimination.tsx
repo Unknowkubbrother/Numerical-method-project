@@ -70,7 +70,7 @@ function GaussElimination() {
             <BlockMath math="( "/>
             {Result?.result.map((result,index) => {
                 return (
-                  <BlockMath key={index} math={`${round(result,6)}${index < Result.result.length - 1 ? ',' : ''}`}/>
+                  <BlockMath key={index} math={`\\small ${round(result,6)}${index < Result.result.length - 1 ? ',' : ''}`}/>
                 )
             })}
             <BlockMath math=")"/>
@@ -94,11 +94,11 @@ function GaussElimination() {
                     {iteration.type === "forward" && (
                     <div className="flex gap-5">
                         {index > 0 ? 
-                            <BlockMath math={`\\underrightarrow{
-                            R_{${iteration.i+1}} = R_{${iteration.i+1}} - (\\frac{R_{${iteration.j+1}}}{${(iteration.matrixA ?? [])[iteration.j][iteration.j]}})  \\kern{3px} \\times}  \\kern{3px} (${Result?.iterations[index - 1]?.matrixA?.[iteration.i]?.[iteration.j] ?? ''})`
+                            <BlockMath math={`\\Large \\xrightarrow{
+                            {R_{${iteration.i+1}} = R_{${iteration.i+1}} - (\\frac{R_{${iteration.j+1}}}{${(iteration.matrixA ?? [])[iteration.j][iteration.j]}})  \\kern{3px} \\times}  \\kern{3px} (${Result?.iterations[index - 1]?.matrixA?.[iteration.i]?.[iteration.j] ?? ''})}`
                             }/>
-                        : <BlockMath math={`\\underrightarrow{
-                            R_{${iteration.i+1}} = R_{${iteration.i+1}} - (\\frac{R_{${iteration.j+1}}}{${(iteration.matrixA ?? [])[iteration.j][iteration.j]}})  \\kern{3px} \\times  \\kern{3px}} (${Result?.default.matrixA[iteration.i][iteration.j]})`
+                        : <BlockMath math={`\\Large \\xrightarrow{
+                            {R_{${iteration.i+1}} = R_{${iteration.i+1}} - (\\frac{R_{${iteration.j+1}}}{${(iteration.matrixA ?? [])[iteration.j][iteration.j]}})  \\kern{3px} \\times  \\kern{3px}} (${Result?.default.matrixA[iteration.i][iteration.j]})}`
                             }/>
                         }
 
@@ -180,7 +180,7 @@ function GaussElimination() {
           className="w-full rounded-md h-content bg-background flex flex-col justify-start items-center p-10"
         >
             {Result ? renderResult() : 
-             <div className="font-semibold">Enter Matrix</div>
+             <div className="font-semibold flex-warp">Enter Matrix</div>
             }
         </div>
       </div>
