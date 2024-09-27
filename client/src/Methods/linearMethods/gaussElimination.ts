@@ -43,23 +43,26 @@ export function GaussEliminationMethod(
   for (let i = 0; i < matrixA.length; i++) {
     for (let j = 0; j < matrixA.length; j++) {
       if (i > j) {
-        let tempMatrixA = [...matrixA[j]];
-        let temparrB = arrB[j];
-        tempMatrixA = tempMatrixA.map((value) => {
-          return (value / matrixA[j][j]) * matrixA[i][j];
-        });
-        temparrB = (temparrB / matrixA[j][j]) * matrixA[i][j];
-        matrixA[i] = matrixA[i].map((value, index) => {
-          return value - tempMatrixA[index];
-        });
-        arrB[i] = arrB[i] - temparrB;
-        result.iterations.push({
-          type: "forward",
-          i: i,
-          j: j,
-          matrixA: matrixA.map((arr) => [...arr]),
-          arrB: [...arrB],
-        });
+          if (matrixA[i][j] == 0){
+            continue;
+        }
+          let tempMatrixA = [...matrixA[j]];
+          let temparrB = arrB[j];
+          tempMatrixA = tempMatrixA.map((value) => {
+            return (value / matrixA[j][j]) * matrixA[i][j];
+          });
+          temparrB = (temparrB / matrixA[j][j]) * matrixA[i][j];
+          matrixA[i] = matrixA[i].map((value, index) => {
+            return value - tempMatrixA[index];
+          });
+          arrB[i] = arrB[i] - temparrB;
+          result.iterations.push({
+            type: "forward",
+            i: i,
+            j: j,
+            matrixA: round(matrixA.map((arr) => [...arr]),6),
+            arrB: (round([...arrB],6)),
+          });
       }
     }
   }

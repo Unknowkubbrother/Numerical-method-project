@@ -14,16 +14,18 @@ export const DetFormat = (matrix: number[][]) => {
   return `\\begin{vmatrix} \\kern{5px} ${str} \\kern{5px} \\end{vmatrix}`;
 };
 
-export const GaussFormat = (matrix: number[][], arrB: number[], hightlight: {row: number,col: number}[]) => {
+export const GaussFormat = (matrix: number[][], arrB: number[], hightlight?: {row: number | undefined,col: number | undefined}[]) => {
   let strmatrixA = "";
   let strarrB = "";
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
       let isHightlight = false;
-        for (let k = 0; k < hightlight.length; k++){
-          if (hightlight[k].row === i && hightlight[k].col === j){
-            isHightlight = true;
-            break;
+        if (hightlight){
+          for (let k = 0; k < hightlight.length; k++){
+            if (hightlight[k].row === i && hightlight[k].col === j){
+              isHightlight = true;
+              break;
+            }
           }
         }
       if (isHightlight){

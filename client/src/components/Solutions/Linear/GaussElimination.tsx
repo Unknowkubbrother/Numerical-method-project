@@ -133,15 +133,15 @@ function GaussElimination() {
                       return (
                         <div key={index} className="font-semibold text-sm flex gap-3 justify-center items-center">
                           <BlockMath math={`
-                            x_{${iteration.i+1}} = \\frac{b_{${iteration.i+1}}
+                            x_{${iteration.i+1}} = \\frac{{b_{${iteration.i+1}}^${iteration.i}}
                             ${iteration.sumIdx !== undefined && iteration.sumIdx?.length > 0 ?
                               `- ${iteration.sumIdx?.map((value)=>{
-                                return `a_{${iteration.i+1}${value+1}} x_{${value}}`
+                                return `{a_{${iteration.i+1}${value+1}}^${iteration.i}} x_{${value}}`
                               }).join(' - ')}`
                               :
                               ''
                             }
-                            }{a_{${iteration.i+1}${iteration.i+1}}}
+                            }{{a_{${iteration.i+1}${iteration.i+1}}^${iteration.i}}}
                           `}/>
                           <BlockMath math={
                             `= \\kern{3px} \\small\\frac

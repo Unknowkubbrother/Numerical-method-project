@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import { round } from "mathjs";
 
 export interface GaussJordanRequest {
     matrixA: number[][], 
@@ -7,26 +7,42 @@ export interface GaussJordanRequest {
 
 export interface GaussJordanResponse {
     result: number[];
-    matrixAList: number[][][];
-    arrBList: number[][];
+    default: {
+        matrixA: number[][];
+        arrB: number[];
+      };
+    iterations: GaussIteraions[];
 	error?: string;
     statusCode: number;
 }
+
+interface GaussIteraions {
+    i?: number;
+    j?: number;
+    matrixA?: number[][];
+    arrB?: number[];
+  }
+  
   
 
 export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJordanResponse{
 
-    const result: GaussJordanResponse = { 
+    const result: GaussJordanResponse = {
+        default: {
+          matrixA: matrixA.map((arr) => [...arr]),
+          arrB: [...arrB],
+        },
         result: [],
-        matrixAList: [],
-        arrBList: [],
-        statusCode: 400
-    };
+        iterations: [],
+        statusCode: 400,
+      };
 
     for(let i = 0; i < matrixA.length; i++){
         for(let j = 0; j < matrixA.length; j++){
             if (i>j){
-                if (matrixA[j][i] != 0){
+                    if (matrixA[i][j] == 0){
+                        continue;
+                    }
                     let tempMatrixA = [...matrixA[j]];
                     let temparrB = arrB[j];
                     tempMatrixA = tempMatrixA.map((value) => {
@@ -37,9 +53,12 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
                         return value - tempMatrixA[index];
                     });
                     arrB[i] = arrB[i] - temparrB;
-                    result.matrixAList.push(matrixA.map((arr) => [...arr]));
-                    result.arrBList.push([...arrB]);
-                }
+                    result.iterations.push({
+                        i: i,
+                        j: j,
+                        matrixA: round(matrixA.map((arr) => [...arr]),6),
+                        arrB: (round([...arrB],6)),
+                    });
             }
         }
     }
@@ -47,7 +66,9 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
     for(let i = matrixA.length - 1; i >= 0; i--){
         for(let j =  matrixA.length - 1; j >= 0; j--){
             if (i<j){
-                if (matrixA[i][j] != 0){
+                    if (matrixA[i][j] == 0){
+                        continue;
+                    }
                     let tempMatrixA = [...matrixA[j]];
                     let temparrB = arrB[j];
                     tempMatrixA = tempMatrixA.map((value) => {
@@ -58,16 +79,28 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
                         return value - tempMatrixA[index];
                     });
                     arrB[i] = arrB[i] - temparrB;
-                    result.matrixAList.push(matrixA.map((arr) => [...arr]));
-                    result.arrBList.push([...arrB]);
-                }
+                    result.iterations.push({
+                        i: i,
+                        j: j,
+                        matrixA: round(matrixA.map((arr) => [...arr]),6),
+                        arrB: round([...arrB],6),
+                    });
             }
         }
     }
 
     for(let i = 0; i < matrixA.length; i++){
         result.result[i] = arrB[i]  / matrixA[i][i];
-        result.result[i] = math.round(result.result[i], 6);
+        result.result[i] = round(result.result[i], 6);
+        arrB[i] /= matrixA[i][i];
+        matrixA[i][i] /= matrixA[i][i];
+        result.iterations.push({
+            i: i,
+            j: i,
+            matrixA: round(matrixA.map((arr) => [...arr]),6),
+            arrB: (round([...arrB],6)),
+        });
+
     }
     
     result.statusCode = 200;
