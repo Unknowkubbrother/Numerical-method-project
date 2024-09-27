@@ -44,6 +44,10 @@ export const mainMenu = [
       {
         path: '/lobby/linear/gaussjordan',
         title: 'gaussjordan'
+      },
+      {
+        path: '/lobby/linear/matrixinverse',
+        title: 'matrixinverse'
       }
     ],
   },
