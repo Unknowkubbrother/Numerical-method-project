@@ -1,21 +1,21 @@
 // import {round} from 'mathjs';
 
-export interface JacobiRequest {
+export interface GaussSeiDelRequest {
     matrixA: number[][], 
     arrB: number[],
     initialX: number[],
     errorFactor: number
 }
 
-export interface JacobiResponse {
-    result: JacobiIterationData;
+export interface GaussSeiDelResponse {
+    result: GaussSeiDelIterationData;
     default: {
         matrixA: number[][];
         arrB: number[];
     };
     iter: number;
     backsub : Backsub[];
-	iterations: JacobiIterationData[];
+	iterations: GaussSeiDelIterationData[];
 	error?: string;
     statusCode: number;
 }
@@ -24,25 +24,21 @@ interface Backsub {
     sumstart: number;
     i: number;
     j: number;
-    sumIdx?: number[];
-  }
-
-interface Backsub {
-    sumstart: number;
-    i: number;
-    j: number;
-    sumIdx?: number[];
+    sumIdx?: {
+        x: number;
+        k?: number;
+    }[];
   }
   
-export interface JacobiIterationData {
+interface GaussSeiDelIterationData {
 	iter: number;
 	error: number[];
 	x: number[];
 }
 
-export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:number[], errorFactor: number) : JacobiResponse{
+export function GaussSeiDelMethod(matrixA: number[][], arrB: number[] , initialX:number[], errorFactor: number) : GaussSeiDelResponse{
 
-    const result: JacobiResponse = { 
+    const result: GaussSeiDelResponse = { 
         iter: 0,
         default: {
             matrixA: matrixA.map((arr) => [...arr]),
@@ -74,10 +70,14 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
 
     for(let i = 0; i < matrixA.length; i++){
         const sum = arrB[i];
-        const sumIdx : number[] = [];
+        const sumIdx : {x: number, k?:number}[] = [];
            for(let j = 0; j < matrixA.length; j++){
              if (i !== j && matrixA[i][j] !== 0) {
-                sumIdx.push(j);
+                if (i >= j) {
+                    sumIdx.push({x: j, k: 1});
+                }else{
+                    sumIdx.push({x: j});
+                }
              }
            }
         result.backsub.push({
@@ -98,9 +98,10 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
         arrXOld = arrX.map((x) => x);
         for(let i = 0; i < matrixA.length; i++){
            let sum = arrB[i];
+           const temp = arrX.map((x) => x);
               for(let j = 0; j < matrixA.length; j++){
                 if (i !== j) {
-                     sum -= matrixA[i][j] * arrXOld[j];
+                     sum -= matrixA[i][j] * temp[j];
                 }
               }
             arrX[i] = sum / matrixA[i][i];

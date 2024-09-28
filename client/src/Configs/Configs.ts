@@ -60,6 +60,10 @@ export const mainMenu = [
       {
         path: '/lobby/linear/jacobi',
         title: 'jacobi'
+      },
+      {
+        path: '/lobby/linear/gaussseidel',
+        title: 'gaussseidel'
       }
     ],
   },
