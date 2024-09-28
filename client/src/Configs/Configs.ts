@@ -48,6 +48,10 @@ export const mainMenu = [
       {
         path: '/lobby/linear/matrixinverse',
         title: 'matrixinverse'
+      },
+      {
+        path: '/lobby/linear/ludecomposition',
+        title: 'ludecomposition'
       }
     ],
   },

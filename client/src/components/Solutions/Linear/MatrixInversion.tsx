@@ -1,5 +1,4 @@
 import { useOutletContext } from "react-router-dom";
-// import { GaussJordanMethod,GaussJordanResponse } from "../../../Methods/linearMethods/gaussJordan";
 import { MatrixInversionMethod, MatrixInversionResponse} from "../../../Methods/linearMethods/matrixInversion";
 import { BlockMath } from "react-katex";
 import { MatrixInversionFormat, MatrixFormat,ArrayFormat } from "../../ui/MatrixFormat";

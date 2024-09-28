@@ -17,6 +17,7 @@ import Cramer from './components/Solutions/Linear/Cramer.tsx';
 import GaussElimination from './components/Solutions/Linear/GaussElimination.tsx';
 import GaussJordan from './components/Solutions/Linear/GaussJordan.tsx';
 import MatrixInversion from './components/Solutions/Linear/MatrixInversion.tsx';
+import Ludecomposition from './components/Solutions/Linear/Ludecomposition.tsx';
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
               {
                 path: 'matrixinverse',
                 element: <MatrixInversion />
+              },
+              {
+                path: 'ludecomposition',
+                element: <Ludecomposition />
               }
             ]
           }

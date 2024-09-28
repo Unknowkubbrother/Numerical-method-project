@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import {round} from 'mathjs';
 
 export interface LudecompositionRequest {
     matrixA: number[][], 
@@ -7,11 +7,34 @@ export interface LudecompositionRequest {
 
 export interface LudecompositionResponse {
     result: number[];
+    defaultMatrix: {
+        matrixA: number[][];
+        arrB: number[];
+    };
     matrixL: number[][];
+    iteration : LudecompositionIteraion[];
     matrixU: number[][];
     arrY : number[];
 	error?: string;
     statusCode: number;
+}
+
+interface LudecompositionIteraion {
+    type: "L" | "U";
+    row: number;
+    col: number;
+    sumstart: number;
+    subtractofproduct: {
+        type: "L" | "U";
+        i: number;
+        j: number;
+        value: number;
+    }[];
+    divide: {
+        i: number;
+        j: number;
+        value: number;
+    };
 }
   
 
@@ -19,7 +42,12 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
 
     const result: LudecompositionResponse = { 
         result: [],
+        defaultMatrix: {
+            matrixA: matrixA.map((arr) => [...arr]),
+            arrB: arrB.map((arr) => arr),
+        },
         matrixL: [],
+        iteration: [],
         matrixU: [],
         arrY: [],
         statusCode: 400
@@ -46,19 +74,60 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
     //LU = A
     for(let i=0; i < matrixA.length; i++){
         for(let j=0; j < matrixA.length; j++){
-            let sum = matrixA[i][j];
-            for(let k=0; k < matrixA.length; k++){
-                sum -= matrixL[i][k] * matrixU[k][j];
-            }
+                let sum = matrixA[i][j];
+                const sumstart = sum;
+                const subtractofproduct: {i: number, j: number, value: number , type: "L"| "U"}[] = [];
+                for(let k=0; k < i; k++){
+                    sum -= matrixL[i][k] * matrixU[k][j];
+                    if (j>0 ){
+                        subtractofproduct.push({
+                            type: "L",
+                            i: i,
+                            j: k,
+                            value: matrixL[i][k]
+                        });
+                        subtractofproduct.push({
+                            type: "U",
+                            i: k,
+                            j: j,
+                            value: matrixU[k][j]
+                        });
+                    }
+                }
 
-            if (i >= j){
-                matrixL[i][j] = sum / matrixU[i][i];
+                if (i >= j){
+                    matrixL[i][j] = sum / matrixU[i][i];
+                    result.iteration.push({
+                        type: "L",
+                        row: i,
+                        col: j,
+                        sumstart: sumstart,
+                        subtractofproduct: subtractofproduct,
+                        divide: {
+                            i: i,
+                            j: j,
+                            value: matrixU[i][i]
+                        },
+                     });
+                    
+                }
+                else{
+                    matrixU[i][j] = sum / matrixL[i][i];
+                    result.iteration.push({
+                        type: "U",
+                        row: i,
+                        col: j,
+                        sumstart: sumstart,
+                        subtractofproduct: subtractofproduct,
+                        divide: {
+                            i: i,
+                            j: j,
+                            value: matrixL[i][i]
+                        },
+                     });
             }
-            else{
-                matrixU[i][j] = sum / matrixL[i][i];
-            }
-        }
-    } 
+        } 
+    }
 
     result.matrixL = matrixL;
     result.matrixU = matrixU;
@@ -70,7 +139,7 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
         for(let j = 0; j < i; j++){
             sum += matrixL[i][j] * arrY[j];
         }
-        arrY[i] = math.round((arrB[i] - sum) / matrixL[i][i], 6);
+        arrY[i] = round((arrB[i] - sum) / matrixL[i][i], 6);
     }
 
     result.arrY = arrY;
@@ -83,7 +152,7 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
         for(let j = matrixU.length - 1; j > i; j--){
             sum += matrixU[i][j] * arrX[j];
         }
-        arrX[i] = math.round((arrY[i] - sum) / matrixU[i][i], 6);
+        arrX[i] = round((arrY[i] - sum) / matrixU[i][i], 6);
     }
 
     result.result = arrX;
@@ -91,7 +160,6 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
     result.statusCode = 200;
 
     return result;
-
 
 
 }
