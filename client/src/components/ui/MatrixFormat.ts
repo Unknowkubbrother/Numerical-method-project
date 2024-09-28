@@ -130,4 +130,32 @@ export const MatrixFormat = (matrix:number[][]) => {
   }
   return `\\begin{bmatrix} \\kern{5px} ${str} \\kern{5px} \\end{bmatrix}`;
 
+
 }
+export const TextMatrixFormat = (matrix:number[][] , text : string) => {
+  let str = "";
+  for(let i = 0; i < matrix.length; i++){
+    for(let j = 0; j < matrix[i].length; j++){
+      str += `{{${text}_{${i+1}${j+1}}}} `;
+      if(j !== matrix[i].length - 1){
+        str += "& ";
+      }
+    }
+    if(i !== matrix.length - 1){
+      str += "\\\\\\\\ ";
+    }
+  }
+  return `\\begin{bmatrix} \\kern{5px} ${str} \\kern{5px} \\end{bmatrix}`;
+
+}
+
+export const TextArrayFormat = (arr: number[], text: string) => {
+  let str = "";
+  for (let i = 0; i < arr.length; i++) {
+    str += `{{${text}_{${i+1}}}}`;
+    if (i !== arr.length - 1) {
+      str += "\\\\";
+    }
+  }
+  return `\\begin{Bmatrix} ${str} \\end{Bmatrix}`;
+};

@@ -30,11 +30,7 @@ interface LudecompositionIteraion {
         j: number;
         value: number;
     }[];
-    divide: {
-        i: number;
-        j: number;
-        value: number;
-    };
+    divide: number
 }
   
 
@@ -84,13 +80,13 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
                             type: "L",
                             i: i,
                             j: k,
-                            value: matrixL[i][k]
+                            value: round(matrixL[i][k], 6)
                         });
                         subtractofproduct.push({
                             type: "U",
                             i: k,
                             j: j,
-                            value: matrixU[k][j]
+                            value: round(matrixU[k][j], 6)
                         });
                     }
                 }
@@ -103,11 +99,7 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
                         col: j,
                         sumstart: sumstart,
                         subtractofproduct: subtractofproduct,
-                        divide: {
-                            i: i,
-                            j: j,
-                            value: matrixU[i][i]
-                        },
+                        divide: round(matrixU[i][i])
                      });
                     
                 }
@@ -119,18 +111,14 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
                         col: j,
                         sumstart: sumstart,
                         subtractofproduct: subtractofproduct,
-                        divide: {
-                            i: i,
-                            j: j,
-                            value: matrixL[i][i]
-                        },
+                        divide: round(matrixL[i][i])
                      });
             }
         } 
     }
 
-    result.matrixL = matrixL;
-    result.matrixU = matrixU;
+    result.matrixL = round(matrixL, 6);
+    result.matrixU = round(matrixU, 6);
 
     //LY = B
     const arrY:number[] = new Array(arrB.length);
