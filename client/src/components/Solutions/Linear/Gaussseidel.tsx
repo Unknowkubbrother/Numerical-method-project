@@ -73,6 +73,7 @@ function Gaussseidel() {
       .then((result: unknown) => {
         const GaussSeiDelResponse = result as GaussSeiDelResponse;
         if (GaussSeiDelResponse.statusCode === 200) {
+          console.log(GaussSeiDelResponse);
           setResult(GaussSeiDelResponse);
           Swal.fire({
             title: "Success!",
@@ -137,10 +138,10 @@ const renderResult = () => {
                                 {x^{k+1}_{${idx+1}}} =
                                 \\frac{${item.sumstart}
                                  ${item.sumIdx?.map((item) => {
-                                    return `- (${round(Result.default.matrixA[idx][item.x], 6)} \\times x^{k${item.k ? `+${item.k}` : ``}}_{${item.x+1}}) `
+                                    return `- (${(Result.default.matrixA[idx][item.x])} \\times x^{k${item.k ? `+${item.k}` : ``}}_{${item.x+1}}) `
                                  }).join('')}
                                 }{
-                                 ${round(Result.default.matrixA[idx][idx], 6)}
+                                 ${(Result.default.matrixA[idx][idx])}
                                 }
                                 
                                 

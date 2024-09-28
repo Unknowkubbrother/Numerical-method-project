@@ -65,96 +65,102 @@ export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : Mat
         statusCode: 400,
       };
 
-      if (matrixA[0].length > matrixA.length) {
-        result.error = "More variables than equations";
+      try{
+        if (matrixA[0].length > matrixA.length) {
+            result.error = "More variables than equations";
+            return result;
+          }
+        
+    
+        for(let i = 0; i < matrixA.length; i++){
+            for(let j = 0; j < matrixA.length; j++){
+                if (i>j){
+                        if (matrixA[i][j] == 0){
+                            continue;
+                        }
+                        let tempMatrixA = [...matrixA[j]];
+                        let tempMatrixAIn = [...matrixAIn[j]];
+                        tempMatrixA = tempMatrixA.map((value) => {
+                            return (value / matrixA[j][j]) * matrixA[i][j];
+                        });
+                        tempMatrixAIn = tempMatrixAIn.map((value) => {
+                            return (value / matrixA[j][j]) * matrixA[i][j];
+                        });
+                        matrixA[i] = matrixA[i].map((value, index) => {
+                            return value - tempMatrixA[index];
+                        });
+                        matrixAIn[i] = matrixAIn[i].map((value, index) => {
+                            return value - tempMatrixAIn[index];
+                        });
+                        result.iterations.push({
+                            type: "forward",
+                            i: i,
+                            j: j,
+                            matrixA: round(matrixA.map((arr) => [...arr]),6),
+                            matrixAIn: round(matrixAIn.map((arr) => [...arr]),6),
+                        });
+                }
+            }
+        }
+    
+        for(let i = matrixA[0].length - 1; i >= 0; i--){
+            for(let j =  matrixA[0].length - 1; j >= 0; j--){
+                if (i<j){
+                        if (matrixA[i][j] == 0){
+                            continue;
+                        }
+                        let tempMatrixA = [...matrixA[j]];
+                        let tempMatrixAIn = [...matrixAIn[j]];
+                        tempMatrixA = tempMatrixA.map((value) => {
+                            return (value / matrixA[j][j]) * matrixA[i][j];
+                        });
+                        tempMatrixAIn = tempMatrixAIn.map((value) => {
+                            return (value / matrixA[j][j]) * matrixA[i][j];
+                        });
+                        matrixA[i] = matrixA[i].map((value, index) => {
+                            return value - tempMatrixA[index];
+                        });
+                        matrixAIn[i] = matrixAIn[i].map((value, index) => {
+                            return value - tempMatrixAIn[index];
+                        });
+                        result.iterations.push({
+                            type: "forward",
+                            i: i,
+                            j: j,
+                            matrixA: round(matrixA.map((arr) => [...arr]),6),
+                            matrixAIn: round(matrixAIn.map((arr) => [...arr]),6),
+                        });
+                }
+            }
+        }
+    
+        for(let i = 0; i < matrixA[0].length; i++){
+            matrixAIn[i] = matrixAIn[i].map((value) => {
+                return value / matrixA[i][i];
+            });
+            matrixA[i][i] /= matrixA[i][i];
+            result.iterations.push({
+                type: "backsub",
+                i: i,
+                j: i,
+                matrixA: round(matrixA.map((arr) => [...arr]),6),
+                matrixAIn: round(matrixAIn.map((arr) => [...arr]),6),
+            });
+        }
+    
+    
+        result.result.arrB = arrB;
+        result.result.matrixAIn = round(matrixAIn,6);
+        result.result.x = multiply(matrixAIn, arrB).slice(0, matrixA[0].length);
+        
+        result.statusCode = 200;
+    
+        return result;
+      }catch(e){
+        result.error = "failed to solve matrix";
+        result.statusCode = 400;
         return result;
       }
-    
-
-    for(let i = 0; i < matrixA.length; i++){
-        for(let j = 0; j < matrixA.length; j++){
-            if (i>j){
-                    if (matrixA[i][j] == 0){
-                        continue;
-                    }
-                    let tempMatrixA = [...matrixA[j]];
-                    let tempMatrixAIn = [...matrixAIn[j]];
-                    tempMatrixA = tempMatrixA.map((value) => {
-                        return (value / matrixA[j][j]) * matrixA[i][j];
-                    });
-                    tempMatrixAIn = tempMatrixAIn.map((value) => {
-                        return (value / matrixA[j][j]) * matrixA[i][j];
-                    });
-                    matrixA[i] = matrixA[i].map((value, index) => {
-                        return value - tempMatrixA[index];
-                    });
-                    matrixAIn[i] = matrixAIn[i].map((value, index) => {
-                        return value - tempMatrixAIn[index];
-                    });
-                    result.iterations.push({
-                        type: "forward",
-                        i: i,
-                        j: j,
-                        matrixA: round(matrixA.map((arr) => [...arr]),6),
-                        matrixAIn: round(matrixAIn.map((arr) => [...arr]),6),
-                    });
-            }
-        }
-    }
-
-    for(let i = matrixA[0].length - 1; i >= 0; i--){
-        for(let j =  matrixA[0].length - 1; j >= 0; j--){
-            if (i<j){
-                    if (matrixA[i][j] == 0){
-                        continue;
-                    }
-                    let tempMatrixA = [...matrixA[j]];
-                    let tempMatrixAIn = [...matrixAIn[j]];
-                    tempMatrixA = tempMatrixA.map((value) => {
-                        return (value / matrixA[j][j]) * matrixA[i][j];
-                    });
-                    tempMatrixAIn = tempMatrixAIn.map((value) => {
-                        return (value / matrixA[j][j]) * matrixA[i][j];
-                    });
-                    matrixA[i] = matrixA[i].map((value, index) => {
-                        return value - tempMatrixA[index];
-                    });
-                    matrixAIn[i] = matrixAIn[i].map((value, index) => {
-                        return value - tempMatrixAIn[index];
-                    });
-                    result.iterations.push({
-                        type: "forward",
-                        i: i,
-                        j: j,
-                        matrixA: round(matrixA.map((arr) => [...arr]),6),
-                        matrixAIn: round(matrixAIn.map((arr) => [...arr]),6),
-                    });
-            }
-        }
-    }
-
-    for(let i = 0; i < matrixA[0].length; i++){
-        matrixAIn[i] = matrixAIn[i].map((value) => {
-            return value / matrixA[i][i];
-        });
-        matrixA[i][i] /= matrixA[i][i];
-        result.iterations.push({
-            type: "backsub",
-            i: i,
-            j: i,
-            matrixA: round(matrixA.map((arr) => [...arr]),6),
-            matrixAIn: round(matrixAIn.map((arr) => [...arr]),6),
-        });
-    }
-
-
-    result.result.arrB = arrB;
-    result.result.matrixAIn = round(matrixAIn,6);
-    result.result.x = multiply(matrixAIn, arrB).slice(0, matrixA[0].length);
-    
-    result.statusCode = 200;
-
-    return result;
 
 
 

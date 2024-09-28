@@ -130,24 +130,25 @@ const renderResult = () => {
             }
             <div className="w-full bg-background mb-10 m-auto rounded-lg text-center p-3">
                 <h1 className="font-semibold pt-3">Solution</h1>
-                {Result?.backsub.map((item, idx) => {
+                
+                {
+                (Result && Result?.backsub) && (
+                Result?.backsub.map((item, idx) => {
                     return (
                         <div key={idx}>
                             <BlockMath math={`
                                 {x^{k+1}_{${idx+1}}} =
                                 \\frac{${item.sumstart}
                                  ${item.sumIdx?.map((i) => {
-                                    return `- (${round(Result.default.matrixA[idx][i], 6)} \\times x^{k}_{${i+1}}) `
+                                    return `- (${(Result.default.matrixA[idx][i])} \\times x^{k}_{${i+1}}) `
                                  }).join('')}
                                 }{
-                                 ${round(Result.default.matrixA[idx][idx], 6)}
+                                 ${(Result.default.matrixA[idx][idx])}
                                 }
-                                
-                                
                                 `}/>
                         </div>
                     )
-                })}
+                }))}
             </div>
             <div className="w-full rounded-md overflow-hidden">
             <div className="overflow-x-auto">
