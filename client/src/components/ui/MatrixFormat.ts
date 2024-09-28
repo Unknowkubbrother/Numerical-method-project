@@ -132,6 +132,50 @@ export const MatrixFormat = (matrix:number[][]) => {
 
 
 }
+export const LMatrixFormat = (matrix:number[][]) => {
+  let str = "";
+  for(let i = 0; i < matrix.length; i++){
+    for(let j = 0; j < matrix[i].length; j++){
+      if (i>= j){
+        str += `{{L_{${i+1}${j+1}}}} `;
+      }else{
+        str += `0`;
+      }
+      if(j !== matrix[i].length - 1){
+        str += "& ";
+      }
+    }
+    if(i !== matrix.length - 1){
+      str += "\\\\\\\\ ";
+    }
+  }
+  return `\\begin{bmatrix} \\kern{5px} ${str} \\kern{5px} \\end{bmatrix}`;
+
+}
+
+export const UMatrixFormat = (matrix:number[][]) => {
+  let str = "";
+  for(let i = 0; i < matrix.length; i++){
+    for(let j = 0; j < matrix[i].length; j++){
+      if (i == j){
+        str += `1`;
+      }else if (i < j){
+        str += `{{U_{${i+1}${j+1}}}} `;
+      }else{
+        str += `0`;
+      }
+      if(j !== matrix[i].length - 1){
+        str += "& ";
+      }
+    }
+    if(i !== matrix.length - 1){
+      str += "\\\\\\\\ ";
+    }
+  }
+  return `\\begin{bmatrix} \\kern{5px} ${str} \\kern{5px} \\end{bmatrix}`;
+
+}
+
 export const TextMatrixFormat = (matrix:number[][] , text : string) => {
   let str = "";
   for(let i = 0; i < matrix.length; i++){

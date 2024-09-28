@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import { LudecompositionMethod, LudecompositionResponse} from "../../../Methods/linearMethods/Ludecomposition";
-import { MatrixFormat,ArrayFormat,TextArrayFormat } from "../../ui/MatrixFormat";
+import { MatrixFormat,ArrayFormat,TextArrayFormat,LMatrixFormat,UMatrixFormat } from "../../ui/MatrixFormat";
 import { useState,useContext } from "react";
 import { round } from "mathjs";
 import Swal from "sweetalert2";
@@ -109,14 +109,26 @@ const renderResult = () => {
                 </div>
                 {
                     (Result?.matrixL && Result?.matrixU) && (
-                        <div className="m-auto flex gap-5 justify-center items-center">
-                            <div className="flex flex-col">
-                                <BlockMath math="\begin{bmatrix}{L}\end{bmatrix}"/>
-                                <BlockMath math={`${MatrixFormat(Result?.matrixL)}`}/>
+                        <div className="w-full flex flex-col justify-center items-center">
+                            <div className="m-auto flex gap-5 justify-center items-center">
+                                <div className="flex flex-col">
+                                    <BlockMath math="\begin{bmatrix}{L}\end{bmatrix}"/>
+                                    <BlockMath math={`${LMatrixFormat(Result?.matrixL)}`}/>
+                                </div>
+                                <div className="flex flex-col">
+                                    <BlockMath math="\begin{bmatrix}{U}\end{bmatrix}"/>
+                                    <BlockMath math={`${UMatrixFormat( Result?.matrixU)}`}/>
+                                </div>
                             </div>
-                             <div className="flex flex-col">
-                                <BlockMath math="\begin{bmatrix}{U}\end{bmatrix}"/>
-                                <BlockMath math={`${MatrixFormat( Result?.matrixU)}`}/>
+                            <div className="m-auto flex gap-5 justify-center items-center mt-10">
+                                <div className="flex flex-col">
+                                    <BlockMath math="\begin{bmatrix}{L}\end{bmatrix}"/>
+                                    <BlockMath math={`${MatrixFormat(Result?.matrixL)}`}/>
+                                </div>
+                                <div className="flex flex-col">
+                                    <BlockMath math="\begin{bmatrix}{U}\end{bmatrix}"/>
+                                    <BlockMath math={`${MatrixFormat( Result?.matrixU)}`}/>
+                                </div>
                             </div>
                         </div>
 
@@ -124,7 +136,7 @@ const renderResult = () => {
                 }
 
                 {/* // [L]{Y}={B} */}
-                <div className="text-lg flex justify-center items-center gap-5">
+                <div className="text-lg flex justify-center items-center gap-5 mt-5">
                     <span>From</span>
                     <BlockMath math="\begin{bmatrix}{L}\end{bmatrix}\begin{Bmatrix}{Y}\end{Bmatrix} = \begin{Bmatrix}{B}\end{Bmatrix}"/>
                 </div>
@@ -159,7 +171,7 @@ const renderResult = () => {
                 }
 
                 {/* // [U]{X}={Y} */}
-                <div className="text-lg flex justify-center items-center gap-5">
+                <div className="text-lg flex justify-center items-center gap-5 mt-5">
                     <span>From</span>
                     <BlockMath math="\begin{bmatrix}{U}\end{bmatrix}\begin{Bmatrix}{X}\end{Bmatrix} = \begin{Bmatrix}{Y}\end{Bmatrix}"/>
                 </div>
