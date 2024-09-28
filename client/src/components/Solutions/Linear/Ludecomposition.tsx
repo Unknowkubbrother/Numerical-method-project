@@ -56,7 +56,7 @@ function Ludecomposition() {
 
 const renderResult = () => {
     return (
-        <div className="w-[85%] flex justify-center items-center flex-col">
+        <div className="w-[95%] flex justify-center items-center flex-col">
             <div className="w-full">
                 <BlockMath math='\color{#05acfa}\underline{Result}' />
                 <div className="flex gap-3 justify-center items-center">
