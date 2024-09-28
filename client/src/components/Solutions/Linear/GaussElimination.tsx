@@ -129,7 +129,7 @@ function GaussElimination() {
                 </div>
                 {Result?.iterations.map((iteration, index) => {
                     const lastForward = Result?.iterations.filter((value) => value.type === "forward").pop();
-                    if (iteration.type === "backsub" && lastForward ?.matrixA && lastForward?.arrB) {
+                    if (iteration.type === "backsub" && lastForward ?.matrixA != undefined && lastForward?.arrB != undefined) {
                       return (
                         <div key={index} className="font-semibold text-sm flex gap-3 justify-center items-center">
                           <BlockMath math={`

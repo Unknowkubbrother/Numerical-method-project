@@ -65,6 +65,12 @@ export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : Mat
         statusCode: 400,
       };
 
+      if (matrixA[0].length > matrixA.length) {
+        result.error = "More variables than equations";
+        return result;
+      }
+    
+
     for(let i = 0; i < matrixA.length; i++){
         for(let j = 0; j < matrixA.length; j++){
             if (i>j){

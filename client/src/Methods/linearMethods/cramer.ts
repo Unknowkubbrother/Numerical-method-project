@@ -17,6 +17,7 @@ export interface CramerResponse {
   
 
 export function CramerMethod (matrixA: number[][], arrB: number[]) : CramerResponse{
+    
     const result: CramerResponse = { 
         defaultMatrixA: matrixA,
         result: [],

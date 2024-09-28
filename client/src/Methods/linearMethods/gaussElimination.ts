@@ -26,10 +26,7 @@ interface GaussIteraions {
   sumIdx?: number[];
 }
 
-export function GaussEliminationMethod(
-  matrixA: number[][],
-  arrB: number[]
-): GaussEliminationResponse {
+export function GaussEliminationMethod(matrixA: number[][], arrB: number[]): GaussEliminationResponse {
   const result: GaussEliminationResponse = {
     default: {
       matrixA: matrixA.map((arr) => [...arr]),
@@ -40,12 +37,18 @@ export function GaussEliminationMethod(
     statusCode: 400,
   };
 
+  if (matrixA[0].length > matrixA.length) {
+    result.error = "More variables than equations";
+    return result;
+  }
+
+
   for (let i = 0; i < matrixA.length; i++) {
     for (let j = 0; j < matrixA.length; j++) {
       if (i > j) {
-          if (matrixA[i][j] == 0){
-            continue;
-        }
+        //   if (matrixA[i][j] == 0){
+        //     continue;
+        // }
           let tempMatrixA = [...matrixA[j]];
           let temparrB = arrB[j];
           tempMatrixA = tempMatrixA.map((value) => {
