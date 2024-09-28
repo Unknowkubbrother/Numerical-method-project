@@ -57,10 +57,10 @@ function Choleskydecomposition() {
 const renderResult = () => {
     return (
 
-        <div className="w-[95%] flex justify-center items-center flex-col">
+        <div className="w-[95%] flex justify-center items-center flex-col ">
             <div className="w-full">
                 <BlockMath math='\color{#05acfa}\underline{Result}' />
-                <div className="flex gap-3 justify-center items-center">
+                <div className="flex gap-3 justify-center items-center flex-wrap">
                     <BlockMath math={`\\therefore`} />
                     <BlockMath math="(" />
                     {Result?.result.map((_, index) => {
@@ -109,8 +109,8 @@ const renderResult = () => {
                 </div>
                 {
                     (Result?.matrixL && Result?.matrixLT) && (
-                        <div className="w-full flex flex-col justify-center items-center">
-                            <div className="m-auto flex gap-5 justify-center items-center">
+                        <div className="w-full flex flex-col justify-center items-center flex-wrap">
+                            <div className="m-auto flex gap-5 justify-center items-center flex-wrap">
                                 <div className="flex flex-col">
                                     <BlockMath math="\begin{bmatrix}{L}\end{bmatrix}"/>
                                     <BlockMath math={`${LMatrixFormat(Result?.matrixL)}`}/>
@@ -120,7 +120,7 @@ const renderResult = () => {
                                     <BlockMath math={`${LTMatrixFormat( Result?.matrixLT)}`}/>
                                 </div>
                             </div>
-                            <div className="m-auto flex gap-5 justify-center items-center mt-10">
+                            <div className="m-auto flex gap-5 justify-center items-center mt-10 flex-wrap">
                                 <div className="flex flex-col">
                                     <BlockMath math="\begin{bmatrix}{L}\end{bmatrix}"/>
                                     <BlockMath math={`${MatrixFormat(Result?.matrixL)}`}/>
@@ -143,7 +143,7 @@ const renderResult = () => {
                 {
                     (Result?.matrixL && Result?.arrY && Result?.defaultMatrix.arrB) && (
                     <div className="w-full flex justify-center items-center flex-col">
-                         <div className="m-auto flex gap-5 justify-center items-center">
+                         <div className="m-auto flex gap-5 justify-center items-center flex-wrap">
                             <div className="flex flex-col">
                                 <BlockMath math="\begin{bmatrix}{L}\end{bmatrix}"/>
                                 <BlockMath math={`${MatrixFormat(Result?.matrixL)}\\kern{10px} \\times` }/>
@@ -159,7 +159,7 @@ const renderResult = () => {
                                 <BlockMath math={`${ArrayFormat( Result?.defaultMatrix.arrB)}`}/>
                             </div>
                         </div>
-                        <div className="m-auto flex gap-5 justify-center items-center mt-5">
+                        <div className="m-auto flex gap-5 justify-center items-center mt-5 flex-wrap">
                                 <div className="flex justify-center items-start">
                                     <BlockMath math={`${TextArrayFormat( Result?.arrY,"Y")} \\kern{10px} = \\kern{10px}`}/>
                                     <BlockMath math={`${ArrayFormat( Result?.arrY)}`}/>
@@ -177,8 +177,8 @@ const renderResult = () => {
                 </div>
                 {
                     (Result?.matrixLT && Result?.arrY && Result?.result) && (
-                    <div className="w-full flex justify-center items-center flex-col">
-                         <div className="m-auto flex gap-5 justify-center items-center">
+                    <div className="w-full flex justify-center items-center flex-col flex-wrap">
+                         <div className="m-auto flex gap-5 justify-center items-center flex-wrap">
                             <div className="flex flex-col">
                                 <BlockMath math="\begin{bmatrix}{L^{T}}\end{bmatrix}"/>
                                 <BlockMath math={`${MatrixFormat(Result?.matrixLT)}\\kern{10px} \\times` }/>
@@ -194,7 +194,7 @@ const renderResult = () => {
                                 <BlockMath math={`${ArrayFormat( Result?.arrY)}`}/>
                             </div>
                         </div>
-                        <div className="m-auto flex gap-5 justify-center items-center mt-5">
+                        <div className="m-auto flex gap-5 justify-center items-center mt-5 flex-wrap">
                                 <div className="flex justify-center items-start">
                                     <BlockMath math={`${TextArrayFormat( Result?.result,"X")} \\kern{10px} = \\kern{10px}`}/>
                                     <BlockMath math={`${ArrayFormat( Result?.result)}`}/>
