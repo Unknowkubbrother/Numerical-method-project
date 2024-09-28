@@ -85,6 +85,7 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
     const arrX = Array(initialX.length).fill(0);
     let arrXOld = Array(matrixA.length).fill(0);
     let iterations = 0;
+    const MAX_ITERATIONS = 1000;
     do{
         iterations++;
         arrXOld = arrX.map((x) => x);
@@ -105,7 +106,7 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
             x: arrX.map((x) => x)
         });
         
-    }while(checkError(arrX, arrXOld));
+    }while(checkError(arrX, arrXOld) && MAX_ITERATIONS > iterations);
 
     result.iter = iterations;
 

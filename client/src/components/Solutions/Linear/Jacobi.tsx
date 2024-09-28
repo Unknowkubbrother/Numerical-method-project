@@ -73,7 +73,6 @@ function Jacobi() {
       .then((result: unknown) => {
         const JacobiResponse = result as JacobiResponse;
         if (JacobiResponse.statusCode === 200) {
-            console.log(JacobiResponse);
           setResult(JacobiResponse);
           Swal.fire({
             title: "Success!",
@@ -157,7 +156,7 @@ const renderResult = () => {
                 <thead className="bg-[#152836] border-b-2 border-sky-500 text-center">
                 <tr>
                     <th>iteration</th>
-                    <th>X</th>
+                    <th>Xi</th>
                     <th>Error</th>
                 </tr>
                 </thead>
