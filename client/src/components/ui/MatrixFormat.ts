@@ -153,6 +153,27 @@ export const LMatrixFormat = (matrix:number[][]) => {
 
 }
 
+export const LTMatrixFormat = (matrix:number[][]) => {
+  let str = "";
+  for(let i = 0; i < matrix.length; i++){
+    for(let j = 0; j < matrix[i].length; j++){
+      if (j>= i){
+        str += `{{L_{${j+1}${i+1}}}} `;
+      }else{
+        str += `0`;
+      }
+      if(j !== matrix[i].length - 1){
+        str += "& ";
+      }
+    }
+    if(i !== matrix.length - 1){
+      str += "\\\\\\\\ ";
+    }
+  }
+  return `\\begin{bmatrix} \\kern{5px} ${str} \\kern{5px} \\end{bmatrix}`;
+
+}
+
 export const UMatrixFormat = (matrix:number[][]) => {
   let str = "";
   for(let i = 0; i < matrix.length; i++){

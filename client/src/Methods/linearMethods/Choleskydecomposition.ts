@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import {round} from 'mathjs';
 
 export interface CholeskydecompositionRequest {
     matrixA: number[][], 
@@ -7,19 +7,44 @@ export interface CholeskydecompositionRequest {
 
 export interface CholeskydecompositionResponse {
     result: number[];
+    defaultMatrix: {
+        matrixA: number[][];
+        arrB: number[];
+    };
     matrixL: number[][];
+    iteration : CholeskydecompositionIteraion[];
     matrixLT: number[][];
     arrY : number[];
 	error?: string;
     statusCode: number;
 }
+
+interface CholeskydecompositionIteraion {
+    type: "L";
+    row: number;
+    col: number;
+    sumstart: number;
+    subtractofproduct: {
+        type: "L";
+        i: number;
+        j: number;
+        value: number;
+    }[];
+    divide?: number
+}
+  
   
 
 export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[]) : CholeskydecompositionResponse{
 
     const result: CholeskydecompositionResponse = { 
         result: [],
+        defaultMatrix: {
+            matrixA: matrixA.map((arr) => [...arr]),
+            arrB: arrB.map((arr) => arr),
+        },
         matrixL: [],
+        iteration: [],
         matrixLT: [],
         arrY: [],
         statusCode: 400
@@ -56,22 +81,51 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
     for(let i=0; i < matrixA.length; i++){
         for(let j = 0; j <= i; j++){
             let sum = matrixA[i][j];
+            const sumstart = sum;
+            const subtractofproduct: {i: number, j: number, value: number , type: "L"}[] = [];
             for(let k=0; k < j; k++){
                 sum -= matrixL[i][k] * matrixLT[k][j];
+                subtractofproduct.push({
+                    type: "L",
+                    i: i,
+                    j: k,
+                    value: round(matrixL[i][k], 6)
+                });
+                subtractofproduct.push({
+                    type: "L",
+                    i: i,
+                    j: k,
+                    value: round(matrixLT[k][j],6),
+                });
             }
             if (i == j){
                 matrixL[i][j] = Math.sqrt(sum);
                 matrixLT[j][i] = matrixL[i][j];
+                result.iteration.push({
+                    type: "L",
+                    row: i,
+                    col: j,
+                    sumstart: sumstart,
+                    subtractofproduct: subtractofproduct,
+                });
             }
             else{
                 matrixL[i][j] = sum / matrixL[j][j];
                 matrixLT[j][i] = matrixL[i][j];
+                result.iteration.push({
+                    type: "L",
+                    row: i,
+                    col: j,
+                    sumstart: sumstart,
+                    subtractofproduct: subtractofproduct,
+                    divide: round(matrixL[j][j], 6)
+                });
             }
         }
     }
 
-    result.matrixL = matrixL;
-    result.matrixLT = matrixLT;
+    result.matrixL = round(matrixL,6);
+    result.matrixLT = round(matrixLT,6);
 
     //LY = B
     const arrY:number[] = new Array(arrB.length);
@@ -80,7 +134,7 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
         for(let j = 0; j < i; j++){
             sum += matrixL[i][j] * arrY[j];
         }
-        arrY[i] = math.round((arrB[i] - sum) / matrixL[i][i], 6);
+        arrY[i] = round((arrB[i] - sum) / matrixL[i][i], 6);
     }
 
     result.arrY = arrY;
@@ -93,7 +147,7 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
         for(let j = matrixLT.length - 1; j > i; j--){
             sum += matrixLT[i][j] * arrX[j];
         }
-        arrX[i] = math.round((arrY[i] - sum) / matrixLT[i][i], 6);
+        arrX[i] = round((arrY[i] - sum) / matrixLT[i][i], 6);
     }
 
     result.result = arrX;

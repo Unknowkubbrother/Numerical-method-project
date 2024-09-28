@@ -18,6 +18,7 @@ import GaussElimination from './components/Solutions/Linear/GaussElimination.tsx
 import GaussJordan from './components/Solutions/Linear/GaussJordan.tsx';
 import MatrixInversion from './components/Solutions/Linear/MatrixInversion.tsx';
 import Ludecomposition from './components/Solutions/Linear/Ludecomposition.tsx';
+import Choleskydecomposition from './components/Solutions/Linear/Choleskydecomposition.tsx';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
               {
                 path: 'ludecomposition',
                 element: <Ludecomposition />
+              },
+              {
+                path: 'choleskydecomposition',
+                element: <Choleskydecomposition />
               }
             ]
           }

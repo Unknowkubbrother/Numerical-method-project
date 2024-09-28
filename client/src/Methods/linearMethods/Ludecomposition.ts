@@ -73,22 +73,20 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
                 let sum = matrixA[i][j];
                 const sumstart = sum;
                 const subtractofproduct: {i: number, j: number, value: number , type: "L"| "U"}[] = [];
-                for(let k=0; k < i; k++){
+                for(let k=0; k < j; k++){
                     sum -= matrixL[i][k] * matrixU[k][j];
-                    if (j>0 ){
-                        subtractofproduct.push({
+                    subtractofproduct.push({
                             type: "L",
                             i: i,
                             j: k,
                             value: round(matrixL[i][k], 6)
-                        });
-                        subtractofproduct.push({
+                    });
+                    subtractofproduct.push({
                             type: "U",
                             i: k,
                             j: j,
                             value: round(matrixU[k][j], 6)
-                        });
-                    }
+                    });
                 }
 
                 if (i >= j){

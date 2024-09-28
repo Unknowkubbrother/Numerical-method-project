@@ -52,6 +52,10 @@ export const mainMenu = [
       {
         path: '/lobby/linear/ludecomposition',
         title: 'ludecomposition'
+      },
+      {
+        path: '/lobby/linear/choleskydecomposition',
+        title: 'choleskydecomposition'
       }
     ],
   },
