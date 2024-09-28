@@ -56,6 +56,10 @@ export const mainMenu = [
       {
         path: '/lobby/linear/choleskydecomposition',
         title: 'choleskydecomposition'
+      },
+      {
+        path: '/lobby/linear/jacobi',
+        title: 'jacobi'
       }
     ],
   },

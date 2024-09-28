@@ -19,6 +19,7 @@ import GaussJordan from './components/Solutions/Linear/GaussJordan.tsx';
 import MatrixInversion from './components/Solutions/Linear/MatrixInversion.tsx';
 import Ludecomposition from './components/Solutions/Linear/Ludecomposition.tsx';
 import Choleskydecomposition from './components/Solutions/Linear/Choleskydecomposition.tsx';
+import Jacobi from './components/Solutions/Linear/Jacobi.tsx';
 
 const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
               {
                 path: 'choleskydecomposition',
                 element: <Choleskydecomposition />
+              },
+              {
+                path: 'jacobi',
+                element: <Jacobi />
               }
             ]
           }

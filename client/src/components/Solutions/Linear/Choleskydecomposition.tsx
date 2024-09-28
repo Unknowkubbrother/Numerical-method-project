@@ -25,7 +25,6 @@ function Choleskydecomposition() {
       .then((result: unknown) => {
         const CholeskydecompositionResponse = result as CholeskydecompositionResponse;
         if (CholeskydecompositionResponse.statusCode === 200) {
-            console.log(CholeskydecompositionResponse);
           setResult(CholeskydecompositionResponse);
           Swal.fire({
             title: "Success!",

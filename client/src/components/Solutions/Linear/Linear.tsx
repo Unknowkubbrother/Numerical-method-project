@@ -44,6 +44,8 @@ function Linear() {
   const ref = useRef<ref>(null);
 
   const clearMatrix = async () => {
+    await setCountCol(0);
+    await setCountRow(0);
     await setCountRow(3);
     await setCountCol(3);
     await ref.current?.clearMatrix();
@@ -98,7 +100,7 @@ function Linear() {
         </div>
       </div>
       <div className="min-[340px]:w-[90%] lg:w-full m-auto">
-        <Outlet context={[Data]}/>
+        <Outlet context={[Data,countCol,countRow]}/>
       </div>
     </div>
   );

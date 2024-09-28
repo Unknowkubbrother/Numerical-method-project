@@ -8,26 +8,14 @@ export interface JacobiRequest {
 }
 
 export interface JacobiResponse {
-    result: JacobiIterationData;
-    default: {
-        matrixA: number[][];
-        arrB: number[];
-    };
+    result: JacobiIterationData[];
     iter: number;
-    backsub : Backsub[];
 	iterations: JacobiIterationData[];
 	error?: string;
     statusCode: number;
 }
 
-interface Backsub {
-    sumstart: number;
-    i: number;
-    j: number;
-    sumIdx?: number[];
-  }
-  
-export interface JacobiIterationData {
+interface JacobiIterationData {
 	iter: number;
 	error: number[];
 	x: number[];
@@ -37,16 +25,7 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
 
     const result: JacobiResponse = { 
         iter: 0,
-        default: {
-            matrixA: matrixA.map((arr) => [...arr]),
-            arrB: [...arrB],
-        },
-        result: {
-            iter: 0,
-            error: [],
-            x: []
-        },
-        backsub: [],
+        result: [],
         iterations: [],
         statusCode: 400
     };
@@ -64,22 +43,6 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
         }
         return false;
     };
-
-    for(let i = 0; i < matrixA.length; i++){
-        const sum = arrB[i];
-        const sumIdx : number[] = [];
-           for(let j = 0; j < matrixA.length; j++){
-             if (i !== j && matrixA[i][j] !== 0) {
-                sumIdx.push(j);
-             }
-           }
-        result.backsub.push({
-            sumstart: sum,
-            i: i,
-            j: i,
-            sumIdx: sumIdx
-        });
-     }
 
 
     const arrX = Array(initialX.length).fill(0);
@@ -109,11 +72,7 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
 
     result.iter = iterations;
 
-    result.result = {
-        iter: iterations,
-        error: Array(matrixA.length).fill(0).map((_,index) => calculateError(arrX[index], arrXOld[index])),
-        x: arrX.map((x) => x)
-    };
+    result.result = result.iterations.filter((iteration) => iteration.iter === iterations);
 
     result.statusCode = 200;
 
