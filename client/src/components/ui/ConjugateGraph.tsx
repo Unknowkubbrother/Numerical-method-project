@@ -41,8 +41,8 @@ function ConjugateGraph(props : {data : Props, type : string}) {
     simulateConjugateGradient();
   }, [props.data.matrixA, props.data.arrB]);
 
-  const xValues = [...Array(100).keys()].map((i) => -3 + i * 0.06);
-  const yValues = [...Array(100).keys()].map((i) => -3 + i * 0.06);
+  const xValues = [...Array(200).keys()].map((i) => -10 + i * 0.1);
+  const yValues = [...Array(200).keys()].map((i) => -10 + i * 0.1);
   const zValues = xValues.map((x) => yValues.map((y) => calculateFx(x, y, props.data.matrixA, props.data.arrB)));
 
   const checkType = (): Partial<Plotly.Data>[] => {
@@ -84,9 +84,9 @@ function ConjugateGraph(props : {data : Props, type : string}) {
         layout={{
           title: 'Conjugate Gradient Optimization Path',
           scene: {
-            xaxis: { title: 'X Axis' },
+            xaxis: { title: 'X Axis' } ,
             yaxis: { title: 'Y Axis' },
-            zaxis: { title: 'Z Axis (f(x, y))' },
+            zaxis: { title: 'Z Axis (f(x, y))'},
           },
           dragmode: props.type == '3D' ? 'orbit' : 'pan',
           margin: { t: 0, r: 0 },

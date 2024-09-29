@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { MyFunctionContext } from "../../../App";
 import { BlockMath } from "react-katex";
 import ConjugateGraph from "../../ui/ConjugateGraph";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 
 function Conjugate() {
   const { setloadingSecond } = useContext(MyFunctionContext);
@@ -138,7 +138,7 @@ function Conjugate() {
               </button>
             </li>
           </ul>
-          <div className="w-[85%] h-[700px] flex justify-center items-center m-auto">
+          <div className="w-[95%] h-[700px] flex justify-center items-center m-auto">
               <ConjugateGraph data={Data} type={typeseleted} />
           </div>
         </div>
@@ -150,7 +150,8 @@ function Conjugate() {
   useEffect(() => {
     const graphContainer = document.getElementById("graphcontour");
     if (graphContainer) {
-      ReactDOM.render(renderGraph(), graphContainer);
+      const graph = createRoot(graphContainer);
+      graph.render(renderGraph());
     }
   },[Result,typeseleted]); 
 
