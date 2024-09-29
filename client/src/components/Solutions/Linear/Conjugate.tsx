@@ -1,12 +1,13 @@
 import { useOutletContext } from "react-router-dom";
-import { ConjugateMethods,ConjugateResponse} from "../../../Methods/linearMethods/conjugate";
-// import { ArrayFormat } from "../../ui/MatrixFormat";
+import { ConjugateMethods,ConjugateResponse , ConjugateIterationData} from "../../../Methods/linearMethods/conjugate";
+import { ArrayFormat } from "../../ui/MatrixFormat";
 import { useState,useContext, useEffect } from "react";
-// import { round } from "mathjs";
+import { round } from "mathjs";
 import Swal from "sweetalert2";
 import { MyFunctionContext } from "../../../App";
-// import { BlockMath } from "react-katex";
-// import ConjugateGraph from "../../ui/ConjugateGraph";
+import { BlockMath } from "react-katex";
+import ConjugateGraph from "../../ui/ConjugateGraph";
+import ReactDOM from "react-dom";
 
 function Conjugate() {
   const { setloadingSecond } = useContext(MyFunctionContext);
@@ -19,6 +20,7 @@ function Conjugate() {
   const [errorFactor, setErrorFactor] = useState<number>(0.000001);
   const [tempA , setTempA] = useState<number[][]>([]);
   const [tempB , setTempB] = useState<number[]>([]);
+  const [typeseleted, settypeseleted] = useState<string>("2D");
 
     const createElemetArrXi = async(col : number)=>{
         await setTableArrXi([]);
@@ -76,7 +78,6 @@ function Conjugate() {
       .then((result: unknown) => {
         const ConjugateResponse = result as ConjugateResponse;
         if (ConjugateResponse.statusCode === 200) {
-          console.log(ConjugateResponse);
           setResult(ConjugateResponse);
           Swal.fire({
             title: "Success!",
@@ -105,12 +106,122 @@ function Conjugate() {
       });
   };
 
+  const handleSetType = (type: string) => {
+    settypeseleted(type);
+  };
+
+  const renderGraph = () => {
+    if (Data.matrixA.length === 2 && Data.matrixA[0].length === 2) {
+      return (
+        <div className="w-full mb-10">
+          <ul className="bg-base-100 w-[170px] menu menu-horizontal rounded-md flex m-auto justify-center items-center mb-2 mt-[-50px]">
+            <li>
+              <button
+                className={`rounded-lg ${typeseleted === '2D' ? 'bg-sky-500' : ''}`}
+                onClick={() => handleSetType('2D')}
+              >
+                <span>
+                  2D
+                  <i className="fa-solid fa-chart-simple ml-2"></i>
+                </span>
+              </button>
+            </li>
+            <li className="flex">
+              <button
+                className={`rounded-lg ${typeseleted === '3D' ? 'bg-sky-500' : ''}`}
+                onClick={() => handleSetType('3D')}
+              >
+                <span>
+                  3D
+                  <i className="fa-solid fa-chart-simple ml-2"></i>
+                </span>
+              </button>
+            </li>
+          </ul>
+          <div className="w-[85%] h-[700px] flex justify-center items-center m-auto">
+              <ConjugateGraph data={Data} type={typeseleted} />
+          </div>
+        </div>
+      );
+    }
+    return <div></div>;
+  };
+
+  useEffect(() => {
+    const graphContainer = document.getElementById("graphcontour");
+    if (graphContainer) {
+      ReactDOM.render(renderGraph(), graphContainer);
+    }
+  },[Result,typeseleted]); 
+
+
 const renderResult = () => {
     return (
         <div className="w-full flex flex-col justify-center items-center">
-           <div className="w-[85%] h-[600px] flex justify-center items-center">
-                {/* <ConjugateGraph data={Data}/> */}
+           <div id="graphcontour" className="w-[90%]"></div>
+           <div className="w-full flex flex-col">
+           {Result && 
+            <div className="w-full bg-background mb-10 m-auto rounded-xl text-center p-3">
+                <h1 className="font-semibold pt-3">Result</h1>
+                <div className="w-full flex gap-5 justify-center items-center m-2 flex-wrap">
+                <div className="flex gap-3 justify-center items-center">
+                    <BlockMath math={`\\therefore`} />
+                    <BlockMath math="(" />
+                    {
+                      (Result.result.x.valueOf() as number[]).map((_, index) => {
+                        return (
+                            <BlockMath key={index} math={`x_{${index + 1}}${index < (Result.result.x.valueOf() as number[]).length - 1 ? ',' : ''}`} />
+                        );
+                      })
+                    }
+                    <BlockMath math=") \kern{5px} = " />
+                    <BlockMath math="( " />
+                    {
+                      (Result.result.x.valueOf() as number[]).map((result, index) => {
+                        return (
+                            <BlockMath key={index} math={`\\small ${round(result, 6)}${index < (Result.result.x.valueOf() as number[]).length - 1 ? ',' : ''}`} />
+                        );
+                      })
+                    }
+                    <BlockMath math=")" />
+                </div>
+                </div>
+            </div>
+            }
+
+        <div className="w-full rounded-md overflow-hidden">
+            <div className="overflow-x-auto">
+            <table className="table table-zebra caption-bottom text-center">
+                {/* head */}
+                <thead className="bg-[#152836] border-b-2 border-sky-500 text-center">
+                <tr>
+                    <th>iteration</th>
+                    <th><BlockMath math="\lambda_{k-1}"/></th>
+                    <th><BlockMath math="X_{k}"/></th>
+                    <th><BlockMath math="R_{k}"/></th>
+                    <th><BlockMath math="error_{k}"/></th>
+                </tr>
+                </thead>
+                <tbody className="text-center">
+                    {Result?.iterations.map((iteration : ConjugateIterationData, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{iteration.iter}</td>
+                            <td>{iteration.lamda.toString()}</td>
+                            <td><BlockMath math={(ArrayFormat(round(iteration.x.valueOf() as number[],6)))}/></td>
+                            <td><BlockMath math={(ArrayFormat(round(iteration.r.valueOf() as number[],6)))}/></td>
+                            <td><BlockMath math={`${iteration.error}`}/></td>
+                        </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            </div>
+        </div><div className="w-full"></div>
+
+
            </div>
+
         </div>
     );
 };

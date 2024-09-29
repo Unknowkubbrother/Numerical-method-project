@@ -17,7 +17,7 @@ export interface ConjugateResponse {
     statusCode: number;
 }
 
-interface ConjugateIterationData {
+export interface ConjugateIterationData {
 	iter: number;
     lamda: number | MathType;
     x: number[] | MathArray | Matrix;
@@ -152,7 +152,7 @@ export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: 
         return result;
     }catch(e){
         console.log(e);
-        result.error = "failed to solve matrix";
+        result.statusCode = 200;
         return result;
     }
 }

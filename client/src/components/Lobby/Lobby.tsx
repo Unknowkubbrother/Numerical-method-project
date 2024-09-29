@@ -61,7 +61,7 @@ function Lobby() {
             )}
           </div>
 
-          <div className="min-[340px]:w-full lg:w-[95%] 2xl:w-[70%] m-auto">
+          <div className={`min-[340px]:w-full lg:w-[95%] m-auto ${location.pathname.split("/")[2] == 'root' ? `2xl:w-[70%]` : `2xl:w-[90%]`}`}>
             <Outlet />
           </div>
         </div>
