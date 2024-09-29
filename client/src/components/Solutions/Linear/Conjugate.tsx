@@ -16,8 +16,6 @@ function Conjugate() {
   const [TableArrXi, setTableArrXi] = useState<JSX.Element[]>([]);
   const [xi, setXi] = useState<number[]>([]);
   const [errorFactor, setErrorFactor] = useState<number>(0.000001);
-  const [tempA, setTempA] = useState<number[][]>([]);
-  const [tempB, setTempB] = useState<number[]>([]);
   const [typeseleted, settypeseleted] = useState<string>("2D");
   const graphRootRef = useRef<Root | null>(null);
 
@@ -58,6 +56,7 @@ function Conjugate() {
     if (countCol > 0 && countRow > 0) {
       createElemetArrXi(countCol);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countCol, countRow]);
 
   const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,8 +66,8 @@ function Conjugate() {
 
   const sendRequest = async () => {
     setloadingSecond(true);
-    setTempA(Data.matrixA.map((row) => row.map((col) => col)));
-    setTempB(Data.arrB.map((col) => col));
+    const tempA = Data.matrixA.map((row) => row.map((col) => col));
+    const tempB = Data.arrB.map((col) => col);
     new Promise((resolve) => {
       setTimeout(() => {
         resolve(ConjugateMethods(tempA, tempB, xi, errorFactor));
@@ -154,6 +153,7 @@ function Conjugate() {
       }
       graphRootRef.current.render(renderGraph());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Result, typeseleted]);
 
   const renderResult = () => {

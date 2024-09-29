@@ -28,6 +28,13 @@ export interface ConjugateIterationData {
 }
 
 export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: number[], errorFactor: number): ConjugateResponse {
+
+    console.log({
+        matrixA,
+        arrB,
+        initialX,
+        errorFactor
+    })
     const result: ConjugateResponse = { 
         iter: 0,
         result: {
