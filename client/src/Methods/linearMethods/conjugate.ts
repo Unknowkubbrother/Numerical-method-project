@@ -103,8 +103,8 @@ export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: 
             const matrixA = matrix(A);
             const matrixB = matrix(B);
             const matrixX = matrix(X);
-            const out = add(multiply(matrixA, matrixX), multiply(matrixB, -1));
-            return matrix(out);
+            const out : Matrix = add(multiply(matrixA, matrixX), multiply(matrixB, -1) as Matrix) as Matrix;
+            return matrix(out) as Matrix;
         };
     
         let arrX : Matrix | number[] = initialX;
