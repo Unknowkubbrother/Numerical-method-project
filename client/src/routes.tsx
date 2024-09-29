@@ -21,6 +21,7 @@ import Ludecomposition from './components/Solutions/Linear/Ludecomposition.tsx';
 import Choleskydecomposition from './components/Solutions/Linear/Choleskydecomposition.tsx';
 import Jacobi from './components/Solutions/Linear/Jacobi.tsx';
 import Gaussseidel from './components/Solutions/Linear/Gaussseidel.tsx';
+import Conjugate from './components/Solutions/Linear/Conjugate.tsx';
 
 const router = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
               {
                 path: 'gaussseidel',
                 element: <Gaussseidel />
+              },
+              {
+                path: 'conjugate',
+                element: <Conjugate />
               }
             ]
           }

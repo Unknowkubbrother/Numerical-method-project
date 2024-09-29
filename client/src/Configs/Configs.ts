@@ -64,6 +64,10 @@ export const mainMenu = [
       {
         path: '/lobby/linear/gaussseidel',
         title: 'gaussseidel'
+      },
+      {
+        path: '/lobby/linear/conjugate',
+        title: 'conjugate'
       }
     ],
   },
