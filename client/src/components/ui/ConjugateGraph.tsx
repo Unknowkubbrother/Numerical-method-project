@@ -1,16 +1,17 @@
 // App.js
 import { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
+import { ConjugateResponse } from '../../Methods/linearMethods/conjugate';
+import { Matrix,matrix } from 'mathjs';
 
 interface Props {
   matrixA: number[][];
   arrB: number[];
 }
 
-function ConjugateGraph(props : {data : Props, type : string}) {
-  const [steps, setSteps] = useState<{x:number, y:number, z:number}[]>([]);
-  
-  const calculateFx = (x: number, y: number, matrixA: number[][], arrB: number[]) => {
+function ConjugateGraph(props : {data : Props, type : string , result : ConjugateResponse | null}) {
+    const [steps, setSteps] = useState<{ x: number; y: number; z: number }[]>([]);
+    const calculateFx = (x: number, y: number, matrixA: number[][], arrB: number[]) => {
     const a = matrixA[0][0];
     const b = matrixA[0][1];
     const c = matrixA[1][0];
@@ -25,47 +26,56 @@ function ConjugateGraph(props : {data : Props, type : string}) {
   };
 
   useEffect(() => {
-    const simulateConjugateGradient = () => {
-      let x = 2;
-      let y = 2;
-      const stepData = [];
-      for (let i = 0; i < 10; i++) {
-        const fx = calculateFx(x, y, props.data.matrixA, props.data.arrB);
-        stepData.push({ x, y, z: fx });
-        x -= 0.2 * x;
-        y -= 0.1 * y;
-      }
-      setSteps(stepData);
-    };
-    
-    simulateConjugateGradient();
-  }, [props.data.matrixA, props.data.arrB]);
+    if (props.result) {
+      setSteps(
+        props.result?.iterations?.map((item) => {
+          return {
+            x: Number(matrix(item.x).toArray()[0]),
+            y:  Number(matrix(item.x).toArray()[1]),
+            z: calculateFx(Number(matrix(item.x).toArray()[0]), Number(matrix(item.x).toArray()[1]), props.data.matrixA, props.data.arrB),
+          };
+        })
+      );
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.result]);
 
   const xValues = [...Array(100).keys()].map((i) => -10 + i * 0.2);
   const yValues = [...Array(100).keys()].map((i) => -10 + i * 0.2);
   const zValues = xValues.map((x) => yValues.map((y) => calculateFx(x, y, props.data.matrixA, props.data.arrB)));
 
   const checkType = (): Partial<Plotly.Data>[] => {
-    if (props.type == '3D') {
-      return [{
-       x: steps.map((s) => s.x),
-        y: steps.map((s) => s.y),
-        z: steps.map((s) => s.z),
-        mode: 'lines+markers',
-        type: 'scatter3d',
-        marker: {
+      return [
+        {
+          x: steps.map((s) => s.x),
+          y: steps.map((s) => s.y),
+          z: steps.map((s) => s.z),
+          mode: 'lines+markers',
+          type: props.type == '2D' ? 'scatter' : 'scatter3d',
+          marker: {
           color: 'red',
           size: 5,
-        },
-        line: {
+            },
+            line: {
           color: 'red',
-          width:  2,
+          width: 2,
+          },
+          name: `Iterations`,
         },
-        name: 'Conjugate Gradient Steps',
-      }];
-    } else {
-      return [];
-    }
+        {
+          x: [Number(matrix(props.result?.result?.x as Matrix).toArray()[0])],
+          y: [Number(matrix(props.result?.result?.x as Matrix).toArray()[1])],
+          z: [calculateFx(Number(matrix(props.result?.result?.x as Matrix).toArray()[0]), Number(matrix(props.result?.result?.x as Matrix).toArray()[1]), props.data.matrixA, props.data.arrB)],
+          mode: 'markers',
+          type: props.type == '2D' ? 'scatter' : 'scatter3d',
+          marker: {
+        color: '#ffffff',
+        size: 10,
+          },
+          name: 'Final Result',
+        }
+      ];
   }
 
   return (

@@ -79,7 +79,7 @@ function GaussElimination() {
          <div className="w-full flex">
           <BlockMath math='\color{#02fa61} Forward' />
          </div>
-            <div className="flex flex-wrap justify-center items-center gap-10">
+            <div className="w-full flex flex-wrap justify-center items-center gap-10">
               
                 {/* // default */}
                 {Result && (
@@ -123,10 +123,10 @@ function GaussElimination() {
             ))}
 
             {/* // backsub */}
-            <div className="w-full flex justify-center items-center flex-col">
-                <div className="w-full flex">
+            <div className="w-full flex">
                   <BlockMath math='\color{#02fa61} Back \kern{3px} Subtiution' />
-                </div>
+            </div>
+            <div className="w-full flex justify-center items-center flex-col">
                 {Result?.iterations.map((iteration, index) => {
                     const lastForward = Result?.iterations.filter((value) => value.type === "forward").pop() || Result?.default;
                     if (iteration.type === "backsub" && lastForward ?.matrixA != undefined && lastForward?.arrB != undefined) {

@@ -108,7 +108,7 @@ function Conjugate() {
     settypeseleted(type);
   };
 
-  const renderGraph = () => {
+  const renderGraph = (result : ConjugateResponse | null) => {
     if (Data.matrixA.length === 2 && Data.matrixA[0].length === 2) {
       return (
         <div className="w-full mb-10">
@@ -136,8 +136,8 @@ function Conjugate() {
               </button>
             </li>
           </ul>
-          <div className="w-[95%] h-[700px] flex justify-center items-center m-auto">
-            <ConjugateGraph data={Data} type={typeseleted} />
+          <div className="w-full h-[700px] flex justify-center items-center m-auto">
+            <ConjugateGraph data={Data} type={typeseleted} result={result}/>
           </div>
         </div>
       );
@@ -151,7 +151,7 @@ function Conjugate() {
       if (!graphRootRef.current) {
         graphRootRef.current = createRoot(graphContainer);
       }
-      graphRootRef.current.render(renderGraph());
+      graphRootRef.current.render(renderGraph(Result));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Result, typeseleted]);
