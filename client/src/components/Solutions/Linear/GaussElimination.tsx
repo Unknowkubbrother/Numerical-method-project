@@ -136,7 +136,7 @@ function GaussElimination() {
                           x_{${iteration.i+1}} = \\frac{b_{${iteration.i+1}}^${iteration.i}
                           ${iteration.sumIdx !== undefined && iteration.sumIdx?.length > 0 ?
                             `- ${iteration.sumIdx?.map((value)=>{
-                            return `a_{${iteration.i+1}${value+1}}^${iteration.i} x_{${value}}`
+                            return `a_{${iteration.i+1}${value+1}}^${iteration.i} x_{${value+1}}`
                             }).join(' - ')}`
                             :
                             ''
