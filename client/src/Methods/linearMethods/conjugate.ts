@@ -152,7 +152,8 @@ export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: 
         return result;
     }catch(e){
         console.log(e);
-        result.statusCode = 200;
+        result.statusCode = 400;
+        result.error = "failed to solve matrix";
         return result;
     }
 }

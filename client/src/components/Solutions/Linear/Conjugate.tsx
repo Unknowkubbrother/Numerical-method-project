@@ -218,7 +218,7 @@ function Conjugate() {
                 </tbody>
               </table>
             </div>
-          </div><div className="w-full"></div>
+          </div>
 
 
         </div>
