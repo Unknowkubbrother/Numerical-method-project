@@ -92,11 +92,10 @@ function ConjugateGraph(props : {data : Props, type : string , result : Conjugat
           ...checkType(),
         ]}
         layout={{
-          title: 'Conjugate Gradient Optimization Path',
           scene: {
             xaxis: { title: 'X Axis' } ,
             yaxis: { title: 'Y Axis' },
-            zaxis: { title: 'Z Axis (f(x, y))'},
+            zaxis: { title: 'Z Axis'},
           },
           dragmode: props.type == '3D' ? 'orbit' : 'pan',
           margin: { t: 0, r: 0 },
