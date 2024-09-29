@@ -73,7 +73,6 @@ function Gaussseidel() {
       .then((result: unknown) => {
         const GaussSeiDelResponse = result as GaussSeiDelResponse;
         if (GaussSeiDelResponse.statusCode === 200) {
-          console.log(GaussSeiDelResponse);
           setResult(GaussSeiDelResponse);
           Swal.fire({
             title: "Success!",

@@ -1,22 +1,24 @@
 import { useOutletContext } from "react-router-dom";
-import { GaussSeiDelMethod,GaussSeiDelResponse} from "../../../Methods/linearMethods/gaussseidel";
-import { ArrayFormat } from "../../ui/MatrixFormat";
+import { ConjugateMethods,ConjugateResponse} from "../../../Methods/linearMethods/conjugate";
+// import { ArrayFormat } from "../../ui/MatrixFormat";
 import { useState,useContext, useEffect } from "react";
-import { round } from "mathjs";
+// import { round } from "mathjs";
 import Swal from "sweetalert2";
 import { MyFunctionContext } from "../../../App";
-import { BlockMath } from "react-katex";
-import ConjugateGraph from "../../ui/ConjugateGraph";
+// import { BlockMath } from "react-katex";
+// import ConjugateGraph from "../../ui/ConjugateGraph";
 
 function Conjugate() {
   const { setloadingSecond } = useContext(MyFunctionContext);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [Data,countCol,countRow] = useOutletContext<[{ matrixA: number[][]; arrB: number[]},number,number]>();
-  const [Result, setResult] = useState<GaussSeiDelResponse | null>(null);
+  const [Result, setResult] = useState<ConjugateResponse | null>(null);
   const [TableArrXi, setTableArrXi] = useState<JSX.Element[]>([]);
   const [xi, setXi] = useState<number[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [errorFactor, setErrorFactor] = useState<number>(0.000001);
+  const [tempA , setTempA] = useState<number[][]>([]);
+  const [tempB , setTempB] = useState<number[]>([]);
 
     const createElemetArrXi = async(col : number)=>{
         await setTableArrXi([]);
@@ -64,18 +66,18 @@ function Conjugate() {
 
   const sendRequest = async () => {
     setloadingSecond(true);
-    const tempA = Data.matrixA.map((row) => row.map((col) => col));
-    const tempB = Data.arrB.map((col) => col);
+    setTempA(Data.matrixA.map((row) => row.map((col) => col)));
+    setTempB(Data.arrB.map((col) => col));
     new Promise((resolve) => {
       setTimeout(() => {
-            resolve(GaussSeiDelMethod(tempA, tempB, xi,errorFactor));
+            resolve(ConjugateMethods(tempA, tempB, xi,errorFactor));
       }, 1000);
     })
       .then((result: unknown) => {
-        const GaussSeiDelResponse = result as GaussSeiDelResponse;
-        if (GaussSeiDelResponse.statusCode === 200) {
-          console.log(GaussSeiDelResponse);
-          setResult(GaussSeiDelResponse);
+        const ConjugateResponse = result as ConjugateResponse;
+        if (ConjugateResponse.statusCode === 200) {
+          console.log(ConjugateResponse);
+          setResult(ConjugateResponse);
           Swal.fire({
             title: "Success!",
             text: "Your have been success.",
@@ -85,10 +87,10 @@ function Conjugate() {
           setResult(null);
           Swal.fire({
             title: "Error!",
-            text: GaussSeiDelResponse.error,
+            text: ConjugateResponse.error,
             icon: "error",
           });
-          console.error("Error loading data:", GaussSeiDelResponse.error);
+          console.error("Error loading data:", ConjugateResponse.error);
         }
         setloadingSecond(false);
       })
@@ -107,7 +109,7 @@ const renderResult = () => {
     return (
         <div className="w-full flex flex-col justify-center items-center">
            <div className="w-[85%] h-[600px] flex justify-center items-center">
-                <ConjugateGraph/>
+                {/* <ConjugateGraph data={Data}/> */}
            </div>
         </div>
     );

@@ -2,26 +2,27 @@
 import { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 
-// Matrix A for quadratic function: f(x, y) = [x y] A [x y]^T
-const A = [
-  [6, 0],   // Coefficients for x^2 and xy
-  [0, -4],  // Coefficients for y^2 and xy
-];
+interface Props {
+  matrixA: number[][];
+  arrB: number[];
+}
 
-// Function to calculate f(x, y) using matrix multiplication
-const calculateF = (x: number, y: number, A: number[][]) => {
-  const vector = [x, y];
-  let result = 0;
-  for (let i = 0; i < A.length; i++) {
-    for (let j = 0; j < A[i].length; j++) {
-      result += vector[i] * A[i][j] * vector[j];
-    }
-  }
-  return result;
-};
-
-function ConjugateGraph() {
+function ConjugateGraph(props : {data : Props}) {
   const [steps, setSteps] = useState<{x:number, y:number, z:number}[]>([]);
+  
+  const calculateFx = (x: number, y: number, matrixA: number[][], arrB: number[]) => {
+    const a = matrixA[0][0];
+    const b = matrixA[0][1];
+    const c = matrixA[1][0];
+    const d = matrixA[1][1];
+
+    const e = arrB[0];
+    const f = arrB[1];
+
+    const result = 0.5 * (x * (a * x + y * c) + y * (x * b + y * d)) - e * x - f * y;
+
+    return result;
+  };
 
   useEffect(() => {
     // Simulate conjugate gradient steps
@@ -30,7 +31,8 @@ function ConjugateGraph() {
       let y = 2; // Starting point y
       const stepData = [];
       for (let i = 0; i < 10; i++) {
-        const fx = calculateF(x, y, A);
+        const fx = calculateFx(x, y, props.data.matrixA, props.data.arrB);
+        console.log(`Step ${i + 1}: x=${x}, y=${y}, f(x, y)=${fx}`);
         stepData.push({ x, y, z: fx });
         // Update points (simplified conjugate gradient direction)
         x -= 0.2 * x;
@@ -40,12 +42,12 @@ function ConjugateGraph() {
     };
     
     simulateConjugateGradient();
-  }, []);
+  }, [props.data.matrixA, props.data.arrB]);
 
   // Create surface data for 3D plot
   const xValues = [...Array(100).keys()].map((i) => -3 + i * 0.06);
   const yValues = [...Array(100).keys()].map((i) => -3 + i * 0.06);
-  const zValues = xValues.map((x) => yValues.map((y) => calculateF(x, y, A)));
+  const zValues = xValues.map((x) => yValues.map((y) => calculateFx(x, y, props.data.matrixA, props.data.arrB)));
 
   return (
     <div className='w-full h-full rounded-lg overflow-hidden'>
