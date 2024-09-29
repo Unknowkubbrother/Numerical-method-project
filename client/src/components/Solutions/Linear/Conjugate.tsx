@@ -112,7 +112,7 @@ function Conjugate() {
     if (Data.matrixA.length === 2 && Data.matrixA[0].length === 2) {
       return (
         <div className="w-full mb-10">
-          <ul className="bg-base-100 w-[170px] menu menu-horizontal rounded-md flex m-auto justify-center items-center mb-2 mt-[-50px]">
+          <ul className="bg-base-100 w-[170px] menu menu-horizontal rounded-md flex gap-2 m-auto justify-center items-center mb-2 mt-[-50px]">
             <li>
               <button
                 className={`rounded-lg ${typeseleted === '2D' ? 'bg-sky-500' : ''}`}

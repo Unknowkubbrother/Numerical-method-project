@@ -48,7 +48,7 @@ function ConjugateGraph(props : {data : Props, type : string}) {
   const checkType = (): Partial<Plotly.Data>[] => {
     if (props.type == '3D') {
       return [{
-        x: steps.map((s) => s.x),
+       x: steps.map((s) => s.x),
         y: steps.map((s) => s.y),
         z: steps.map((s) => s.z),
         mode: 'lines+markers',
@@ -59,7 +59,7 @@ function ConjugateGraph(props : {data : Props, type : string}) {
         },
         line: {
           color: 'red',
-          width: 2,
+          width:  2,
         },
         name: 'Conjugate Gradient Steps',
       }];
@@ -77,7 +77,7 @@ function ConjugateGraph(props : {data : Props, type : string}) {
             x: xValues,
             y: yValues,
             type: props.type == '2D' ? 'contour' : 'surface',
-            colorscale: 'Viridis',
+            colorscale: 'Jet',
           },
           ...checkType(),
         ]}
