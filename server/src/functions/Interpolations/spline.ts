@@ -51,50 +51,50 @@ export function SplineMethods( x:number, points: {x:number, y:number}[], type : 
 
     if (type == "linear") {
 
-        // const fx = ( xValue: number) => {
-        //     for(let i=1 ; i < points.length ; i++){
-        //         if (xValue >= points[i-1].x && xValue <= points[i].x) {
-        //             return i-1;
-        //         }
-        //     }
-        // }
-
-        // for(let i = 1 ; i < points.length; i++){
-        //     const fx = points[i-1].y
-        //     const m = (points[i].y - points[i-1].y) / (points[i].x - points[i-1].x);
-        //     const offset  = points[i-1].x;
-
-        //     result.iterations.push({
-        //         fx: fx,
-        //         m: m,
-        //         offset: offset,
-        //         slope: {
-        //             xi: points[i-1].x,
-        //             xi1: points[i].x
-        //         }
-        //     });
-        // }
-
-        // const resultindexAt = fx(x);
-
-        // result.result.iteration = result.iterations[resultindexAt];
-        // result.result.result = result.iterations[resultindexAt].m * (x - result.iterations[resultindexAt].offset) + result.iterations[resultindexAt].fx;
-
-        let m = [];
-        for(let i = 1 ; i < points.length; i++){
-            m.push((points[i].y - points[i-1].y) / (points[i].x - points[i-1].x));
-        }
-
         const fx = ( xValue: number) => {
             for(let i=1 ; i < points.length ; i++){
                 if (xValue >= points[i-1].x && xValue <= points[i].x) {
-                    return points[i-1].y + m[i-1] * (xValue - points[i-1].x);
+                    return i-1;
                 }
             }
         }
 
-		const answer = fx(x);
-        console.log(answer);
+        for(let i = 1 ; i < points.length; i++){
+            const fx = points[i-1].y
+            const m = (points[i].y - points[i-1].y) / (points[i].x - points[i-1].x);
+            const offset  = points[i-1].x;
+
+            result.iterations.push({
+                fx: fx,
+                m: m,
+                offset: offset,
+                slope: {
+                    xi: points[i-1].x,
+                    xi1: points[i].x
+                }
+            });
+        }
+
+        const resultindexAt = fx(x);
+
+        result.result.iteration = result.iterations[resultindexAt];
+        result.result.result = result.iterations[resultindexAt].m * (x - result.iterations[resultindexAt].offset) + result.iterations[resultindexAt].fx;
+
+        // let m = [];
+        // for(let i = 1 ; i < points.length; i++){
+        //     m.push((points[i].y - points[i-1].y) / (points[i].x - points[i-1].x));
+        // }
+
+        // const fx = ( xValue: number) => {
+        //     for(let i=1 ; i < points.length ; i++){
+        //         if (xValue >= points[i-1].x && xValue <= points[i].x) {
+        //             return points[i-1].y + m[i-1] * (xValue - points[i-1].x);
+        //         }
+        //     }
+        // }
+
+		// const answer = fx(x);
+        // console.log(answer);
     }
 
     result.statusCode = 200;
