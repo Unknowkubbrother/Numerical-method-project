@@ -64,7 +64,7 @@ export function SplineMethods( x:number, points: {x:number, y:number}[], type : 
             });
 
             if (x >= offset && x <= points[i].x) {
-				resultindexAt = i;
+				resultindexAt = i-1;
             }
         }
 		result.result = result.iterations[resultindexAt];
