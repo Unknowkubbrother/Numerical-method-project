@@ -10,10 +10,7 @@ export interface SplineRequest {
 }
 
 export interface SplineResponse {
-    result: {
-        iteration: SplineIterationData;
-        result: number;
-    };
+    result: SplineIterationData;
     iterations: SplineIterationData[];
     error?: string;
     statusCode: number;
@@ -50,6 +47,7 @@ export function SplineMethods( x:number, points: {x:number, y:number}[], type : 
     };
 
     if (type == "linear") {
+		let resultindexAt;
         for(let i = 1 ; i < points.length; i++){
             const fx = points[i-1].y
             const m = (points[i].y - points[i-1].y) / (points[i].x - points[i-1].x);
@@ -66,21 +64,10 @@ export function SplineMethods( x:number, points: {x:number, y:number}[], type : 
             });
 
             if (x >= offset && x <= points[i].x) {
-                const resultAt = fx + m * (x - offset);
-                result.result = {
-                    iteration: {
-                        fx: fx,
-                        m: m,
-                        offset: offset,
-                        slope: {
-                            xi: points[i-1].x,
-                            xi1: points[i].x
-                        }
-                    },
-                    result: resultAt
-                };
+				resultindexAt = i;
             }
         }
+		result.result = result.iterations[resultindexAt];
 
     }
 
