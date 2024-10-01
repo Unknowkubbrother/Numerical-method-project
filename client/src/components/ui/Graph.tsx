@@ -41,7 +41,7 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
     
 
     if(props.func && data){
-      const xMainValues = location.pathname.split("/")[3] != "onepoint" ? range(-10, 10, 0.002).toArray() as number[] : range(0, 10, 0.002).toArray() as number[];
+      const xMainValues = location.pathname.split("/")[3] != "onepoint" ? range(-10, 10, 0.01).toArray() as number[] : range(0, 10, 0.002).toArray() as number[];
       const yMainValues = xMainValues.map(function (x) {
         return evaluate(props?.func ?? '',{x: x}) as number;
       });
@@ -113,6 +113,7 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
             mode: 'lines',
             line: {
               color: '#4db5ff',
+              shape: 'spline',
               width: 2,
             },
             name: 'Main Graph',
@@ -130,7 +131,7 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
         ]
       }
         layout={{
-          margin: { t: 0, r: 0 },
+          margin: { t: 35, r: 0, b: 35, l: 35 },
           dragmode: 'pan',
           autosize: true,
         }}
