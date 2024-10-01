@@ -62,11 +62,12 @@ export function SplineMethods( x:number, points: {x:number, y:number}[], type : 
                     xi1: points[i].x
                 }
             });
-
-            if (x >= offset && x <= points[i].x) {
+        }
+		for(let i=1 ; i < points.length ; i++){
+			if (x >= points[i-1] && x <= points[i].x) {
 				resultindexAt = i-1;
             }
-        }
+		}
 		result.result = result.iterations[resultindexAt];
 
     }
