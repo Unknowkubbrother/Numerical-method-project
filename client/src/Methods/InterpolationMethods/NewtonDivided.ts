@@ -1,5 +1,5 @@
 export interface NewtonDividedRequest {
-    x: number,
+    x: number[];
     points: {
         x:number,
         y:number,
@@ -21,7 +21,7 @@ interface NewtonDividedIterationData {
 }
 
 
-export function NewtonDividedMethod( x:number, points: {x:number, y:number , selected : boolean}[]) : NewtonDividedResponse{
+export function NewtonDividedMethod( x:number[], points: {x:number, y:number , selected : boolean}[]) : NewtonDividedResponse{
 
     const result: NewtonDividedResponse = { 
         result: 0,
@@ -29,30 +29,32 @@ export function NewtonDividedMethod( x:number, points: {x:number, y:number , sel
         statusCode: 400
     };
 
-    const selectedPoints = points.filter(point => point.selected);
+    console.log(x, points);
 
-    const C = selectedPoints.map((point) => point.y);
+    // const selectedPoints = points.filter(point => point.selected);
 
-    for(let i= 1 ; i<selectedPoints.length; i++){
-        for(let j= selectedPoints.length-1; j>=i; j--){
-            C[j] = (C[j] - C[j-1]) / (selectedPoints[j].x - selectedPoints[j-i].x);
-        }
-    }
+    // const C = selectedPoints.map((point) => point.y);
 
-    for (let i = 0; i < selectedPoints.length; i++) {
-        let sum = C[i];
-        const MutiOfSubtract = [1];
-        for (let j = 0; j < i; j++) {
-            MutiOfSubtract.push(x - selectedPoints[j].x);
-            sum *= (x - selectedPoints[j].x);
-        }
-        result.iterations.push({
-            C: C[i],
-            MutiOfSubtract: MutiOfSubtract,
-            sum: sum
-        });
-        result.result += sum;
-    }
+    // for(let i= 1 ; i<selectedPoints.length; i++){
+    //     for(let j= selectedPoints.length-1; j>=i; j--){
+    //         C[j] = (C[j] - C[j-1]) / (selectedPoints[j].x - selectedPoints[j-i].x);
+    //     }
+    // }
+
+    // for (let i = 0; i < selectedPoints.length; i++) {
+    //     let sum = C[i];
+    //     const MutiOfSubtract = [1];
+    //     for (let j = 0; j < i; j++) {
+    //         MutiOfSubtract.push(x - selectedPoints[j].x);
+    //         sum *= (x - selectedPoints[j].x);
+    //     }
+    //     result.iterations.push({
+    //         C: C[i],
+    //         MutiOfSubtract: MutiOfSubtract,
+    //         sum: sum
+    //     });
+    //     result.result += sum;
+    // }
 
     result.statusCode = 200;
 

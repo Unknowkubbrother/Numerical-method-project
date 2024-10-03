@@ -12,7 +12,7 @@ interface MenuItem {
 }
 
 interface Values {
-    x: number | undefined; 
+    x: number[] | undefined; 
     points: { x: number; y: number; selected: boolean; }[]; 
 }
 
@@ -34,7 +34,7 @@ function Interpolation() {
         selected: Boolean(point.selected)
       }
     });
-    const x = value.x != undefined ? Number(value.x) : undefined;
+    const x = value.x?.map(x => Number(x));
     setData(
       {
         x,

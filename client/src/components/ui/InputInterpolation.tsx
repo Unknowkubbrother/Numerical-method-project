@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 
 interface Values {
-  x: number | undefined;
+  x: number[] | undefined; 
   points: { x: number; y: number; selected: boolean; }[]; 
 }
 
@@ -11,7 +11,8 @@ interface Props {
 
 const InputInterpolation = (props : Props) => {
   const [size, setSize] = useState<number>(3);
-  const [x, setX] = useState<number>();
+  const [countX, setCountX] = useState<number>(1);
+  const [x, setX] = useState<number[]>([]);
   const [points, setPoints] = useState<{x: number, y: number, selected: boolean}[]>([]);
 
   const handleSize = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +29,15 @@ const InputInterpolation = (props : Props) => {
     });
   }
 
+  const ChangeCountX = (countX: number) => {
+    setX(prevX => {
+      const newX = Array.from({ length: countX }).map((_, index) => (
+        prevX[index] || 0
+      ));
+      return newX;
+    });
+  }
+
   const SelectAll = () => {
     setPoints(v => {
       const newPoints = [...v];
@@ -40,8 +50,16 @@ const InputInterpolation = (props : Props) => {
      });
   }
 
-  const handleXValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setX(e.target.value as unknown as number);
+  const handleCountXValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCountX(e.target.value as unknown as number);
+  }
+
+  const handleXValue = (e: React.ChangeEvent<HTMLInputElement>, index : number) => {
+    setX(v => {
+      const newX = [...v];
+      newX[index] = e.target.value as unknown as number;
+      return newX;
+    });
   }
 
   const handlePoints = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -74,6 +92,10 @@ const InputInterpolation = (props : Props) => {
   },[size])
 
   useEffect(() => {
+    ChangeCountX(countX);
+  },[countX])
+
+  useEffect(() => {
     props.getValues({x, points});
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[points,x])
@@ -82,8 +104,8 @@ const InputInterpolation = (props : Props) => {
     <div className="w-full mt-10 flex justify-center items-center flex-col">
        <div className="flex gap-2 justify-center items-center">
 
-          <div className="flex flex-col gap-2">
-            <span>Size of POINTS</span>
+          <div className="flex flex-col gap-2 justify-center items-center">
+            <span>SIZE OF POINTS</span>
             <div className="flex gap-2">
               <button className="btn hover:bg-rose-400 hover:text-white" onClick={()=> {(size>1) && setSize(size-1)}}>-</button>
               <input
@@ -97,15 +119,19 @@ const InputInterpolation = (props : Props) => {
             </div>
           </div>
 
-          <div className='flex flex-col gap-2'>
-            <span>xValue</span>
-            <input
-              type="number"
-              className="rounded-md px-5 py-2 w-[230px]"
-              placeholder="0.0"
-              value={x}
-              onChange={handleXValue}
-            />
+          <div className="flex flex-col gap-2 justify-center items-center">
+            <span>NUMBER OF FIND X</span>
+            <div className="flex gap-2">
+              <button className="btn hover:bg-rose-400 hover:text-white" onClick={()=> {(countX>1) && setCountX(countX-1)}}>-</button>
+              <input
+                type="number"
+                className="rounded-md px-5 py-2 w-[150px] text-center"
+                placeholder="N"
+                value={countX}
+                onChange={handleCountXValue}
+              />
+              <button className="btn hover:bg-rose-400 hover:text-white" onClick={()=>setCountX(countX+1)}>+</button>
+            </div>
           </div>
 
        </div>
@@ -137,6 +163,21 @@ const InputInterpolation = (props : Props) => {
 
         <button className='text-sm font-semibold bg-secondary w-[80px] h-[40px] rounded-md duration-300 hover:scale-105 hover:bg-primary text-white' onClick={SelectAll}>Select All</button>
        </div>
+
+        <div className='w-[500px] mt-5 rounded-md p-3 flex gap-3 flex-wrap justify-center bg-background'>
+          {Array.from({length: countX}).map((_, index) => 
+            <div className="form-control" key={index}>
+            <label className="cursor-pointer label flex flex-col gap-2">
+              <span>X{index+1}</span>
+              <input type="number" className="rounded-md px-5 py-2 w-[100px] text-center"
+                placeholder={`x${index}`}
+                value={x[index]}
+                onChange={(e) => handleXValue(e, index)}
+              />
+            </label>
+          </div>
+          )}
+        </div>
     </div>
   )
 };

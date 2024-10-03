@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { MyFunctionContext } from "../../../App";
 
 interface Values {
-  x: number; 
+  x: number[]; 
   points: { x: number; y: number; selected: boolean; }[]; 
 }
 
