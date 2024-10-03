@@ -118,7 +118,7 @@ function NewtonDivided() {
                           item.iteration.map((iteration, idx) => {
                             return (
                               <BlockMath key={idx} math={`\\small  (${ round(iteration.C,6)})${iteration.MutiOfSubtract.map((sum,i)=>{
-                                  return `\\small ${i != 1 ? `(${sum})` : ''}`
+                                  return `\\small ${i != 0 ? `(${sum})` : ''}`
                               }).join('')} ${idx != item.iteration.length-1 ? `\\kern{3px} + \\kern{3px}` : ``}`} />
                             )
                           })
