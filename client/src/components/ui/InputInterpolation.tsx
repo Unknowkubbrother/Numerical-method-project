@@ -115,7 +115,7 @@ const InputInterpolation = (props : Props) => {
                 value={size}
                 onChange={handleSize}
               />
-              <button className="btn hover:bg-rose-400 hover:text-white" onClick={()=>setSize(size+1)}>+</button>
+              <button className="btn hover:bg-green-400 hover:text-white" onClick={()=>setSize(size+1)}>+</button>
             </div>
           </div>
 
@@ -130,7 +130,7 @@ const InputInterpolation = (props : Props) => {
                 value={countX}
                 onChange={handleCountXValue}
               />
-              <button className="btn hover:bg-rose-400 hover:text-white" onClick={()=>setCountX(countX+1)}>+</button>
+              <button className="btn hover:bg-green-400 hover:text-white" onClick={()=>setCountX(countX+1)}>+</button>
             </div>
           </div>
 

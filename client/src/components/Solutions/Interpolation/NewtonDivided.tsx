@@ -3,6 +3,8 @@ import {useState,useContext} from "react";
 import { NewtonDividedMethod, NewtonDividedResponse } from "../../../Methods/InterpolationMethods/NewtonDivided";
 import Swal from "sweetalert2";
 import { MyFunctionContext } from "../../../App";
+import { BlockMath } from "react-katex";
+import {round } from "mathjs";
 
 interface Values {
   x: number[]; 
@@ -55,8 +57,69 @@ function NewtonDivided() {
 
   const renderResult = () => {
     return (
-      <div className="w-full flex flex-col gap-3">
-        
+      <div className="w-full flex flex-col">
+        {Result && 
+            <div className="w-full bg-background mb-10 m-auto rounded-xl text-center p-3">
+                <BlockMath math='\color{#05acfa}\underline{Result}' />
+                <div className="w-full flex gap-5 justify-center items-center m-2 flex-wrap">
+                <div className="flex gap-3 justify-center items-center">
+                    <BlockMath math={`\\therefore`} />
+                    <BlockMath math="(" />
+                    {Result?.result.map((_, index) => {
+                        return (
+                            <BlockMath key={index} math={`y_{${index + 1}}${index < Result.result.length - 1 ? ',' : ''}`} />
+                        );
+                    })}
+                    <BlockMath math=") \kern{3px} = " />
+                    <BlockMath math="( " />
+                    {Result?.result.map((result, index) => {
+                        return (
+                            <BlockMath key={index} math={`\\small ${round(result, 6)}${index < Result.result.length - 1 ? ',' : ''}`} />
+                        );
+                    })}
+                    <BlockMath math=")" />
+                </div>
+                </div>
+            </div>
+            }
+
+
+            <div className="w-[90%] m-auto flex flex-col gap-3">
+              {Result?.iterations.map((item, index) => {
+                return (
+                  <div className="w-full flex flex-col justify-center items-center" key={index}>
+                    <span><BlockMath math={`X_{${index+1}} \\kern{3px} = \\small \\color{#02fa61} ${item.Xi}`} /></span>
+                    <div className="w-full flex justify-center items-center flex-wrap">
+                      <BlockMath math={`f(\\color{#02fa61}x_{${index+1}}\\color{white}) \\kern{3px} = \\kern{3px}`} />
+                      {
+                          item.iteration.map((iteration, idx) => {
+                            return (
+                              <BlockMath key={idx} math={`\\small  C_{${idx}}${iteration.MutiOfSubtract.map((_,i)=>{
+                                  return `\\small ${i != 0 ? `(x - x_{${i-1}})` : ''}`
+                              }).join('')} ${idx != item.iteration.length-1 ? `\\kern{3px} + \\kern{3px}` : ``}`} />
+                            )
+                          })
+                      }
+                     </div>
+                     <div className="w-full flex justify-center items-center flex-wrap">
+                      <BlockMath math={`f(\\color{#02fa61}${item.Xi}\\color{white}) \\kern{3px} = \\kern{3px}`} />
+                      {
+                          item.iteration.map((iteration, idx) => {
+                            return (
+                              <BlockMath key={idx} math={`\\small  (${ round(iteration.C,6)})${iteration.MutiOfSubtract.map((sum,i)=>{
+                                  return `\\small ${i != 1 ? `(${sum})` : ''}`
+                              }).join('')} ${idx != item.iteration.length-1 ? `\\kern{3px} + \\kern{3px}` : ``}`} />
+                            )
+                          })
+                      }
+                      <BlockMath math={`\\kern{3px}  = \\kern{3px} \\color{red} ${round(Result.result[index],6)}`} />
+                     </div>
+                 </div>
+                )
+              })}
+
+            </div>
+
       </div>
     );
   };
