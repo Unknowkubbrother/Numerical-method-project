@@ -22,6 +22,8 @@ import Choleskydecomposition from './components/Solutions/Linear/Choleskydecompo
 import Jacobi from './components/Solutions/Linear/Jacobi.tsx';
 import Gaussseidel from './components/Solutions/Linear/Gaussseidel.tsx';
 import Conjugate from './components/Solutions/Linear/Conjugate.tsx';
+import Interpolation from './components/Solutions/Interpolation/Interpolation.tsx';
+import NewtonDivided from './components/Solutions/Interpolation/NewtonDivided.tsx';
 
 const router = createBrowserRouter([
   {
@@ -105,6 +107,16 @@ const router = createBrowserRouter([
               {
                 path: 'conjugate',
                 element: <Conjugate />
+              }
+            ]
+          },
+          {
+            path: 'interpolation',
+            element: <Interpolation />,
+            children:[
+              {
+                path: 'newton',
+                element: <NewtonDivided />
               }
             ]
           }

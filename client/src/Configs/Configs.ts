@@ -71,12 +71,16 @@ export const mainMenu = [
       }
     ],
   },
-  // {
-  //   title: "Interpolation",
-  //   path: "/lobby/root",
-  //   menu: [
-  //   ],
-  // },
+  {
+    title: "Interpolation",
+    path: "../lobby/interpolation",
+    menu: [
+      {
+        path: '/lobby/interpolation/newton',
+        title: "Newton's Divided Difference"
+      }
+    ],
+  },
   // {
   //   title: "Extrapolation",
   //   path: "/lobby/root",

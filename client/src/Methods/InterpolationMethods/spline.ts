@@ -1,12 +1,11 @@
-import math from '../../lib/math';
-
 export interface SplineRequest {
     x: number,
     points: {
         x:number,
-        y:number
+        y:number,
+        seleted: boolean
     }[]
-    type: String
+    type: string
 }
 
 export interface SplineResponse {
@@ -30,7 +29,7 @@ interface SplineIterationData {
 }
 
 
-export function SplineMethods( x:number, points: {x:number, y:number}[], type : String) : SplineResponse{
+export function SplineMethods( x:number, points: {x:number, y:number , seleted : boolean}[], type : string) : SplineResponse{
 
     const result: SplineResponse = { 
         result: {
@@ -51,12 +50,13 @@ export function SplineMethods( x:number, points: {x:number, y:number}[], type : 
 
     if (type == "linear") {
 
-        const fx = ( xValue: number) => {
+        const fx = ( xValue: number) : number => {
             for(let i=1 ; i < points.length ; i++){
                 if (xValue >= points[i-1].x && xValue <= points[i].x) {
                     return i-1;
                 }
             }
+            return -1;
         }
 
         for(let i = 1 ; i < points.length; i++){
@@ -75,7 +75,7 @@ export function SplineMethods( x:number, points: {x:number, y:number}[], type : 
             });
         }
 
-        const resultindexAt = fx(x);
+        const resultindexAt : number = fx(x);
 
         result.result.iteration = result.iterations[resultindexAt];
         result.result.result = result.iterations[resultindexAt].m * (x - result.iterations[resultindexAt].offset) + result.iterations[resultindexAt].fx;
