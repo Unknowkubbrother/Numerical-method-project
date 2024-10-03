@@ -29,20 +29,22 @@ export function NewtonDividedMethod( x:number, points: {x:number, y:number , sel
         statusCode: 400
     };
 
-    const C = points.map((point) => point.y);
+    const selectedPoints = points.filter(point => point.selected);
 
-    for(let i= 1 ; i<points.length; i++){
-        for(let j= points.length-1; j>=i; j--){
-            C[j] = (C[j] - C[j-1]) / (points[j].x - points[j-i].x);
+    const C = selectedPoints.map((point) => point.y);
+
+    for(let i= 1 ; i<selectedPoints.length; i++){
+        for(let j= selectedPoints.length-1; j>=i; j--){
+            C[j] = (C[j] - C[j-1]) / (selectedPoints[j].x - selectedPoints[j-i].x);
         }
     }
 
-    for (let i = 0; i < points.length; i++) {
+    for (let i = 0; i < selectedPoints.length; i++) {
         let sum = C[i];
         const MutiOfSubtract = [1];
         for (let j = 0; j < i; j++) {
-            MutiOfSubtract.push(x - points[j].x);
-            sum *= (x - points[j].x);
+            MutiOfSubtract.push(x - selectedPoints[j].x);
+            sum *= (x - selectedPoints[j].x);
         }
         result.iterations.push({
             C: C[i],
