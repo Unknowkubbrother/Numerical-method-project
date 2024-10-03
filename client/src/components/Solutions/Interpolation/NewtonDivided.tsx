@@ -26,7 +26,6 @@ function NewtonDivided() {
       .then((result: unknown) => {
         const NewtonDividedResponse = result as NewtonDividedResponse;
         if (NewtonDividedResponse.statusCode === 200) {
-          console.log(NewtonDividedResponse);
           setResult(NewtonDividedResponse);
           Swal.fire({
             title: "Success!",
@@ -59,7 +58,7 @@ function NewtonDivided() {
     return (
       <div className="w-full flex flex-col">
         {Result && 
-            <div className="w-full bg-background mb-10 m-auto rounded-xl text-center p-3">
+            <div className="w-full bg-background m-auto rounded-xl text-center p-3">
                 <BlockMath math='\color{#05acfa}\underline{Result}' />
                 <div className="w-full flex gap-5 justify-center items-center m-2 flex-wrap">
                 <div className="flex gap-3 justify-center items-center">
@@ -82,6 +81,18 @@ function NewtonDivided() {
                 </div>
             </div>
             }
+
+
+          <div className="w-full flex justify-center items-center flex-wrap">
+              {Result?.CIterations.map((item, index) => {
+                return (
+                  <div className="flex flex-wrap" key={index}>
+                    <BlockMath math={`C_{${index}} = ${round(item,6)} ${index != Result.CIterations.length-1 ? `,  \\kern{5px}` : ``}`} />
+                  </div>
+                  
+                )
+              })}
+              </div>
 
 
             <div className="w-[90%] m-auto flex flex-col gap-3">
