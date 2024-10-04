@@ -20,7 +20,6 @@ function Conjugate() {
 
   const sendRequest = async () => {
     setloadingSecond(true);
-		setResult(null);
     const tempA = Data.matrixA.map((row) => row.map((col) => col));
     const tempB = Data.arrB.map((col) => col);
     const xi = Data.xi.map((col) => col);
@@ -65,7 +64,7 @@ function Conjugate() {
     settypeseleted(type);
   };
 
-  const renderGraph = (result : ConjugateResponse | null) => {
+  const renderGraph = (result : ConjugateResponse) => {
     if (Data.matrixA.length == 2 && Data.matrixA[0].length == 2) {
       return (
         <div className="w-full mb-10">
@@ -104,7 +103,7 @@ function Conjugate() {
 
   useEffect(() => {
     const graphContainer = document.getElementById("graphcontour");
-    if (graphContainer != null) {
+    if (graphContainer != null && Result != null) {
       if (!graphRootRef.current) {
         graphRootRef.current = createRoot(graphContainer);
       }
