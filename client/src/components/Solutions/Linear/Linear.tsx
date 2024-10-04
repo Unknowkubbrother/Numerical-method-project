@@ -19,7 +19,7 @@ interface ref{
 function Linear() {
   const navigate = useNavigate();
   const [selectedSubMenu, setselectedSubMenu] = useState("");
-  const [Data , setData] = useState<{matrixA : number[][], arrB : number[]}>({matrixA : [], arrB : []});
+  const [Data , setData] = useState<{matrixA : number[][], arrB : number[], xi : number[] , errorFactor: number}>({matrixA : [], arrB : [], xi : [], errorFactor: 0.00001});
 
   const setSubMenu= (e: React.ChangeEvent<HTMLSelectElement>) => {
     setselectedSubMenu(e.target.value);
@@ -37,18 +37,18 @@ function Linear() {
     setCountCol(e.target.value as unknown as number);
   };
 
-  const getValues = (matrixA:number[][], arrB:number[]) =>{
-    setData({matrixA, arrB});
+  const getValues = async (matrixA:number[][], arrB:number[], xi : number[], errorFactor : number) =>{
+    await setData({matrixA, arrB, xi, errorFactor});
   }
 
   const ref = useRef<ref>(null);
 
-  const clearMatrix = async () => {
-    await setCountCol(0);
-    await setCountRow(0);
-    await setCountRow(3);
-    await setCountCol(3);
-    await ref.current?.clearMatrix();
+  const clearMatrix = () => {
+       setCountCol(0);
+       setCountRow(0);
+       setCountCol(3);
+       setCountRow(3);
+       ref.current?.clearMatrix();
   };
 
 
@@ -100,7 +100,7 @@ function Linear() {
         </div>
       </div>
       <div className="min-[340px]:w-[90%] lg:w-full m-auto">
-        <Outlet context={[Data,countCol,countRow]}/>
+        <Outlet context={[Data]}/>
       </div>
     </div>
   );

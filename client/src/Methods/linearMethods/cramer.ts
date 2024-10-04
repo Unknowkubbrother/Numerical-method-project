@@ -54,7 +54,7 @@ export function CramerMethod (matrixA: number[][], arrB: number[]) : CramerRespo
     
         return result;
     }catch(e){
-        result.error = "Error Matrix Size";
+        result.error = "failed to solve matrix";
         result.statusCode = 400;
         return result;
     }

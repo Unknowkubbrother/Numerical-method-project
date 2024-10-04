@@ -11,63 +11,19 @@ import { createRoot, Root } from 'react-dom/client';
 
 function Conjugate() {
   const { setloadingSecond } = useContext(MyFunctionContext);
-  const [Data, countCol, countRow] = useOutletContext<[{ matrixA: number[][]; arrB: number[] }, number, number]>();
+  const [Data] = useOutletContext<[{ matrixA: number[][]; arrB: number[]; xi : number[] ; errorFactor: number},number,number]>();
   const [Result, setResult] = useState<ConjugateResponse | null>(null);
-  const [TableArrXi, setTableArrXi] = useState<JSX.Element[]>([]);
-  const [xi, setXi] = useState<number[]>([]);
-  const [errorFactor, setErrorFactor] = useState<number>(0.000001);
   const [typeseleted, settypeseleted] = useState<string>("2D");
   const graphRootRef = useRef<Root | null>(null);
 
-  const createElemetArrXi = async (col: number) => {
-    await setTableArrXi([]);
-    await setXi(new Array(Number(col)).fill(0));
-    if (col > 0 && col <= 10 && countRow > 0 && countRow <= 10) {
-      setTimeout(() => {
-        const tempArr = [];
-        for (let i = 0; i < col; i++) {
-          tempArr.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={i} placeholder={`x${i + 1}`}
-            onInput={(event: React.ChangeEvent<HTMLInputElement>) => onInputArrXi(event, i)}
-          />);
-        }
-        setTableArrXi(tempArr);
-      }, 0.001);
-    }
-  }
-
-  const onInputArrXi = (event: React.ChangeEvent<HTMLInputElement>, row: number) => {
-    if (event.target.value) {
-      const value: number = parseFloat(event.target.value);
-      setXi(v => {
-        const newArrB = [...v];
-        newArrB[row] = value;
-        return newArrB;
-      });
-    } else {
-      setXi(v => {
-        const newArrB = [...v];
-        newArrB[row] = 0;
-        return newArrB;
-      });
-    }
-  }
-
-  useEffect(() => {
-    if (countCol > 0 && countRow > 0) {
-      createElemetArrXi(countCol);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countCol, countRow]);
-
-  const handleSetError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setErrorFactor(e.target.value as unknown as number);
-  };
   
 
   const sendRequest = async () => {
     setloadingSecond(true);
     const tempA = Data.matrixA.map((row) => row.map((col) => col));
     const tempB = Data.arrB.map((col) => col);
+    const xi = Data.xi.map((col) => col);
+    const errorFactor = Data.errorFactor;
     new Promise((resolve) => {
       setTimeout(() => {
         resolve(ConjugateMethods(tempA, tempB, xi, errorFactor));
@@ -229,18 +185,6 @@ function Conjugate() {
 
   return (
     <div className="w-[90%] h-full m-auto flex flex-col justify-center items-center">
-      <div className="flex gap-3 mt-5">{TableArrXi}</div>
-      <div className="mt-5 flex flex-col gap-3">
-        <label>Error threshold 𝜖</label>
-        <input
-          type="number"
-          name="errorfactor"
-          className="min-[340px]:w-[150px] min-[667px]:w-[280px] md:w-[300px] lg:w-[200px] h-[30px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
-          placeholder="10.00"
-          onInput={handleSetError}
-          value={errorFactor}
-        />
-      </div>
       <button
         className="min-[340px]:w-[250px] lg:w-[200px] mt-5 p-2 bg-secondary rounded-lg hover:scale-105 duration-300"
         onClick={sendRequest}
