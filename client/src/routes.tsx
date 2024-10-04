@@ -25,6 +25,7 @@ import Conjugate from './components/Solutions/Linear/Conjugate.tsx';
 import Interpolation from './components/Solutions/Interpolation/Interpolation.tsx';
 import NewtonDivided from './components/Solutions/Interpolation/NewtonDivided.tsx';
 import Lagrange from './components/Solutions/Interpolation/Lagrange.tsx';
+import Spline from './components/Solutions/Interpolation/Spline.tsx';
 
 const router = createBrowserRouter([
   {
@@ -122,6 +123,10 @@ const router = createBrowserRouter([
               {
                 path: 'lagrange',
                 element: <Lagrange />
+              },
+              {
+                path: 'spline',
+                element: <Spline />
               }
             ]
           }

@@ -1,18 +1,19 @@
 export interface SplineRequest {
-    x: number,
+    x: number[],
     points: {
         x:number,
         y:number,
-        seleted: boolean
+        selected: boolean
     }[]
     type: string
 }
 
 export interface SplineResponse {
     result: {
+        Xi: number;
         iteration: SplineIterationData;
         result: number
-    };
+    }[];
     iterations: SplineIterationData[];
     error?: string;
     statusCode: number;
@@ -29,26 +30,46 @@ interface SplineIterationData {
 }
 
 
-export function SplineMethods( x:number, points: {x:number, y:number , seleted : boolean}[], type : string) : SplineResponse{
+export function SplineMethods( x:number[], points: {x:number, y:number , selected : boolean}[], type : string) : SplineResponse{
 
     const result: SplineResponse = { 
-        result: {
-            iteration: {
-                fx: 0,
-                m: 0,
-                offset: 0,
-                slope: {
-                    xi: 0,
-                    xi1: 0
-                }
-            },
-            result: 0
-        },
+        result: [],
         iterations: [],
         statusCode: 400
     };
 
+
+    
+    const selectedPoints = points.filter((point) => point.selected);
+
+    const maxSelectedPointsX = () => {
+        let max = selectedPoints[0].x;
+        for(let i=1;i<selectedPoints.length;i++){
+            if(selectedPoints[i].x > max){
+                max = selectedPoints[i].x;
+            }
+        }
+        return max;
+    };
+
+    const minSelectedPointsX = () => {
+        let min = selectedPoints[0].x;
+        for(let i=1;i<selectedPoints.length;i++){
+            if(selectedPoints[i].x < min){
+                min = selectedPoints[i].x;
+            }
+        }
+        return min;
+    }
+
     if (type == "linear") {
+
+        for(let xi=0;xi<x.length;xi++){
+            if (x[xi] < minSelectedPointsX() || x[xi] > maxSelectedPointsX()) {
+                result.error = "X value out of range";
+                return result;
+            }
+        }
 
         const fx = ( xValue: number) : number => {
             for(let i=1 ; i < points.length ; i++){
@@ -59,26 +80,30 @@ export function SplineMethods( x:number, points: {x:number, y:number , seleted :
             return -1;
         }
 
-        for(let i = 1 ; i < points.length; i++){
-            const fx = points[i-1].y
-            const m = (points[i].y - points[i-1].y) / (points[i].x - points[i-1].x);
-            const offset  = points[i-1].x;
+        for(let i = 1 ; i < selectedPoints.length; i++){
+            const fx = selectedPoints[i-1].y
+            const m = (selectedPoints[i].y - selectedPoints[i-1].y) / (selectedPoints[i].x - selectedPoints[i-1].x);
+            const offset  = selectedPoints[i-1].x;
 
             result.iterations.push({
                 fx: fx,
                 m: m,
                 offset: offset,
                 slope: {
-                    xi: points[i-1].x,
-                    xi1: points[i].x
+                    xi: selectedPoints[i-1].x,
+                    xi1: selectedPoints[i].x
                 }
             });
         }
 
-        const resultindexAt : number = fx(x);
-
-        result.result.iteration = result.iterations[resultindexAt];
-        result.result.result = result.iterations[resultindexAt].m * (x - result.iterations[resultindexAt].offset) + result.iterations[resultindexAt].fx;
+        for(let xi=0;xi<x.length;xi++){
+            const resultindexAt : number = fx(x[xi]);
+            result.result.push({
+                Xi: x[xi],
+                iteration: result.iterations[resultindexAt],
+                result: result.iterations[resultindexAt].m * (x[xi] - result.iterations[resultindexAt].offset) + result.iterations[resultindexAt].fx
+            });
+        }
     }
 
     result.statusCode = 200;

@@ -26,7 +26,6 @@ function Lagrange() {
       .then((result: unknown) => {
         const LagrangeResponse = result as LagrangeResponse;
         if (LagrangeResponse.statusCode === 200) {
-          console.log(LagrangeResponse);
           setResult(LagrangeResponse);
           Swal.fire({
             title: "Success!",

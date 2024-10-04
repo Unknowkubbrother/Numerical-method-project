@@ -82,6 +82,10 @@ export const mainMenu = [
       {
         path: '/lobby/interpolation/lagrange',
         title: "Lagrange"
+      },
+      {
+        path: '/lobby/interpolation/spline',
+        title: "Spline"
       }
     ],
   },
