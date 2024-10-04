@@ -175,8 +175,8 @@ const InputInterpolation = (props : Props) => {
         )}
 
         <div className='flex gap-3 mt-5'>
-          <button className='text-sm font-semibold bg-secondary w-[80px] h-[30px] rounded-md duration-300 hover:scale-105 hover:bg-primary text-white' onClick={SelectAll}>Select All</button>
-          <button className='text-sm font-semibold bg-rose-400 w-[120px] h-[30px] rounded-md duration-300 hover:scale-105 hover:bg-rose-500 text-white' onClick={ClearSelectAll}>Clear Select All</button>
+          <button className='text-sm font-semibold bg-secondary px-3 py-2 rounded-md duration-300 hover:scale-105 hover:bg-primary text-white' onClick={SelectAll}>Select All</button>
+          <button className='text-sm font-semibold bg-rose-400 px-3 py-2 rounded-md duration-300 hover:scale-105 hover:bg-rose-500 text-white' onClick={ClearSelectAll}>Clear Select All</button>
         </div>
        </div>
 
