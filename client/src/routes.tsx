@@ -24,6 +24,7 @@ import Gaussseidel from './components/Solutions/Linear/Gaussseidel.tsx';
 import Conjugate from './components/Solutions/Linear/Conjugate.tsx';
 import Interpolation from './components/Solutions/Interpolation/Interpolation.tsx';
 import NewtonDivided from './components/Solutions/Interpolation/NewtonDivided.tsx';
+import Lagrange from './components/Solutions/Interpolation/Lagrange.tsx';
 
 const router = createBrowserRouter([
   {
@@ -117,6 +118,10 @@ const router = createBrowserRouter([
               {
                 path: 'newton',
                 element: <NewtonDivided />
+              },
+              {
+                path: 'lagrange',
+                element: <Lagrange />
               }
             ]
           }

@@ -1,15 +1,18 @@
 export interface LagrangeRequest {
-    x: number,
+    x: number[],
     points: {
         x:number,
         y:number,
-        seleted: boolean
+        selected: boolean
     }[]
 }
 
 export interface LagrangeResponse {
-    result: number;
-    iterations: LagrangeIterationData[];
+    result: number[];
+    iterations: {
+        Xi: number;
+        iteration: LagrangeIterationData[];
+    }[];
     error?: string;
     statusCode: number;
 }
@@ -20,29 +23,56 @@ interface LagrangeIterationData {
     sum : number;
 }
 
-export function LagrangeMethods( x:number, points: {x:number, y:number , seleted : boolean}[]) : LagrangeResponse{
+export function LagrangeMethod( x:number[], points: {x:number, y:number , selected : boolean}[]) : LagrangeResponse{
 
     const result: LagrangeResponse = { 
-        result: 0,
+        result: [],
         iterations: [],
         statusCode: 400
     };
 
-    for(let i = 0; i < points.length; i++){
-        let L = 1;
-        for(let j = 0; j < points.length; j++){
-            if(i != j){
-                L *= (points[j].x - x) / (points[j].x - points[i].x);
+    const selectedPoints = points.filter((point) => point.selected);
+
+    for(let xi=0; xi < x.length; xi++){
+        result.result[xi] = 0;
+        const iterations = [];
+        for(let i=0; i < selectedPoints.length; i++){
+            let sum = 0;
+            let L = 1;
+            for(let j=0; j < selectedPoints.length; j++){
+                if(i != j){
+                    L *= (x[xi] - selectedPoints[j].x) / (selectedPoints[i].x - selectedPoints[j].x);
+                }
             }
+            sum += L * selectedPoints[i].y;
+            iterations.push({
+                L: L,
+                Y: selectedPoints[i].y,
+                sum: sum
+            });
+            result.result[xi] += sum;
         }
-        const sum = L * points[i].y;
         result.iterations.push({
-            L: L,
-            Y: points[i].y,
-            sum: sum
+            Xi: x[xi],
+            iteration: iterations
         });
-        result.result += sum;
     }
+
+    // for(let i = 0; i < points.length; i++){
+    //     let L = 1;
+    //     for(let j = 0; j < points.length; j++){
+    //         if(i != j){
+    //             L *= (points[j].x - x) / (points[j].x - points[i].x);
+    //         }
+    //     }
+    //     const sum = L * points[i].y;
+    //     result.iterations.push({
+    //         L: L,
+    //         Y: points[i].y,
+    //         sum: sum
+    //     });
+    //     result.result += sum;
+    // }
 
     result.statusCode = 200;
 

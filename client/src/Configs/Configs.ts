@@ -78,6 +78,10 @@ export const mainMenu = [
       {
         path: '/lobby/interpolation/newton',
         title: "Newton's Divided Difference"
+      },
+      {
+        path: '/lobby/interpolation/lagrange',
+        title: "Lagrange"
       }
     ],
   },

@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import {useState,useContext} from "react";
-import { NewtonDividedMethod, NewtonDividedResponse } from "../../../Methods/InterpolationMethods/NewtonDivided";
+import { LagrangeMethod , LagrangeResponse} from "../../../Methods/InterpolationMethods/Lagrange";
 import Swal from "sweetalert2";
 import { MyFunctionContext } from "../../../App";
 import { BlockMath } from "react-katex";
@@ -11,22 +11,23 @@ interface Values {
   points: { x: number; y: number; selected: boolean; }[]; 
 }
 
-function NewtonDivided() {
+function Lagrange() {
   const { setloadingSecond } = useContext(MyFunctionContext);
   const [Data] = useOutletContext<[Values]>();
-  const [Result, setResult] = useState<NewtonDividedResponse | null>(null);
+  const [Result, setResult] = useState<LagrangeResponse | null>(null);
 
   const sendRequest = async () => {
     setloadingSecond(true);
     new Promise((resolve) => {
       setTimeout(() => {
-        resolve(NewtonDividedMethod(Data.x, Data.points));
+        resolve(LagrangeMethod(Data.x, Data.points));
       }, 1000);
     })
       .then((result: unknown) => {
-        const NewtonDividedResponse = result as NewtonDividedResponse;
-        if (NewtonDividedResponse.statusCode === 200) {
-          setResult(NewtonDividedResponse);
+        const LagrangeResponse = result as LagrangeResponse;
+        if (LagrangeResponse.statusCode === 200) {
+          console.log(LagrangeResponse);
+          setResult(LagrangeResponse);
           Swal.fire({
             title: "Success!",
             text: "Your have been success.",
@@ -36,10 +37,10 @@ function NewtonDivided() {
           setResult(null);
           Swal.fire({
             title: "Error!",
-            text: NewtonDividedResponse.error,
+            text: LagrangeResponse.error,
             icon: "error",
           });
-          console.error("Error loading data:", NewtonDividedResponse.error);
+          console.error("Error loading data:", LagrangeResponse.error);
         }
         setloadingSecond(false);
       })
@@ -57,7 +58,7 @@ function NewtonDivided() {
   const renderResult = () => {
     return (
       <div className="w-full flex flex-col">
-        {Result && 
+          {Result && 
             <div className="w-full bg-background m-auto rounded-xl text-center p-3">
                 <BlockMath math='\color{#05acfa}\underline{Result}' />
                 <div className="w-full flex gap-5 justify-center items-center m-2 flex-wrap">
@@ -82,54 +83,55 @@ function NewtonDivided() {
             </div>
             }
 
-
-          <div className="w-full flex justify-center items-center flex-wrap">
-              {Result?.CIterations.map((item, index) => {
-                return (
-                  <div className="flex flex-wrap" key={index}>
-                    <BlockMath math={`C_{${index}} = ${round(item,6)} ${index != Result.CIterations.length-1 ? `,  \\kern{5px}` : ``}`} />
-                  </div>
-                  
-                )
-              })}
-              </div>
-
-
-            <div className="w-[90%] m-auto flex flex-col gap-3">
+          <div className="w-[90%] m-auto flex flex-col gap-3">
               {Result?.iterations.map((item, index) => {
                 return (
                   <div className="w-full flex flex-col justify-center items-center flex-wrap" key={index}>
                     <span><BlockMath math={`X_{${index+1}} \\kern{3px} = \\small \\color{#02fa61} ${item.Xi}`} /></span>
                     <div className="w-full flex justify-center items-center flex-wrap">
+                      {
+                          item.iteration.map((itemL, idx) => {
+                            return (
+                              <div key={idx} className="flex flex-col">
+                                <BlockMath  math={`\\small  L_{${idx}} \\kern{3px} = \\kern{3px} ${round(itemL.L,6)} ${idx != item.iteration.length-1 ? `, \\kern{3px}` : ``}`} />
+                              </div>
+                            )
+                          })
+                      }
+                    </div>
+                    <div className="w-full flex justify-center items-center flex-wrap">
                       <BlockMath math={`f(\\color{#02fa61}x_{${index+1}}\\color{white}) \\kern{3px} = \\kern{3px}`} />
                       {
-                          item.iteration.map((iteration, idx) => {
+                          item.iteration.map((_, idx) => {
                             return (
-                              <BlockMath key={idx} math={`\\small  C_{${idx}}${iteration.MutiOfSubtract.map((_,i)=>{
-                                  return `\\small ${i != 0 ? `(x - x_{${i-1}})` : ''}`
-                              }).join('')} ${idx != item.iteration.length-1 ? `\\kern{3px} + \\kern{3px}` : ``}`} />
+                              <div key={idx} className="flex flex-col">
+                                <BlockMath  math={`\\small  L_{${idx}}(x) \\kern{1px}f(x_{${idx}}) ${idx != item.iteration.length-1 ? `\\kern{3px} + \\kern{3px}` : ``}`} />
+                              </div>
                             )
                           })
                       }
                      </div>
+
                      <div className="w-full flex justify-center items-center flex-wrap">
-                      <BlockMath math={`f(\\color{#02fa61}${item.Xi}\\color{white}) \\kern{3px} = \\kern{3px}`} />
+                      <BlockMath math={`f(\\color{#02fa61}\\small${item.Xi}\\color{white}) \\kern{3px} = \\kern{3px}`} />
                       {
-                          item.iteration.map((iteration, idx) => {
+                          item.iteration.map((iter, idx) => {
                             return (
-                              <BlockMath key={idx} math={`\\small  (${ round(iteration.C,6)})${iteration.MutiOfSubtract.map((sum,i)=>{
-                                  return `\\small ${i != 0 ? `(${sum})` : ''}`
-                              }).join('')} ${idx != item.iteration.length-1 ? `\\kern{3px} + \\kern{3px}` : ``}`} />
+                              <div key={idx} className="flex flex-col">
+                                <BlockMath  math={`\\small  (${round(iter.L,6)}) \\kern{1px} (${round(iter.Y,6)}) ${idx != item.iteration.length-1 ? `\\kern{3px} + \\kern{3px}` : ``}`} />
+                              </div>
                             )
                           })
                       }
-                      <BlockMath math={`\\kern{3px}  = \\kern{3px} \\color{red} ${round(Result.result[index],6)}`} />
+                        <BlockMath math={`\\kern{3px} = \\kern{3px} \\color{red} ${round(Result.result[index],6)}`} />
                      </div>
-                 </div>
+                    
+                  
+                  </div>
                 )
               })}
-
-            </div>
+        </div>
+        
 
       </div>
     );
@@ -145,7 +147,7 @@ function NewtonDivided() {
         Calculate!
       </button>
       <div className="w-full h-content flex flex-col gap-5 mt-10">
-        <h1 className="text-xl font-semibold">Newton's Divided Difference</h1>
+        <h1 className="text-xl font-semibold">Lagrange Interpolation</h1>
         <div
           className="w-full rounded-md h-content bg-background flex flex-col justify-start items-center p-10"
         >
@@ -158,4 +160,4 @@ function NewtonDivided() {
   )
 }
 
-export default NewtonDivided;
+export default Lagrange;
