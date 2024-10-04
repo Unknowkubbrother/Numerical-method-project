@@ -108,8 +108,8 @@ function Lagrange() {
               return (
                 <div key={index} className="flex flex-col gap-3">
                   <span><BlockMath math={`X_{${index+1}} \\kern{3px} = \\small \\color{#02fa61} ${result.Xi}`} /></span>
-                  <BlockMath math={`f_{\\color{#02fa61}${index+1}}(x_{${index+1}}) = \\small ${round(result.iteration.fx,6)} + ${round(result.iteration.m,6)}(x-${round(result.iteration.offset,6)}) ; \\kern{10px} ${round(result.iteration.slope.xi,6)}\\le{x}\\le{${round(result.iteration.slope.xi1,6)}}`}/>
-                  <BlockMath math={`f_{\\color{#02fa61}${index+1}}(${round(result.Xi,6)}) = \\small ${round(result.iteration.fx,6)} + ${round(result.iteration.m,6)}(${round(result.Xi,6)}-${round(result.iteration.offset,6)}) = \\color{red}${round(result.result,6)}`}/>
+                  <BlockMath math={`f_{\\color{#02fa61}${index+1}}(\\color{#02fa61}x_{${index+1}}\\color{white}) = \\small ${round(result.iteration.fx,6)} + ${round(result.iteration.m,6)}(x-${round(result.iteration.offset,6)}) ; \\kern{10px} ${round(result.iteration.slope.xi,6)}\\le{x}\\le{${round(result.iteration.slope.xi1,6)}}`}/>
+                  <BlockMath math={`f_{\\color{#02fa61}${index+1}}(\\color{#02fa61}${round(result.Xi,6)}\\color{white}) = \\small ${round(result.iteration.fx,6)} + ${round(result.iteration.m,6)}(${round(result.Xi,6)}-${round(result.iteration.offset,6)}) = \\color{red}${round(result.result,6)}`}/>
 
                 </div>
               )
