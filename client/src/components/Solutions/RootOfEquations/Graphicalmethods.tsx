@@ -1,8 +1,8 @@
 import { useState } from "react";
 import React from "react";
-import Graph from "../../ui/Graph";
+import Graph from "../../ui/RootGraph";
 import { graphicalMethod , GraphicalResponse} from "../../../Methods/rootMethods/graphical";
-import Table from "../../ui/Table";
+import Table from "../../ui/TableGraph";
 import { useOutletContext } from "react-router-dom";
 import { round } from "mathjs";
 import {useContext} from "react";

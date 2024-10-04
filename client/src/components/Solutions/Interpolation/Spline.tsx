@@ -5,6 +5,10 @@ import Swal from "sweetalert2";
 import { MyFunctionContext } from "../../../App";
 import { BlockMath } from "react-katex";
 import {round } from "mathjs";
+import TableInterpolation from "../../ui/TableInterpolation";
+import GraphInterpolation from "../../ui/GraphInterpolation";
+
+
 
 interface Values {
   x: number[]; 
@@ -54,9 +58,39 @@ function Lagrange() {
       });
   };
 
-  const renderResult = () => {
+  const renderTable = () => {
+    const data = Result?.result.map((item) => {
+      return {
+        x: item.Xi,
+        y: item.result
+      }
+    });
     return (
-      <div className="w-full flex flex-col">
+      data ? <TableInterpolation data={{ iterations: data }} /> : null
+    )
+  }
+
+  const renderGraph = () => {
+    const mainGraph : {x : number , y : number }[] = Data.points.filter((point) => point.selected).map((point) => {
+      return {
+        x: point.x,
+        y: point.y
+      }
+    })
+    const data = Result?.result.map((item) => {
+      return {
+        x: item.Xi,
+        y: item.result
+      }
+    });
+    return (
+      <GraphInterpolation mainGraph={mainGraph} data={data || []}/>
+    )
+  }
+
+  const renderSolution = () => {
+    return (
+      <div className="w-full flex flex-col p-5">
         {Result && 
             <div className="w-full bg-background m-auto rounded-xl text-center p-3">
                 <BlockMath math='\color{#05acfa}\underline{Result}' />
@@ -133,9 +167,28 @@ function Lagrange() {
       <div className="w-full h-content flex flex-col gap-5 mt-10">
         <h1 className="text-xl font-semibold">Lagrange Interpolation</h1>
         <div
-          className="w-full rounded-md h-content bg-background flex flex-col justify-start items-center p-10"
+          className={`w-full rounded-md h-content flex flex-col justify-start items-center p-5 ${Result ? '' : 'bg-background'}`}
         >
-            {Result ? renderResult() : 
+            {Result ? 
+
+            <div role="tablist" className="tabs tabs-lifted w-full">
+              <input type="radio" name="my_tabs_2" role="tab" className="tab [--tab-bg:#16232e] " aria-label="Solution" defaultChecked />
+              <div role="tabpanel" className="tab-content bg-background rounded-box">
+                {renderSolution()}
+              </div>
+
+              <input type="radio" name="my_tabs_2" role="tab" className="tab [--tab-bg:#16232e]" aria-label="Table" />
+              <div role="tabpanel" className="tab-content bg-background rounded-box">
+                {renderTable()}
+              </div>
+
+              <input type="radio" name="my_tabs_2" role="tab" className="tab [--tab-bg:#16232e]" aria-label="Graph" />
+              <div role="tabpanel" className="tab-content bg-background rounded-box">
+                {renderGraph()}
+              </div>
+            </div>
+            
+            : 
              <div className="font-semibold">Please Enter Points and xValue</div>
             }
         </div>
