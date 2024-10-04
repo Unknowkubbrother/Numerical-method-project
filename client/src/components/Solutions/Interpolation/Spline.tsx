@@ -119,12 +119,12 @@ function Lagrange() {
 
 
 
-        <div className="flex flex-col gap-3 justify-start items-center">
+        <div className="flex flex-col gap-3 justify-start items-center flex-wrap">
           <span><BlockMath math="\color{#02fa61}Solution"/></span>
           {
             Result?.iterations.map((iteration, index) => {
               return (
-                <div key={index} className="flex flex-col gap-3">
+                <div key={index} className="flex flex-col gap-3 flex-wrap">
                   <BlockMath math={`f_{\\color{#02fa61}${index+1}}(x) = \\small f(x_{\\color{red}${index}}) + m_{\\color{#02fa61}${index+1}}(x-x_{\\color{red}${index}}) \\kern{3px}; \\kern{10px} x_{\\color{#02fa61}${index}}\\le{x}\\le{x_{\\color{#02fa61}${index+1}}}`}/>
                   <BlockMath math={`f_{\\color{#02fa61}${index+1}}(x) = \\small ${round(iteration.fx,6)} + (${round(iteration.m,6)})(x-${round(iteration.offset,6)}) \\kern{3px}; \\kern{10px} ${round(iteration.slope.xi,6)}\\le{x}\\le{${round(iteration.slope.xi1,6)}}`}/>
 
@@ -139,7 +139,7 @@ function Lagrange() {
           {
             Result?.result.map((result, index) => {
               return (
-                <div key={index} className="flex flex-col gap-3">
+                <div key={index} className="flex flex-col gap-3 flex-wrap">
                   <span><BlockMath math={`X_{${index+1}} \\kern{3px} = \\small \\color{#02fa61} ${result.Xi}`} /></span>
                   <BlockMath math={`f_{\\color{#02fa61}${index+1}}(\\color{#02fa61}x_{${index+1}}\\color{white}) = \\small ${round(result.iteration.fx,6)} + ${round(result.iteration.m,6)}(x-${round(result.iteration.offset,6)}) ; \\kern{10px} ${round(result.iteration.slope.xi,6)}\\le{x}\\le{${round(result.iteration.slope.xi1,6)}}`}/>
                   <BlockMath math={`f_{\\color{#02fa61}${index+1}}(\\color{#02fa61}${round(result.Xi,6)}\\color{white}) = \\small ${round(result.iteration.fx,6)} + ${round(result.iteration.m,6)}(${round(result.Xi,6)}-${round(result.iteration.offset,6)}) = \\color{red}${round(result.result,6)}`}/>
@@ -167,7 +167,7 @@ function Lagrange() {
       <div className="w-full h-content flex flex-col gap-5 mt-10">
         <h1 className="text-xl font-semibold">Lagrange Interpolation</h1>
         <div
-          className={`w-full rounded-md h-content flex flex-col justify-start items-center p-5 ${Result ? '' : 'bg-background'}`}
+          className={`w-full rounded-md h-content flex flex-col justify-center items-center p-5 ${Result ? '' : 'bg-background'}`}
         >
             {Result ? 
 

@@ -183,7 +183,7 @@ function NewtonDivided() {
       <div className="w-full h-content flex flex-col gap-5 mt-10">
         <h1 className="text-xl font-semibold">Newton's Divided Difference</h1>
         <div
-          className={`w-full rounded-md h-content flex flex-col justify-start items-center p-5 ${Result ? '' : 'bg-background'}`}
+          className={`w-full rounded-md h-content flex flex-col justify-center items-center p-5 ${Result ? '' : 'bg-background'}`}
         >
             {Result ? 
 
