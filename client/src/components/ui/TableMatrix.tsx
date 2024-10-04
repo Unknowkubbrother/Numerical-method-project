@@ -32,7 +32,7 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
                 for (let i = 0; i < row; i++) {
                     const colelement = [];
                     for (let j = 0; j < col ; j++) {
-                        colelement.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={j} placeholder={`a${i+1}${j+1}`} onInput={(event : React.ChangeEvent<HTMLInputElement> ) => onInputMartrixA(event, i, j)}/>);
+                        colelement.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={j} placeholder={`a${i+1}${j+1}`} onInput={(event : React.ChangeEvent<HTMLInputElement> ) => onInputMartrixA(event, i, j)} value={matrixA[i]?.[j]}/>);
                     }
                     tempTablematrix.push(<div className='flex justify-center items-center gap-2 mt-2' key={i}>{colelement}</div>);
                 }
@@ -62,7 +62,7 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
             setTimeout(() => {
                 const tempArr = [];
                 for (let i = 0; i < row; i++) {
-                    tempArr.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={i} placeholder={`b${i+1}`} onInput={(event : React.ChangeEvent<HTMLInputElement> ) => onInputArrB(event, i)}/>);
+                    tempArr.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={i} placeholder={`b${i+1}`} onInput={(event : React.ChangeEvent<HTMLInputElement> ) => onInputArrB(event, i)} value={arrB[i]}/>);
                 }
                 setTableArrB(tempArr);
             }, 0.001);
@@ -135,6 +135,7 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
         }
     }
 
+    
     useEffect(() => {
         initialMatrix();
     // eslint-disable-next-line react-hooks/exhaustive-deps
