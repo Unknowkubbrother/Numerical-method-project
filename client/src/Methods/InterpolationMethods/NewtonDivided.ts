@@ -34,6 +34,11 @@ export function NewtonDividedMethod( x:number[], points: {x:number, y:number , s
         statusCode: 400
     };
 
+    if (points.filter((point) => point.selected).length < 2) {
+        result.error = "You must select at least 2 points";
+        return result;
+    }
+
     const selectedPoints = points.filter(point => point.selected);
 
     const C = selectedPoints.map((point) => point.y);

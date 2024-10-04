@@ -31,6 +31,11 @@ export function LagrangeMethod( x:number[], points: {x:number, y:number , select
         statusCode: 400
     };
 
+    if (points.filter((point) => point.selected).length < 2) {
+        result.error = "You must select at least 2 points";
+        return result;
+    }
+
     const selectedPoints = points.filter((point) => point.selected);
 
     for(let xi=0; xi < x.length; xi++){

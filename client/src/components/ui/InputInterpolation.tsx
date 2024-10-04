@@ -28,6 +28,7 @@ const InputInterpolation = (props : Props) => {
       return newPoints;
     });
   }
+  
 
   const ChangeCountX = (countX: number) => {
     setX(prevX => {
@@ -44,6 +45,18 @@ const InputInterpolation = (props : Props) => {
       newPoints.map(point => {
         if (!point.selected){
           point.selected = true;
+        }
+      });
+      return newPoints;
+     });
+  }
+
+  const ClearSelectAll = () => {
+    setPoints(v => {
+      const newPoints = [...v];
+      newPoints.map(point => {
+        if (point.selected){
+          point.selected = false;
         }
       });
       return newPoints;
@@ -161,8 +174,13 @@ const InputInterpolation = (props : Props) => {
         </div>
         )}
 
-        <button className='text-sm font-semibold bg-secondary w-[80px] h-[40px] rounded-md duration-300 hover:scale-105 hover:bg-primary text-white' onClick={SelectAll}>Select All</button>
+        <div className='flex gap-3 mt-5'>
+          <button className='text-sm font-semibold bg-secondary w-[80px] h-[30px] rounded-md duration-300 hover:scale-105 hover:bg-primary text-white' onClick={SelectAll}>Select All</button>
+          <button className='text-sm font-semibold bg-rose-400 w-[120px] h-[30px] rounded-md duration-300 hover:scale-105 hover:bg-rose-500 text-white' onClick={ClearSelectAll}>Clear Select All</button>
+        </div>
        </div>
+
+       
 
         <div className='w-[500px] mt-5 rounded-md p-3 flex gap-3 flex-wrap justify-center bg-background'>
           {Array.from({length: countX}).map((_, index) => 
