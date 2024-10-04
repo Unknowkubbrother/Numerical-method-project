@@ -1,4 +1,5 @@
 import { round } from "mathjs";
+import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
 
 export interface GaussEliminationRequest {
   matrixA: number[][];
@@ -36,6 +37,17 @@ export function GaussEliminationMethod(matrixA: number[][], arrB: number[]): Gau
     iterations: [],
     statusCode: 400,
   };
+
+  if (hasUndefinedMatrix(matrixA)) {
+      result.error = "Matrix A contains undefined values";
+      return result;
+  }
+
+  if (hasUndefinedArr(arrB)) {
+      result.error = "Array B contains undefined values";
+      return result;
+  }
+
 
   try{
     if (matrixA[0].length > matrixA.length) {

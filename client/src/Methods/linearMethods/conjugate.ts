@@ -1,5 +1,6 @@
 import { Matrix, MathArray , MathType } from 'mathjs';
 import { add, multiply, transpose, sqrt , matrix, divide , round} from 'mathjs';
+import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
 
 
 export interface ConjugateRequest {
@@ -43,6 +44,21 @@ export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: 
         iterations: [],
         statusCode: 400
     };
+
+    if (hasUndefinedMatrix(matrixA)) {
+        result.error = "Matrix A contains undefined values";
+        return result;
+    }
+
+    if (hasUndefinedArr(arrB)) {
+        result.error = "Array B contains undefined values";
+        return result;
+    }
+
+    if (hasUndefinedArr(initialX)) {
+        result.error = "Initial X contains undefined values";
+        return result;
+    }
 
     try{    
         const calculateDistance0 = (residualMatrix: Matrix) => {

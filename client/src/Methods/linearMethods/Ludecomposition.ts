@@ -1,5 +1,5 @@
 import {round} from 'mathjs';
-
+import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
 export interface LudecompositionRequest {
     matrixA: number[][], 
     arrB: number[]
@@ -48,6 +48,16 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
         arrY: [],
         statusCode: 400
     };
+
+    if (hasUndefinedMatrix(matrixA)) {
+        result.error = "Matrix A contains undefined values";
+        return result;
+    }
+
+    if (hasUndefinedArr(arrB)) {
+        result.error = "Array B contains undefined values";
+        return result;
+    }
 
     try{
         if (matrixA[0].length > matrixA.length) {

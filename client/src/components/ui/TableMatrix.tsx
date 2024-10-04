@@ -216,6 +216,7 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
         if (location.pathname.split("/")[3] != "jacobi" && location.pathname.split("/")[3] != "gaussseidel" && location.pathname.split("/")[3] != "conjugate"){
             createElemetArrXi(props.col);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname.split("/")[3]]);
     
     useEffect(() => {

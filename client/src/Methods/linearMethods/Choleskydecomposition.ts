@@ -1,4 +1,5 @@
 import {round} from 'mathjs';
+import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
 
 export interface CholeskydecompositionRequest {
     matrixA: number[][], 
@@ -49,6 +50,17 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
         arrY: [],
         statusCode: 400
     };
+
+    if (hasUndefinedMatrix(matrixA)) {
+        result.error = "Matrix A contains undefined values";
+        return result;
+    }
+
+    if (hasUndefinedArr(arrB)) {
+        result.error = "Array B contains undefined values";
+        return result;
+    }
+
 
     try{
 

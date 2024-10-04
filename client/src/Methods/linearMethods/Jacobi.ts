@@ -1,4 +1,4 @@
-// import {round} from 'mathjs';
+import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
 
 export interface JacobiRequest {
     matrixA: number[][], 
@@ -57,6 +57,21 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
         iterations: [],
         statusCode: 400
     };
+
+    if (hasUndefinedMatrix(matrixA)) {
+        result.error = "Matrix A contains undefined values";
+        return result;
+    }
+
+    if (hasUndefinedArr(arrB)) {
+        result.error = "Array B contains undefined values";
+        return result;
+    }
+
+    if (hasUndefinedArr(initialX)) {
+        result.error = "Initial X contains undefined values";
+        return result;
+    }
 
 
     try{
