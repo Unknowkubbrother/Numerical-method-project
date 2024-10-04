@@ -20,6 +20,7 @@ function Conjugate() {
 
   const sendRequest = async () => {
     setloadingSecond(true);
+		setResult(null);
     const tempA = Data.matrixA.map((row) => row.map((col) => col));
     const tempB = Data.arrB.map((col) => col);
     const xi = Data.xi.map((col) => col);
