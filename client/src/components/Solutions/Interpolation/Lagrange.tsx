@@ -82,6 +82,11 @@ function Lagrange() {
             </div>
             }
 
+
+      <div className="flex flex-col gap-3 justify-start items-center">
+          <span><BlockMath math="\color{#02fa61}Solution"/></span>
+        </div>
+
           <div className="w-[90%] m-auto flex flex-col gap-3">
               {Result?.iterations.map((item, index) => {
                 return (

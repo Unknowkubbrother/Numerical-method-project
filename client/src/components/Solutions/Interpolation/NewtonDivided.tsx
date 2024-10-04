@@ -82,6 +82,10 @@ function NewtonDivided() {
             </div>
             }
 
+        <div className="flex flex-col gap-3 justify-start items-center">
+          <span><BlockMath math="\color{#02fa61}Solution"/></span>
+        </div>
+
 
           <div className="w-full flex justify-center items-center flex-wrap">
               {Result?.CIterations.map((item, index) => {

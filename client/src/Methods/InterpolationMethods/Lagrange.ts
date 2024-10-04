@@ -58,22 +58,6 @@ export function LagrangeMethod( x:number[], points: {x:number, y:number , select
         });
     }
 
-    // for(let i = 0; i < points.length; i++){
-    //     let L = 1;
-    //     for(let j = 0; j < points.length; j++){
-    //         if(i != j){
-    //             L *= (points[j].x - x) / (points[j].x - points[i].x);
-    //         }
-    //     }
-    //     const sum = L * points[i].y;
-    //     result.iterations.push({
-    //         L: L,
-    //         Y: points[i].y,
-    //         sum: sum
-    //     });
-    //     result.result += sum;
-    // }
-
     result.statusCode = 200;
 
     return result;
