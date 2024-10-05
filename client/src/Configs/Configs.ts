@@ -1,3 +1,5 @@
+export const domain = "http://localhost:3000";
+
 export const mainMenu = [
   {
     title: "Root of Equation",
@@ -76,7 +78,7 @@ export const mainMenu = [
     path: "../lobby/interpolation",
     menu: [
       {
-        path: '/lobby/interpolation/newton',
+        path: '/lobby/interpolation/newtondivided',
         title: "Newton's Divided Difference"
       },
       {

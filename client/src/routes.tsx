@@ -117,7 +117,7 @@ const router = createBrowserRouter([
             element: <Interpolation />,
             children:[
               {
-                path: 'newton',
+                path: 'newtondivided',
                 element: <NewtonDivided />
               },
               {

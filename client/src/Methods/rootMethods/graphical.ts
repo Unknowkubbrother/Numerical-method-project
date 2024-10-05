@@ -1,4 +1,5 @@
 import {evaluate,abs} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface GraphicalRequest {
     xStart: number;
@@ -24,7 +25,7 @@ export interface GraphicalResponse {
 }
   
 
-export function graphicalMethod (xStart: number, xEnd: number, func: string, errorFactor: number) : GraphicalResponse{
+export const graphicalMethod = async (xStart: number, xEnd: number, func: string, errorFactor: number) =>{
     xStart = Number(xStart);
     xEnd = Number(xEnd);
     const result : GraphicalResponse = {
@@ -96,6 +97,20 @@ export function graphicalMethod (xStart: number, xEnd: number, func: string, err
     }
 
     result.statusCode = 200;
+
+    
+   problemCreate({
+            type: "Root of Equation",
+            solution: "graphical",
+            input: {
+                "xStart" : xStart,
+                "xEnd" : xEnd,
+                "func" : func,
+                "errorFactor" : errorFactor
+            },
+            output: result
+        }
+    );
 
     return result;
 }

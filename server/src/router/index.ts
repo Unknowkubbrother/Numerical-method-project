@@ -1,6 +1,6 @@
 import express from 'express';
 
-import authentication from './authentication';
+import problem from './problem';
 import rootMethods from './rootMethods';
 import HWRootMethods from './HWRootMethods';
 import linearMethods from './linearMethods';
@@ -9,7 +9,7 @@ import interpolationMethods from './interpolationMethods';
 const router = express.Router();
 
 export default (): express.Router => {
-    authentication(router)
+    problem(router)
     rootMethods(router)
     HWRootMethods(router)
     linearMethods(router)
