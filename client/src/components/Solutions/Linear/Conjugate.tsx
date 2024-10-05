@@ -64,7 +64,7 @@ function Conjugate() {
     settypeseleted(type);
   };
 
-  const renderGraph = (result : ConjugateResponse) => {
+  const renderGraph = (result : ConjugateResponse | null) => {
     if (Data.matrixA.length == 2 && Data.matrixA[0].length == 2) {
       return (
         <div className="w-full mb-10">
@@ -103,6 +103,14 @@ function Conjugate() {
 
   useEffect(() => {
     const graphContainer = document.getElementById("graphcontour");
+    if (Result == null && graphRootRef.current != null) {
+      setTimeout(() => {
+        if (graphRootRef.current) {
+          graphRootRef.current.unmount();
+          graphRootRef.current = null;
+        }
+      }, 0.001);
+    }
     if (graphContainer != null && Result != null) {
       if (!graphRootRef.current) {
         graphRootRef.current = createRoot(graphContainer);

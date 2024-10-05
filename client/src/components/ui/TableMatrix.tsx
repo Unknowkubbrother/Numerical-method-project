@@ -193,7 +193,7 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
 
     const renderXiandError = () => {
         return (
-            <div className='mt-10'>
+            <div className='flex flex-col mt-10 justify-center items-center'>
                 <div className='flex gap-2'>
                 {TableArrXi}
             </div>
