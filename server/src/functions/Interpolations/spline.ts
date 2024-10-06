@@ -51,34 +51,33 @@ export function SplineMethods( x:number, points: {x:number, y:number}[], type : 
 
     if (type == "linear") {
 
+        let m : number[] = [];
+
+        const findM = (i : number) => {
+            if (m[i-1]) return m[i-1];
+            const M = (points[i].y - points[i-1].y) / (points[i].x - points[i-1].x);
+            m[i-1] = M;
+            return M;
+        }
+
         const fx = ( xValue: number) => {
-            for(let i=1 ; i < points.length ; i++){
+            for(let i = 1 ; i < points.length; i++){
+                const fx = points[i-1].y
+                const m = findM(i);
+                const offset  = points[i-1].x;
+    
                 if (xValue >= points[i-1].x && xValue <= points[i].x) {
-                    return i-1;
+                    return fx + m * (xValue - offset);
                 }
             }
         }
 
-        for(let i = 1 ; i < points.length; i++){
-            const fx = points[i-1].y
-            const m = (points[i].y - points[i-1].y) / (points[i].x - points[i-1].x);
-            const offset  = points[i-1].x;
+        const answer = fx(x);
 
-            result.iterations.push({
-                fx: fx,
-                m: m,
-                offset: offset,
-                slope: {
-                    xi: points[i-1].x,
-                    xi1: points[i].x
-                }
-            });
-        }
+        console.log(answer);
 
-        const resultindexAt = fx(x);
-
-        result.result.iteration = result.iterations[resultindexAt];
-        result.result.result = result.iterations[resultindexAt].m * (x - result.iterations[resultindexAt].offset) + result.iterations[resultindexAt].fx;
+        // result.result.iteration = result.iterations[resultindexAt];
+        // result.result.result = result.iterations[resultindexAt].m * (x - result.iterations[resultindexAt].offset) + result.iterations[resultindexAt].fx;
     }
 
     result.statusCode = 200;

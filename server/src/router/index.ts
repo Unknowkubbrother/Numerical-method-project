@@ -5,6 +5,7 @@ import rootMethods from './rootMethods';
 import HWRootMethods from './HWRootMethods';
 import linearMethods from './linearMethods';
 import interpolationMethods from './interpolationMethods';
+import Regression from './regression';
 
 const router = express.Router();
 
@@ -14,5 +15,6 @@ export default (): express.Router => {
     HWRootMethods(router)
     linearMethods(router)
     interpolationMethods(router)
+    Regression(router)
     return router;
 }
