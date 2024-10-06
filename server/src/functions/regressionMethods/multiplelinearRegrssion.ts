@@ -34,8 +34,14 @@ export function multipleLinearRegressionMethods( x:number[], points: {x:number[]
     const getXiXjSum = (i : number , j : number) => {
         let key = `${i}-${j}`;
         let key2 = `${j}-${i}`;
-        if (xixjSumMemory[key]) return xixjSumMemory[key];
-        if (xixjSumMemory[key2]) return xixjSumMemory[key2];
+        if (xixjSumMemory[key]) {
+            console.log('memory');
+            return xixjSumMemory[key];
+        }
+        if (xixjSumMemory[key2]) {
+            console.log('memory');
+            return xixjSumMemory[key2]
+        };
 
         let sum = 0;
         for (let k = 0; k < n; k++){
@@ -95,5 +101,18 @@ export function multipleLinearRegressionMethods( x:number[], points: {x:number[]
 //         {"x": [1,2], "y": 9},
 //         {"x": [2,1], "y": 8},
 //         {"x": [2,2], "y": 11}
+//     ]
+// }
+
+// {
+//     "x": [1,2,3], 
+//     "points": [
+//         {"x": [1,0,1], "y": 4},
+//         {"x": [0,1,3], "y": -5},
+//         {"x": [2,4,1], "y": -6},
+//         {"x": [3,2,2], "y": 0},
+//         {"x": [4,1,5], "y": -1},
+//         {"x": [2,3,3], "y": -7},
+//         {"x": [1,6,4], "y": -20}
 //     ]
 // }
