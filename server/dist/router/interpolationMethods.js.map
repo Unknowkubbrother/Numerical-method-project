@@ -1,0 +1,1 @@
+{"version":3,"file":"interpolationMethods.js","sourceRoot":"","sources":["../../src/router/interpolationMethods.ts"],"names":[],"mappings":";;AACA,gEAAwE;AACxE,kBAAe,CAAC,MAAsB,EAAE,EAAE;IACtC,MAAM,CAAC,IAAI,CAAC,uBAAuB,EAAE,sBAAM,CAAC,CAAA;IAC5C,MAAM,CAAC,IAAI,CAAC,yBAAyB,EAAE,wBAAQ,CAAC,CAAA;IAChD,MAAM,CAAC,IAAI,CAAC,uBAAuB,EAAE,sBAAM,CAAC,CAAA;AAEhD,CAAC,CAAA"}
