@@ -24,7 +24,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URL)
 mongoose.connection.on('error', (error: Error) => console.log(error));
 
-swagger(app);
+// swagger(app);
 
 app.listen(process.env.SERVER_PORT || 3000, () => {
     console.log(`Sever running on port: ${process.env.SERVER_PORT || 3000}`);
