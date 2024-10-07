@@ -2,7 +2,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import fs from 'fs';
 import YAML from 'yaml';
-const file = fs.readFileSync('./swagger.yaml', 'utf8');
+const file = fs.readFileSync('./src/swagger.yaml', 'utf8');
 const swaggerDocument = YAML.parse(file);
 
 
