@@ -13,6 +13,12 @@
             "dest": "dist/index.js"
         }
     ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ],
     "git": {
         "deploymentEnabled": {
           "main": true
