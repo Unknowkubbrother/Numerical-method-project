@@ -1,4 +1,5 @@
 import {evaluate,abs} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface SecantRequest {
     xInitial0: number;
@@ -98,6 +99,17 @@ export function SecantMethod (xInitial0: number, xInitial1: number, func: string
 
     
     result.statusCode = 200;
+
+    problemCreate({
+        type: "Root of Equation",
+        solution: "secant",
+        input: {
+            "xInitial0" : xInitial0,
+            "xInitial1" : xInitial1,
+            "func" : func,
+            "errorFactor" : errorFactor
+        }
+    });
 
     return result;
 

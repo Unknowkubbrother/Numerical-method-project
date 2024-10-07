@@ -1,5 +1,6 @@
 // import {round} from 'mathjs';
 import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
+import {problemCreate} from '../../Api/problem';
 
 export interface GaussSeiDelRequest {
     matrixA: number[][], 
@@ -146,6 +147,16 @@ export function GaussSeiDelMethod(matrixA: number[][], arrB: number[] , initialX
         };
 
         result.statusCode = 200;
+        problemCreate({
+            type: "Linear Algebraic Equation",
+            solution: "gaussseidel",
+            input: {
+                "matrixA" : matrixA,
+                "initialX" : initialX,
+                "arrB" : arrB,
+                "errorFactor" : errorFactor
+            }
+        });
 
         return result;
    }catch(e){

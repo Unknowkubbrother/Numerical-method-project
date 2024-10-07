@@ -1,8 +1,9 @@
 import {evaluate,abs} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface BisectionRequest {
-    xStart: number;
-    xEnd: number;
+    xL: number;
+    xR: number;
     func: string;
     errorFactor: number;
 }
@@ -90,6 +91,17 @@ export function bisectionMethod (xL: number, xR: number, func: string, errorFact
     
     result.statusCode = 200;
 
+    problemCreate({
+        type: "Root of Equation",
+        solution: "bisection",
+        input: {
+            "xL" : xL,
+            "xR" : xR,
+            "func" : func,
+            "errorFactor" : errorFactor
+        }
+    }
+);
     return result;
 
 

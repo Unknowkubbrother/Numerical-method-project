@@ -10,9 +10,7 @@ interface Problem {
 
 export const problemCreate = async (problem : Problem) => {
     try {
-        const response = await axios.post(`${domain}/problem/create`, { 
-            problem : problem 
-        });
+        const response = await axios.post(`${domain}/problem/create`, problem);
         return response.data;
     } catch (error) {
         console.error(error);

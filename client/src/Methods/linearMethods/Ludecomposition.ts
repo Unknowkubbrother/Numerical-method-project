@@ -1,5 +1,6 @@
 import {round} from 'mathjs';
 import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
+import {problemCreate} from '../../Api/problem';
 export interface LudecompositionRequest {
     matrixA: number[][], 
     arrB: number[]
@@ -160,6 +161,15 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
             result.result = arrX;
         
             result.statusCode = 200;
+
+            problemCreate({
+                type: "Linear Algebraic Equation",
+                solution: "ludecomposition",
+                input: {
+                    "matrixA" : matrixA,
+                    "arrB" : arrB
+                }
+            });
         
             return result;
     }catch(e){

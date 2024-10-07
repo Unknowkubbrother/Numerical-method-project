@@ -1,4 +1,5 @@
 import {evaluate,derivative,abs} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface NewTonRequest {
     xInitial: number;
@@ -89,6 +90,16 @@ export function NewTonMethod (xInitial: number, func: string, errorFactor: numbe
     }
 
     result.statusCode = 200;
+
+    problemCreate({
+        type: "Root of Equation",
+        solution: "newton",
+        input: {
+            "xInitial" : xInitial,
+            "func" : func,
+            "errorFactor" : errorFactor
+        }
+    });
 
     return result;
 

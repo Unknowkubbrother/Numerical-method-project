@@ -1,5 +1,6 @@
 import {det} from 'mathjs';
 import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
+import {problemCreate} from '../../Api/problem';
 
 export interface CramerRequest {
     matrixA: number[][], 
@@ -62,6 +63,15 @@ export function CramerMethod (matrixA: number[][], arrB: number[]) : CramerRespo
         }
         
         result.statusCode = 200;
+
+        problemCreate({
+            type: "Linear Algebraic Equation",
+            solution: "cramer",
+            input: {
+                "matrixA" : matrixA,
+                "arrB" : arrB
+            }
+        });
     
         return result;
     }catch(e){

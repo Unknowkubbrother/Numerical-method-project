@@ -1,3 +1,5 @@
+import {problemCreate} from '../../Api/problem';
+
 export interface NewtonDividedRequest {
     x: number[];
     points: {
@@ -77,6 +79,15 @@ export function NewtonDividedMethod( x:number[], points: {x:number, y:number , s
     }
 
     result.statusCode = 200;
+
+    problemCreate({
+        type: "Interpolation",
+        solution: "newtondivided",
+        input: {
+            "x" : x,
+            "points" : points
+        }
+    });
 
     return result;
 

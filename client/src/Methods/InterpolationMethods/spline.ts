@@ -1,3 +1,5 @@
+import {problemCreate} from '../../Api/problem';
+
 export interface SplineRequest {
     x: number[],
     points: {
@@ -110,6 +112,16 @@ export function SplineMethods( x:number[], points: {x:number, y:number , selecte
     }
 
     result.statusCode = 200;
+
+    problemCreate({
+        type: "Interpolation",
+        solution: "spline",
+        input: {
+            "x" : x,
+            "points" : points,
+            "type" : type
+        },
+    });
 
     return result;
 

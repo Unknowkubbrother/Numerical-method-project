@@ -36,35 +36,34 @@ interface IProblem {
 }
 
 const ProblemSchema = new mongoose.Schema({
-    problem: {
-        type: {
-            type: String,
-            enum: Object.values(ProblemType),
-            required: true,
-        },
-        solution: {
-            type: String,
-            enum: Object.values(SolutionType),
-            required: true,
-        },
-        input: { type: Object, required: true },
-        output: { type: Object, required: false },
+    type: {
+        type: String,
+        enum: Object.values(ProblemType),
+        required: true,
     },
+    solution: {
+        type: String,
+        enum: Object.values(SolutionType),
+        required: true,
+    },
+    input: { type: Object, required: true },
+    output: { type: Object, required: false },
     createdAt: { type: Date, default: Date.now },
 });
 
 export const Problem = mongoose.model('problems', ProblemSchema);
 
-export const createProblem = (values: { problem: IProblem }) =>
+export const createProblem = (values: IProblem) =>
     new Problem(values).save().then((problem) => problem.toObject());
 
 export const getProblem = async (input: object, type: string, solution: string) => {
     const problem = await Problem.findOne({
-        "problem.type": type,
-        "problem.solution": solution
+        input: { $eq: input },
+        type: type,
+        solution: solution,
     });
 
-    if (problem && lodash.isEqual(lodash.toPlainObject(problem).problem.input, input)) {
+    if (problem) {
         return problem.toObject();
     }
 

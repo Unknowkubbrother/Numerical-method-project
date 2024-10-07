@@ -1,5 +1,6 @@
 import { round ,multiply} from "mathjs";
 import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
+import {problemCreate} from '../../Api/problem';
 
 export interface MatrixInversionRequest {
     matrixA: number[][], 
@@ -166,6 +167,15 @@ export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : Mat
         result.result.x = multiply(matrixAIn, arrB).slice(0, matrixA[0].length);
         
         result.statusCode = 200;
+
+        problemCreate({
+            type: "Linear Algebraic Equation",
+            solution: "matrixinverse",
+            input: {
+                "matrixA" : matrixA,
+                "arrB" : arrB
+            }
+        });
     
         return result;
       }catch(e){

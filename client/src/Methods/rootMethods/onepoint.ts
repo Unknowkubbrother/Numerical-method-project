@@ -1,4 +1,5 @@
 import {evaluate,abs} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface OnePointRequest {
     xInitial: number;
@@ -92,6 +93,16 @@ export function OnepointMethod (xInitial: number, func: string, errorFactor: num
     }
     
     result.statusCode = 200;
+
+    problemCreate({
+        type: "Root of Equation",
+        solution: "onepoint",
+        input: {
+            "xInitial" : xInitial,
+            "func" : func,
+            "errorFactor" : errorFactor
+        }
+    });
 
     return result;
 

@@ -107,8 +107,7 @@ export const graphicalMethod = async (xStart: number, xEnd: number, func: string
                 "xEnd" : xEnd,
                 "func" : func,
                 "errorFactor" : errorFactor
-            },
-            output: result
+            }
         }
     );
 

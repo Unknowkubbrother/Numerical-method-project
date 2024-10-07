@@ -1,5 +1,6 @@
 import {round} from 'mathjs';
 import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
+import {problemCreate} from '../../Api/problem';
 
 export interface CholeskydecompositionRequest {
     matrixA: number[][], 
@@ -172,6 +173,14 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
         result.result = arrX;
     
         result.statusCode = 200;
+        problemCreate({
+            type: "Linear Algebraic Equation",
+            solution: "choleskydecomposition",
+            input: {
+                "matrixA" : matrixA,
+                "arrB" : arrB
+            }
+        });
     
         return result;
     }catch(e){

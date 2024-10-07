@@ -1,8 +1,9 @@
 import {evaluate,abs} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface FalsePositionRequest {
-    xStart: number;
-    xEnd: number;
+    xL: number;
+    xR: number;
     func: string;
     errorFactor: number;
 }
@@ -92,6 +93,17 @@ export function falsePositionMethod (xL: number, xR: number, func: string, error
     }
     
     result.statusCode = 200;
+
+    problemCreate({
+        type: "Root of Equation",
+        solution: "falseposition",
+        input: {
+            "xL" : xL,
+            "xR" : xR,
+            "func" : func,
+            "errorFactor" : errorFactor
+        }
+    });
 
     return result;
 

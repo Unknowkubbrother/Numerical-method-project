@@ -1,4 +1,5 @@
 import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
+import {problemCreate} from '../../Api/problem';
 
 export interface JacobiRequest {
     matrixA: number[][], 
@@ -145,6 +146,17 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
         };
     
         result.statusCode = 200;
+
+        problemCreate({
+            type: "Linear Algebraic Equation",
+            solution: "jacobi",
+            input: {
+                "matrixA" : matrixA,
+                "initialX" : initialX,
+                "arrB" : arrB,
+                "errorFactor" : errorFactor
+            }
+        });
     
         return result;
     }catch(err){

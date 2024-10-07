@@ -1,5 +1,6 @@
 import { round } from "mathjs";
 import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
+import {problemCreate} from '../../Api/problem';
 
 export interface GaussEliminationRequest {
   matrixA: number[][];
@@ -102,6 +103,15 @@ export function GaussEliminationMethod(matrixA: number[][], arrB: number[]): Gau
     }
 
     result.statusCode = 200;
+
+    problemCreate({
+      type: "Linear Algebraic Equation",
+      solution: "gausselimination",
+      input: {
+          "matrixA" : matrixA,
+          "arrB" : arrB
+      }
+  });
 
     return result;
   }catch(e){

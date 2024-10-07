@@ -1,6 +1,7 @@
 import { Matrix, MathArray , MathType } from 'mathjs';
 import { add, multiply, transpose, sqrt , matrix, divide , round} from 'mathjs';
 import { hasUndefinedMatrix, hasUndefinedArr } from "../../helper";
+import {problemCreate} from '../../Api/problem';
 
 
 export interface ConjugateRequest {
@@ -165,6 +166,17 @@ export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: 
         result.iter = iterations;
         result.result = result.iterations[result.iterations.length - 1];
         result.statusCode = 200;
+        
+        problemCreate({
+            type: "Linear Algebraic Equation",
+            solution: "conjugate",
+            input: {
+                "matrixA" : matrixA,
+                "initialX" : initialX,
+                "arrB" : arrB,
+                "errorFactor" : errorFactor
+            }
+        });
     
         return result;
     }catch(e){

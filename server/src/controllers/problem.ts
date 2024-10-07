@@ -12,28 +12,26 @@ interface Problem {
 export const problemCreate = async (req: express.Request, res: express.Response) => {
     try{
 
-        const { problem } : {problem : Problem} = req.body;
+        const { type, solution, input , output} : Problem= req.body;
         
-         if(!problem){
+         if(!type || !solution || !input){
             return res.sendStatus(400);
          }
 
-        const response  = await createProblem({ problem });
+         const checkExist = await getProblem(input , type , solution);
+
+         if (checkExist){
+            return res.sendStatus(409);
+         }
+
+        const response  = await createProblem({
+            type,
+            solution,
+            input,
+            output
+         });
         
         return res.status(201).json(response).end();
-
-
-        // {
-        //     "problem":{
-        //         "type": "Root of Equation",
-        //         "solution": "graphical",
-        //         "input" : {
-        //             "equation" : "x^2-7",
-        //             "xStart" : 1,
-        //             "xEnd" : 10
-        //         }
-        //     }
-        // }
 
     }catch (error) {
         console.log(error);

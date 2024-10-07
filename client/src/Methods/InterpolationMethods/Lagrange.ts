@@ -1,3 +1,4 @@
+import {problemCreate} from '../../Api/problem';
 export interface LagrangeRequest {
     x: number[],
     points: {
@@ -64,6 +65,15 @@ export function LagrangeMethod( x:number[], points: {x:number, y:number , select
     }
 
     result.statusCode = 200;
+    
+    problemCreate({
+        type: "Interpolation",
+        solution: "lagrange",
+        input: {
+            "x" : x,
+            "points" : points
+        }
+    });
 
     return result;
 
