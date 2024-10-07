@@ -28,6 +28,8 @@ export interface GraphicalResponse {
 export const graphicalMethod = async (xStart: number, xEnd: number, func: string, errorFactor: number) =>{
     xStart = Number(xStart);
     xEnd = Number(xEnd);
+    const tempXStart = xStart;
+    const tempXEnd = xEnd;
     const result : GraphicalResponse = {
         result: {
             x: 0,
@@ -103,11 +105,12 @@ export const graphicalMethod = async (xStart: number, xEnd: number, func: string
             type: "Root of Equation",
             solution: "graphical",
             input: {
-                "xStart" : xStart,
-                "xEnd" : xEnd,
+                "xStart" : tempXStart,
+                "xEnd" : tempXEnd,
                 "func" : func,
                 "errorFactor" : errorFactor
-            }
+            },
+            output: result
         }
     );
 

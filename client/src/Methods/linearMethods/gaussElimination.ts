@@ -108,9 +108,10 @@ export function GaussEliminationMethod(matrixA: number[][], arrB: number[]): Gau
       type: "Linear Algebraic Equation",
       solution: "gausselimination",
       input: {
-          "matrixA" : matrixA,
-          "arrB" : arrB
-      }
+          "matrixA" : result.default.matrixA,
+          "arrB" : result.default.arrB
+      },
+      // output: result
   });
 
     return result;

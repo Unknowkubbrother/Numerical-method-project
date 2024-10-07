@@ -132,9 +132,10 @@ export function GaussJordanMethod(matrixA: number[][], arrB: number[]) : GaussJo
             type: "Linear Algebraic Equation",
             solution: "gaussjordan",
             input: {
-                "matrixA" : matrixA,
-                "arrB" : arrB
-            }
+                "matrixA" : result.default.matrixA,
+                "arrB" : result.default.arrB
+            },
+            // output: result
         });
     
         return result;

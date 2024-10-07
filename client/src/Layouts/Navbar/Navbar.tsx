@@ -1,11 +1,15 @@
-import { Link , useNavigate, useLocation  } from 'react-router-dom'
+import { useNavigate, useLocation  } from 'react-router-dom'
 import logo from '../../assets/logo.png'
+import {MyFunctionContext} from "../../App";
+import {useContext} from "react";
 
 function Navbar() {
   const navigate = useNavigate();
   const currentLocation = useLocation();
+  const {setLoading} = useContext(MyFunctionContext);
 
   const setPage = (page: string) => {
+    setLoading(true);
     navigate(page);
   }
 
@@ -18,11 +22,14 @@ function Navbar() {
           <span className='text-lg'>Numerical methods</span>
         </div>
         <ul className='flex justify-center items-center gap-5 font-semibold'>
-            <li className={`hover:scale-105 duration-300 ${currentLocation.pathname === '/home' ? 'active' : ''}`}>
-                <Link to="/home">Home</Link>
+            <li className={`hover:scale-105 duration-300 cursor-pointer ${currentLocation.pathname === '/home' ? 'active' : ''}`} onClick={()=> setPage('/home')}>
+                Home
             </li>
-            <li className={`hover:scale-105 duration-300 ${currentLocation.pathname === '/login' ? 'active' : ''}`}>
-                <Link to="/login">Login</Link>
+            <li className={`hover:scale-105 duration-300  cursor-pointer ${location.pathname.split("/")[1] === 'lobby' ? 'active' : ''}`} onClick={()=> setPage('/lobby/root/graphical')}>
+                Calculate
+            </li>
+            <li className={`hover:scale-105 duration-300 cursor-pointer ${currentLocation.pathname === '/problems' ? 'active' : ''}`} onClick={()=> setPage('/problems')}>
+                Problems
             </li>
         </ul>
     </nav>

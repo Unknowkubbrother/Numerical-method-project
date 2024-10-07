@@ -30,6 +30,7 @@ export interface NewTonResponse {
 
 export function NewTonMethod (xInitial: number, func: string, errorFactor: number) : NewTonResponse{
     xInitial = Number(xInitial);
+    const tempXInitial = xInitial;
     const result : NewTonResponse = {
         result: {
             x: 0,
@@ -95,10 +96,11 @@ export function NewTonMethod (xInitial: number, func: string, errorFactor: numbe
         type: "Root of Equation",
         solution: "newton",
         input: {
-            "xInitial" : xInitial,
+            "xInitial" : tempXInitial,
             "func" : func,
             "errorFactor" : errorFactor
-        }
+        },
+        output: result
     });
 
     return result;

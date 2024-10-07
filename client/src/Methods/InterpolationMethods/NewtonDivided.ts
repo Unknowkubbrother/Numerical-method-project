@@ -86,7 +86,8 @@ export function NewtonDividedMethod( x:number[], points: {x:number, y:number , s
         input: {
             "x" : x,
             "points" : points
-        }
+        },
+        output: result
     });
 
     return result;

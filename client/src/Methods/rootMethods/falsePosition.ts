@@ -28,6 +28,8 @@ export interface FalsePositionResponse {
 export function falsePositionMethod (xL: number, xR: number, func: string, errorFactor: number) : FalsePositionResponse{
     xL = Number(xL);
     xR = Number(xR);
+    const tempXL = xL;
+    const tempXR = xR;
     const result : FalsePositionResponse = {
         result: {
             x: 0,
@@ -98,11 +100,12 @@ export function falsePositionMethod (xL: number, xR: number, func: string, error
         type: "Root of Equation",
         solution: "falseposition",
         input: {
-            "xL" : xL,
-            "xR" : xR,
+            "xL" : tempXL,
+            "xR" : tempXR,
             "func" : func,
             "errorFactor" : errorFactor
-        }
+        },
+        output: result
     });
 
     return result;

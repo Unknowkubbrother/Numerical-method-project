@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProblem , ProblemType, SolutionType , getProblem } from '../models/problem';
+import { createProblem , ProblemType, SolutionType , getProblem, getProblemsByType,getProblems } from '../models/problem';
 // import axios from 'axios';
 
 interface Problem {
@@ -39,11 +39,46 @@ export const problemCreate = async (req: express.Request, res: express.Response)
     }
 }
 
-export const problemGet = async (req: express.Request, res: express.Response) => {
+export const problemGetByITS = async (req: express.Request, res: express.Response) => {
     try{
         const {input , type , solution} = req.body;
 
         const response = await getProblem(input , type , solution);
+
+        if (response){
+            return res.status(200).json(response).end();
+        }
+
+        return res.sendStatus(404);
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
+export const problemGetByType = async (req: express.Request, res: express.Response) => {
+    try{
+        const {type} = req.body;
+
+        const response = await getProblemsByType(type).select('type solution input output.result createdAt');
+
+        if (response){
+            return res.status(200).json(response).end();
+        }
+
+        return res.sendStatus(404);
+        
+    }catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+
+}
+
+export const problemGetAll = async (req: express.Request, res: express.Response) => {
+    try{
+        const response = await getProblems();
 
         if (response){
             return res.status(200).json(response).end();

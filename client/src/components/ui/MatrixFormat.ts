@@ -1,4 +1,4 @@
-
+import {round} from 'mathjs';
 export const DetFormat = (matrix: number[][]) => {
   let str = "";
   for (let i = 0; i < matrix.length; i++) {
@@ -18,7 +18,7 @@ export const DetFormat = (matrix: number[][]) => {
 export const ArrayFormat = (arr: number[]) => {
   let str = "";
   for (let i = 0; i < arr.length; i++) {
-    str += `& ${arr[i]} &`;
+    str += `& ${round(Number(arr[i]),6)} &`;
     if (i !== arr.length - 1) {
       str += "\\\\";
     }
@@ -119,7 +119,8 @@ export const MatrixFormat = (matrix:number[][]) => {
   let str = "";
   for(let i = 0; i < matrix.length; i++){
     for(let j = 0; j < matrix[i].length; j++){
-      str += matrix[i][j] + " ";
+      // str += matrix[i][j] + " ";
+      str += `${round(Number(matrix[i][j]),6)} `;
       if(j !== matrix[i].length - 1){
         str += "& ";
       }

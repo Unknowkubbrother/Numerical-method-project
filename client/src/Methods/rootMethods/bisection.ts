@@ -28,6 +28,8 @@ export interface BisectionResponse {
 export function bisectionMethod (xL: number, xR: number, func: string, errorFactor: number) : BisectionResponse{
     xL = Number(xL);
     xR = Number(xR);
+    const tempXL = xL;
+    const tempXR = xR;
     const result : BisectionResponse = {
         result: {
             x: 0,
@@ -95,11 +97,12 @@ export function bisectionMethod (xL: number, xR: number, func: string, errorFact
         type: "Root of Equation",
         solution: "bisection",
         input: {
-            "xL" : xL,
-            "xR" : xR,
+            "xL" : tempXL,
+            "xR" : tempXR,
             "func" : func,
             "errorFactor" : errorFactor
-        }
+        },
+        output: result
     }
 );
     return result;

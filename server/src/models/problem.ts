@@ -47,7 +47,7 @@ const ProblemSchema = new mongoose.Schema({
         required: true,
     },
     input: { type: Object, required: true },
-    output: { type: Object, required: false },
+    output: { type: Object, required: false , select: false },
     createdAt: { type: Date, default: Date.now },
 });
 
@@ -56,16 +56,11 @@ export const Problem = mongoose.model('problems', ProblemSchema);
 export const createProblem = (values: IProblem) =>
     new Problem(values).save().then((problem) => problem.toObject());
 
-export const getProblem = async (input: object, type: string, solution: string) => {
-    const problem = await Problem.findOne({
-        input: { $eq: input },
-        type: type,
-        solution: solution,
-    });
+export const getProblem = (input: object, type: string, solution: string) => Problem.findOne({
+    input: { $eq: input },
+    type: type,
+    solution: solution,
+});
 
-    if (problem) {
-        return problem.toObject();
-    }
-
-    return null;
-}
+export const getProblemsByType = (type: string) => Problem.find({ type: type })
+export const getProblems = () => Problem.find();

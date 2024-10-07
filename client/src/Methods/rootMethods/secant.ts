@@ -32,6 +32,8 @@ export interface SecantResponse {
 export function SecantMethod (xInitial0: number, xInitial1: number, func: string, errorFactor: number) : SecantResponse{
     xInitial0 = Number(xInitial0);
     xInitial1 = Number(xInitial1);
+    const tempXInitial0 = xInitial0;
+    const tempXInitial1 = xInitial1
     const result : SecantResponse = {
         result: {
             x: 0,
@@ -104,11 +106,12 @@ export function SecantMethod (xInitial0: number, xInitial1: number, func: string
         type: "Root of Equation",
         solution: "secant",
         input: {
-            "xInitial0" : xInitial0,
-            "xInitial1" : xInitial1,
+            "xInitial0" : tempXInitial0,
+            "xInitial1" : tempXInitial1,
             "func" : func,
             "errorFactor" : errorFactor
-        }
+        },
+        output: result
     });
 
     return result;

@@ -172,9 +172,10 @@ export function MatrixInversionMethod(matrixA: number[][], arrB: number[]) : Mat
             type: "Linear Algebraic Equation",
             solution: "matrixinverse",
             input: {
-                "matrixA" : matrixA,
-                "arrB" : arrB
-            }
+                "matrixA" : result.default.matrixA,
+                "arrB" : result.default.arrB
+            },
+            // output: result
         });
     
         return result;

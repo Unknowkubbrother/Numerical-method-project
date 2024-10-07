@@ -166,7 +166,7 @@ export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: 
         result.iter = iterations;
         result.result = result.iterations[result.iterations.length - 1];
         result.statusCode = 200;
-        
+
         problemCreate({
             type: "Linear Algebraic Equation",
             solution: "conjugate",
@@ -175,7 +175,8 @@ export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: 
                 "initialX" : initialX,
                 "arrB" : arrB,
                 "errorFactor" : errorFactor
-            }
+            },
+            // output: result
         });
     
         return result;

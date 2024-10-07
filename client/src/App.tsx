@@ -30,7 +30,7 @@ function App() {
       setLoading(false);
       setloadingMain(false);
     }, 1000);
-  }, []);
+  }, [loading,loadingMain]);
 
   return (
     <MyFunctionContext.Provider value={{setLoading,loading,setloadingSecond,loadingSecond}}>

@@ -177,9 +177,10 @@ export function CholeskydecompositionMethod(matrixA: number[][], arrB: number[])
             type: "Linear Algebraic Equation",
             solution: "choleskydecomposition",
             input: {
-                "matrixA" : matrixA,
-                "arrB" : arrB
-            }
+                "matrixA" : result.defaultMatrix.matrixA,
+                "arrB" : result.defaultMatrix.arrB
+            },
+            // output: result
         });
     
         return result;

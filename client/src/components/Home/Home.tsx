@@ -1,12 +1,12 @@
 // import React from 'react'
 import Chart from "react-apexcharts";
 import { useNavigate } from "react-router-dom";
-import {useContext} from "react";
+import {useContext,useEffect} from "react";
 import {MyFunctionContext} from "../../App";
 
 function Home() {
   const navigate = useNavigate();
-  const {setLoading} = useContext(MyFunctionContext);
+  const {setLoading,loading} = useContext(MyFunctionContext);
   const state = {
     options: {
       chart: {
@@ -31,11 +31,24 @@ function Home() {
   };
 
   const onClickToLobby = () => {
-    navigate("/lobby");
+    navigate("/lobby/root/graphical");
     setLoading(true);
   }
 
+  const onClickToProblems = () => {
+    navigate("/problems");
+    setLoading(true);
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+        setLoading(false);
+    }, 500);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
+
   return (
+    (loading ? <></> : 
     <div className="w-full h-screen overflow-x">
       <div className="w-full h-full flex min-[340px]:flex-col lg:flex-row min-[340px]:mt-[200px] min-[340px]:min-[340px]:items-center lg:justify-around lg:items-center lg:px-[7rem] xl:px-[15rem] lg:m-0 ">
         {/* Left */}
@@ -51,6 +64,9 @@ function Home() {
             </button>
             <button className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500">
               Document
+            </button>
+            <button className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500" onClick={onClickToProblems}>
+              Problems
             </button>
           </div>
         </div>
@@ -70,6 +86,7 @@ function Home() {
         {/* endRight */}
       </div>
     </div>
+    )
   );
 }
 

@@ -151,11 +151,12 @@ export function GaussSeiDelMethod(matrixA: number[][], arrB: number[] , initialX
             type: "Linear Algebraic Equation",
             solution: "gaussseidel",
             input: {
-                "matrixA" : matrixA,
+                "matrixA" : result.default.matrixA,
+                "arrB" : result.default.arrB,
                 "initialX" : initialX,
-                "arrB" : arrB,
                 "errorFactor" : errorFactor
-            }
+            },
+            // output: result
         });
 
         return result;

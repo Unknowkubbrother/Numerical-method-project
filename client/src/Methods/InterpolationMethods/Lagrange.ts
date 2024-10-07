@@ -65,14 +65,15 @@ export function LagrangeMethod( x:number[], points: {x:number, y:number , select
     }
 
     result.statusCode = 200;
-    
+
     problemCreate({
         type: "Interpolation",
         solution: "lagrange",
         input: {
             "x" : x,
             "points" : points
-        }
+        },
+        output: result
     });
 
     return result;

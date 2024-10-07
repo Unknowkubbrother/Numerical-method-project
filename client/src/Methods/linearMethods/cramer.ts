@@ -70,7 +70,8 @@ export function CramerMethod (matrixA: number[][], arrB: number[]) : CramerRespo
             input: {
                 "matrixA" : matrixA,
                 "arrB" : arrB
-            }
+            },
+            // output: result
         });
     
         return result;

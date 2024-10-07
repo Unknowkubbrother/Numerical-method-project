@@ -151,11 +151,12 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
             type: "Linear Algebraic Equation",
             solution: "jacobi",
             input: {
-                "matrixA" : matrixA,
+                "matrixA" : result.default.matrixA,
+                "arrB" : result.default.arrB,
                 "initialX" : initialX,
-                "arrB" : arrB,
                 "errorFactor" : errorFactor
-            }
+            },
+            // output: result
         });
     
         return result;

@@ -34,6 +34,7 @@ export interface OnePointResponse {
 
 export function OnepointMethod (xInitial: number, func: string, errorFactor: number) : OnePointResponse{
     xInitial = Number(xInitial);
+    const tempXInitial = xInitial;
     const result : OnePointResponse = {
         result: {
             x: 0,
@@ -98,10 +99,11 @@ export function OnepointMethod (xInitial: number, func: string, errorFactor: num
         type: "Root of Equation",
         solution: "onepoint",
         input: {
-            "xInitial" : xInitial,
+            "xInitial" : tempXInitial,
             "func" : func,
             "errorFactor" : errorFactor
-        }
+        },
+        output: result
     });
 
     return result;

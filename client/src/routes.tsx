@@ -26,6 +26,7 @@ import Interpolation from './components/Solutions/Interpolation/Interpolation.ts
 import NewtonDivided from './components/Solutions/Interpolation/NewtonDivided.tsx';
 import Lagrange from './components/Solutions/Interpolation/Lagrange.tsx';
 import Spline from './components/Solutions/Interpolation/Spline.tsx';
+import Problems from './components/Problems/Problems.tsx'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'home',
         element: <Home />,
+      },
+      {
+        path: 'problems',
+        element: <Problems />,
       },
       {
         path: 'lobby',

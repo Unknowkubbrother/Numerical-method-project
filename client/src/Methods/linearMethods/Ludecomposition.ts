@@ -166,9 +166,10 @@ export function LudecompositionMethod(matrixA: number[][], arrB: number[]) : Lud
                 type: "Linear Algebraic Equation",
                 solution: "ludecomposition",
                 input: {
-                    "matrixA" : matrixA,
-                    "arrB" : arrB
-                }
+                    "matrixA" : result.defaultMatrix.matrixA,
+                    "arrB" : result.defaultMatrix.arrB
+                },
+                // output: result
             });
         
             return result;
