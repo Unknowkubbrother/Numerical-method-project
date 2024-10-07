@@ -1,4 +1,4 @@
-export const domain = "https://numer-api.unknowkubbrother.net/";
+export const domain = "https://numer-api.unknowkubbrother.net";
 
 export const mainMenu = [
   {
