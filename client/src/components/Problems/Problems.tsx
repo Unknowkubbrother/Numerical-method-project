@@ -48,7 +48,7 @@ interface InterpolationRequest {
 
 
 function Problems() {
-  const { setLoading, loading } = useContext(MyFunctionContext);
+  const { setLoading, loading,setloadingSecond , loadingSecond} = useContext(MyFunctionContext);
   const [selectedMenu, setselectedMenu] = useState(mainMenu[0].title);
   const [table, setTable] = useState<ProblemItem[]>([]);
 
@@ -58,26 +58,37 @@ function Problems() {
     menu: { title: string; path: string }[];
   }) => {
     setselectedMenu(item.title);
-    const data = await problemGetByType(item.title);
-    setTable(data);
+    setloadingSecond(true);
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(problemGetByType(item.title));
+      }, 1000);
+    })
+      .then((result: unknown) => {
+        const response = result as ProblemItem[];
+        setTable(response);
+        setloadingSecond(false);
+      })
+      .catch((error) => {
+        console.error("Error loading data:", error);
+        setloadingSecond(false);
+      });
   };
 
   useEffect(() => {
+    setLoading(false);
     handlerSetRouter(mainMenu[0]);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   const onClickToCalulate = (_id : string) => {
     console.log(_id);
-
   }
 
   const renderTableRoot = () => {
     return (
       <table className="w-[80%] table caption-bottom m-auto">
+        { (!table.length) && <caption className="mt-4 text-sm text-muted-foreground">Data Not Found</caption> }
         <thead className="w-full bg-[#152836] border-b-2 border-sky-500 sticky top-0 z-50 text-center">
           <tr>
             <th>ID</th>
@@ -88,7 +99,8 @@ function Problems() {
           </tr>
         </thead>
         <tbody className="text-center">
-          {table.map((item: ProblemItem, index) => {
+          {(table &&
+          table.map((item: ProblemItem, index) => {
             const result = item.output && (item.output as { result: { x: number } }).result;
             return (
               <tr key={index} className={`cursor-pointer hover:bg-[#152836] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item._id)}>
@@ -101,7 +113,7 @@ function Problems() {
                 </td>
               </tr>
             );
-          })}
+          }))}
         </tbody>
       </table>
     );
@@ -110,6 +122,7 @@ function Problems() {
   const renderTableLinear = () => {
     return (
       <table className="w-[90%] table caption-bottom m-auto">
+        { (!table.length) && <caption className="mt-4 text-sm text-muted-foreground">Data Not Found</caption> }{ (!table) && <caption className="mt-4 text-sm text-muted-foreground">Data Not Found</caption> }
         <thead className="w-full bg-[#152836] border-b-2 border-sky-500 sticky top-0 z-50 text-center">
           <tr>
             <th>ID</th>
@@ -121,7 +134,8 @@ function Problems() {
           </tr>
         </thead>
         <tbody className="text-center">
-          {table.map((item: ProblemItem, index) => {
+        {(table &&
+          table.map((item: ProblemItem, index) => {
             return (
               <tr key={index} className={`cursor-pointer hover:bg-[#152836] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item._id)}>
                 <td>{index + 1}</td>
@@ -134,7 +148,7 @@ function Problems() {
                 </td>
               </tr>
             );
-          })}
+          }))}
         </tbody>
       </table>
     );
@@ -143,6 +157,7 @@ function Problems() {
   const renderTableInterpolation = () => {
     return (
       <table className="w-[90%] table caption-bottom m-auto">
+        { (!table.length) && <caption className="mt-4 text-sm text-muted-foreground">Data Not Found</caption> }
         <thead className="w-full bg-[#152836] border-b-2 border-sky-500 sticky top-0 z-50 text-center">
           <tr>
             <th>ID</th>
@@ -153,7 +168,8 @@ function Problems() {
           </tr>
         </thead>
         <tbody className="text-center">
-          {table.map((item: ProblemItem, index) => {
+        {(table &&
+          table.map((item: ProblemItem, index) => {
             return (
               <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item._id)}>
                 <td>{index + 1}</td>
@@ -176,7 +192,7 @@ function Problems() {
                 </td>
               </tr>
             );
-          })}
+          }))}
         </tbody>
       </table>
     );
@@ -187,7 +203,7 @@ function Problems() {
 
   return (
     (loading ? <></> : 
-    <div className="w-full h-content mt-[90px]">
+    <div className={`w-full h-content mt-[90px] ${loadingSecond ? 'blur' : ''}`}>
       <div className="w-full flex justify-center items-center">
         <h1 className="min-[340px]:text-2xl lg:text-4xl font-bold text-center flex gap-2 mt-10">
           <span>Numerical</span>
