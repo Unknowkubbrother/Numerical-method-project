@@ -127,7 +127,7 @@ function Problems() {
           <tr>
             <th>ID</th>
             <th>Solution</th>
-            <th>MatrxiA</th>
+            <th>MatrixA</th>
             <th>ArrB</th>
             <th>InitialX</th>
             <th>Date</th>
