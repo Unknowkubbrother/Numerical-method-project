@@ -72,6 +72,7 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
               console.log(error)
             }); 
         }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       },[Id]);
 
     const NewGenerateMatrixA = (matrix: number[][]) => {
@@ -84,12 +85,12 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
             for (let j = 0; j < col; j++) {
                 colelement.push(
                     <input
-                        disabled
+                        // disabled
                         type="number"
                         className="w-[70px] h-[70px] text-center rounded-md"
                         key={j}
                         placeholder={`a${i + 1}${j + 1}`}
-                        value={matrix[i][j] ?? ''} // Render the value from matrix
+                        value={matrix[i][j]?? ''}
                     />
                 );
             }
@@ -110,7 +111,6 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
         for (let i = 0; i < row; i++) {
             tempArr.push(
                 <input
-                    disabled
                     type="number"
                     className="w-[70px] h-[70px] text-center rounded-md"
                     key={i}
@@ -130,7 +130,6 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
         for (let i = 0; i < col; i++) {
             tempArr.push(
                 <input
-                    disabled
                     type="number"
                     className="w-[70px] h-[70px] text-center rounded-md"
                     key={i}

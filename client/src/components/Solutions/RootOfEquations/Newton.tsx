@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import React from "react";
 import Graph from "../../ui/RootGraph";
 import {
   NewTonMethod,
   NewTonResponse,
+  NewTonRequest
 } from "../../../Methods/rootMethods/newton";
 import Table from "../../ui/TableGraph";
 import { useOutletContext } from "react-router-dom";
@@ -11,6 +12,16 @@ import { round } from "mathjs";
 import { useContext } from "react";
 import { MyFunctionContext } from "../../../App";
 import Swal from "sweetalert2";
+import {problemGetById} from '../../../Api/problem'
+import {useLocation} from 'react-router-dom'
+
+interface Problem {
+    type: string;
+    solution: string;
+    input: object;
+    output?: object;
+  }
+
 
 function Newton() {
   const { setloadingSecond } = useContext(MyFunctionContext);
@@ -21,6 +32,31 @@ function Newton() {
   const [xInitial, setxInitial] = useState<number>(0);
   const [errorfactor, seterrorfacoter] = useState<number>(0.000001);
   const [Data, setData] = useState<NewTonResponse | null>(null);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const Id = params.get('id');
+
+  useEffect(() => {
+    if (Id != null) {
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(problemGetById(Id));
+        }, 1000);
+      })
+        .then((result: unknown) => {
+          const data = result as Problem;
+          const input = data.input as NewTonRequest;
+          setxInitial(input.xInitial);
+          setEquation(input.func);
+          seterrorfacoter(input.errorFactor);
+        })
+        .catch((error) => {
+          console.log(error)
+        }); 
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[Id]);
+
 
   const handleSetEquation = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEquation(e.target.value);
