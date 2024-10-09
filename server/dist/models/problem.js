@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProblems = exports.getProblemsByType = exports.getProblem = exports.createProblem = exports.Problem = exports.SolutionType = exports.ProblemType = void 0;
+exports.getProblemById = exports.getProblems = exports.getProblemsByType = exports.getProblem = exports.createProblem = exports.Problem = exports.SolutionType = exports.ProblemType = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 var ProblemType;
 (function (ProblemType) {
@@ -60,4 +60,6 @@ const getProblemsByType = (type) => exports.Problem.find({ type: type });
 exports.getProblemsByType = getProblemsByType;
 const getProblems = () => exports.Problem.find();
 exports.getProblems = getProblems;
+const getProblemById = (id) => exports.Problem.findById(id);
+exports.getProblemById = getProblemById;
 //# sourceMappingURL=problem.js.map

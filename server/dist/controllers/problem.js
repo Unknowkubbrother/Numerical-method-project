@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.problemGetAll = exports.problemGetByType = exports.problemGetByITS = exports.problemCreate = void 0;
+exports.problemsGetbyId = exports.problemGetAll = exports.problemGetByType = exports.problemGetByITS = exports.problemCreate = void 0;
 const problem_1 = require("../models/problem");
 const problemCreate = async (req, res) => {
     try {
@@ -70,4 +70,19 @@ const problemGetAll = async (req, res) => {
     }
 };
 exports.problemGetAll = problemGetAll;
+const problemsGetbyId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const response = await (0, problem_1.getProblemById)(id);
+        if (!response) {
+            return res.sendStatus(404);
+        }
+        return res.status(200).json(response).end();
+    }
+    catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+exports.problemsGetbyId = problemsGetbyId;
 //# sourceMappingURL=problem.js.map
