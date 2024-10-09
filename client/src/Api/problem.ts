@@ -39,3 +39,12 @@ export const problemGetByType = async (type : string) => {
         return null;
     }
 }
+
+export const problemGetById = async (id : string) => {
+    try{
+        const response = await axios.post(`${domain}/problem/${id}`)
+        return response.data;
+    }catch(error){
+        return null
+    }
+}

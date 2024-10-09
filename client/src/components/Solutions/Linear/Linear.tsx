@@ -1,4 +1,4 @@
-import { useState,useRef } from "react";
+import { useState,useRef,useEffect } from "react";
 import TableMatrix from "../../ui/TableMatrix";
 import { mainMenu } from "../../../Configs/Configs";
 import { useNavigate,Outlet } from "react-router-dom";
@@ -51,6 +51,26 @@ function Linear() {
        ref.current?.clearMatrix();
   };
 
+  const setRow = (num:number)=>{
+    setCountRow(num);
+  }
+
+  const setCol = (num:number) => {
+    setCountCol(num);
+  }
+
+  
+  useEffect(() => {
+    mainMenu.forEach((item: MenuItem) => {
+      item.menu.forEach((subItem) => {
+        if (subItem.path === location.pathname) {
+          setselectedSubMenu(subItem.path);
+        }
+      });
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
 
   return (
     <div className="w-full flex justify-center items-center flex-col">
@@ -96,7 +116,7 @@ function Linear() {
       </div>
       <div className="flex justify-center items-center">
         <div className="flex flex-col justify-center items-center">
-          <TableMatrix row={countRow} col={countCol} getValues={getValues} ref={ref}/>
+          <TableMatrix row={countRow} col={countCol} getValues={getValues} ref={ref} setRow={setRow} setCol={setCol}/>
         </div>
       </div>
       <div className="min-[340px]:w-[90%] lg:w-full m-auto">

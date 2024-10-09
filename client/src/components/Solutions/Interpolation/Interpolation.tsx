@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useState ,useEffect } from "react";
 import { mainMenu } from "../../../Configs/Configs";
 import { useNavigate,Outlet } from "react-router-dom";
 import InputInterpolation from "../../ui/InputInterpolation";
@@ -42,6 +42,17 @@ function Interpolation() {
       }
     );
   }
+
+  useEffect(() => {
+    mainMenu.forEach((item: MenuItem) => {
+      item.menu.forEach((subItem) => {
+        if (subItem.path === location.pathname) {
+          setselectedSubMenu(subItem.path);
+        }
+      });
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
 
   return (

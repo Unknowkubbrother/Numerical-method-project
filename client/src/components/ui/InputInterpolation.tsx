@@ -1,8 +1,18 @@
 import {useEffect, useState} from 'react'
+import { useLocation } from 'react-router-dom';
+import {problemGetById} from '../../Api/problem'
+
 
 interface Values {
   x: number[] | undefined; 
   points: { x: number; y: number; selected: boolean; }[]; 
+}
+
+interface Problem {
+  type: string;
+  solution: string;
+  input: object;
+  output?: object;
 }
 
 interface Props {
@@ -14,6 +24,32 @@ const InputInterpolation = (props : Props) => {
   const [countX, setCountX] = useState<number>(1);
   const [x, setX] = useState<number[]>([]);
   const [points, setPoints] = useState<{x: number, y: number, selected: boolean}[]>([]);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const Id = params.get('id');
+
+  useEffect(() => {
+    if (Id != null) {
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(problemGetById(Id));
+        }, 1000);
+      })
+        .then((result: unknown) => {
+          const data = result as Problem;
+          const input = data.input as Values;
+          if (input.points && input.x){
+            setPoints(input.points);
+            setSize(input.points.length);
+            setX(input.x);
+            setCountX(input.x.length);
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        }); 
+    }
+  },[Id]);
 
   const handleSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSize = e.target.value as unknown as number;

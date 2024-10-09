@@ -1,10 +1,29 @@
 import {useEffect,useState, useImperativeHandle, forwardRef} from 'react'
 import { BlockMath } from "react-katex";
 import Swal from "sweetalert2";
+import {problemGetById} from '../../Api/problem'
+import {useLocation} from 'react-router-dom'
+
+interface Problem {
+    type: string;
+    solution: string;
+    input: object;
+    output?: object;
+  }
+
+interface Values {
+    matrixA: number[][];
+    arrB: number[];
+    initialX?: number[];
+    errorFactor?: number;
+  }
+  
 
 interface TableMatrixProps {
     row : number;
     col : number;
+    setRow: (num:number) => void;
+    setCol: (num:number) => void;
     getValues: (matrixA:number[][], arrB:number[], xi : number[], errorFactor : number) => void;
 }
 
@@ -17,6 +36,114 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
     const [TableArrXi, setTableArrXi] = useState<JSX.Element[]>([]);
     const [xi, setXi] = useState<number[]>([]);
     const [errorFactor, setErrorFactor] = useState<number>(0.000001);
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const Id = params.get('id');
+
+    useEffect(() => {
+        if (Id != null) {
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(problemGetById(Id));
+            }, 1000);
+          })
+            .then((result: unknown) => {
+              const data = result as Problem;
+              const input = data.input as Values;
+              props.setRow(input.matrixA.length);
+              props.setCol(input.matrixA[0].length);
+              setMatrixA(input.matrixA);
+              setArrB(input.arrB);
+              if (input.initialX) {
+                setXi(input.initialX);
+              }
+              if (input.errorFactor) {
+                setErrorFactor(input.errorFactor);
+              }
+
+              NewGenerateMatrixA(input.matrixA);
+              NewGenerateArrB(input.arrB);
+              createArrX(input.matrixA[0].length);
+              if (input.initialX) {
+                NewGenerateArrXi(input.initialX);
+              }
+            })
+            .catch((error) => {
+              console.log(error)
+            }); 
+        }
+      },[Id]);
+
+    const NewGenerateMatrixA = (matrix: number[][]) => {
+        const tempTablematrix: JSX.Element[] = [];
+        const row = matrix.length;
+        const col = matrix[0].length;
+
+        for (let i = 0; i < row; i++) {
+            const colelement: JSX.Element[] = [];
+            for (let j = 0; j < col; j++) {
+                colelement.push(
+                    <input
+                        disabled
+                        type="number"
+                        className="w-[70px] h-[70px] text-center rounded-md"
+                        key={j}
+                        placeholder={`a${i + 1}${j + 1}`}
+                        value={matrix[i][j] ?? ''} // Render the value from matrix
+                    />
+                );
+            }
+            tempTablematrix.push(
+                <div className="flex justify-center items-center gap-2 mt-2" key={i}>
+                    {colelement}
+                </div>
+            );
+        }
+        // Set the table to be displayed
+        setTableMatrixA(tempTablematrix);
+    };
+
+    const NewGenerateArrB = (arr: number[]) => {
+        const tempArr: JSX.Element[] = [];
+        const row = arr.length;
+
+        for (let i = 0; i < row; i++) {
+            tempArr.push(
+                <input
+                    disabled
+                    type="number"
+                    className="w-[70px] h-[70px] text-center rounded-md"
+                    key={i}
+                    placeholder={`b${i + 1}`}
+                    value={arr[i] ?? ''} // Render the value from arr
+                />
+            );
+        }
+        // Set the array to be displayed
+        setTableArrB(tempArr);
+    };
+
+    const NewGenerateArrXi = (arr: number[]) => {
+        const tempArr: JSX.Element[] = [];
+        const col = arr.length;
+
+        for (let i = 0; i < col; i++) {
+            tempArr.push(
+                <input
+                    disabled
+                    type="number"
+                    className="w-[70px] h-[70px] text-center rounded-md"
+                    key={i}
+                    placeholder={`x${i + 1}`}
+                    value={arr[i] ?? ''} // Render the value from arr
+                />
+            );
+        }
+        // Set the array to be displayed
+        setTableArrXi(tempArr);
+    };
+
+
 
     const createMatrix= (rowSize: number, colSize: number) => {
         const matrix = new Array(Number(rowSize));
@@ -41,7 +168,7 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
                 for (let i = 0; i < row; i++) {
                     const colelement = [];
                     for (let j = 0; j < col ; j++) {
-                        colelement.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={j} placeholder={`a${i+1}${j+1}`} onInput={(event : React.ChangeEvent<HTMLInputElement> ) => onInputMartrixA(event, i, j)} value={newMatrix[i]?.[j]}/>);
+                        colelement.push(<input type="number" className='w-[70px] h-[70px] text-center rounded-md' key={j} placeholder={`a${i+1}${j+1}`} onChange={(event : React.ChangeEvent<HTMLInputElement> ) => onInputMartrixA(event, i, j)} value={newMatrix[i]?.[j]}/>);
                     }
                     tempTablematrix.push(<div className='flex justify-center items-center gap-2 mt-2' key={i}>{colelement}</div>);
                 }
@@ -151,18 +278,21 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
             });
         }
     };
-
     useImperativeHandle(ref, () => ({
-
-        clearMatrix : async() => {
+        clearMatrix: async () => {
             await initialMatrix();
+            
+            // Remove the search params from the URL
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.delete('id');
+            window.history.replaceState({}, '', newUrl.toString());
+
             Swal.fire({
                 title: "Success!",
-                text: "Clear Matrix Success!.",
+                text: "Clear Matrix Success!",
                 icon: "success",
-              });
+            });
         }
-    
     }));
 
     const clearMatrix = async () => {
@@ -220,8 +350,10 @@ const TableMatrix = forwardRef((props : TableMatrixProps, ref) => {
     }, [location.pathname.split("/")[3]]);
     
     useEffect(() => {
-        initialMatrix();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (Id == null){
+            initialMatrix();
+        }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.row, props.col]);
 
     useEffect(() => {

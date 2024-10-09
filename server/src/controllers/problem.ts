@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProblem , ProblemType, SolutionType , getProblem, getProblemsByType,getProblems } from '../models/problem';
+import { createProblem , ProblemType, SolutionType , getProblem, getProblemsByType,getProblems,getProblemById } from '../models/problem';
 // import axios from 'axios';
 
 interface Problem {
@@ -90,4 +90,23 @@ export const problemGetAll = async (req: express.Request, res: express.Response)
         console.log(error);
         return res.sendStatus(400);
     }
+}
+
+export const problemsGetbyId = async(req : express.Request , res : express.Response) =>{
+    try{
+        const { id } = req.params;
+        const response = await getProblemById(id);
+
+        if (!response) {
+            return res.sendStatus(404);
+        }
+        
+        return res.status(200).json(response).end();
+
+
+    }catch(error){
+        console.log(error);
+        return res.sendStatus(400);
+    }
+
 }

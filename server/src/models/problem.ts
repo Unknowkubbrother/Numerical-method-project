@@ -64,3 +64,4 @@ export const getProblem = (input: object, type: string, solution: string) => Pro
 
 export const getProblemsByType = (type: string) => Problem.find({ type: type })
 export const getProblems = () => Problem.find();
+export const getProblemById = (id :string) => Problem.findById(id);

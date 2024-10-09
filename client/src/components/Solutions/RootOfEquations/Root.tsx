@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { mainMenu } from "../../../Configs/Configs";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -25,6 +25,18 @@ function Root() {
     navigate(e.target.value);
     setEquation("");
   };
+
+
+  useEffect(() => {
+    mainMenu.forEach((item: MenuItem) => {
+      item.menu.forEach((subItem) => {
+        if (subItem.path === location.pathname) {
+          setselectedSubMenu(subItem.path);
+        }
+      });
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
 
   return (

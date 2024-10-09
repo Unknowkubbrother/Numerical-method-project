@@ -1,6 +1,6 @@
 import { useState, useEffect} from "react";
 import { mainMenu } from "../../Configs/Configs";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {useContext} from "react";
 import {MyFunctionContext} from "../../App";
 
@@ -8,13 +8,13 @@ function Lobby() {
   const navigate = useNavigate();
   const [selectedMenu, setselectedMenu] = useState(mainMenu[0].title);
   const {setLoading,loading,loadingSecond} = useContext(MyFunctionContext);
+  const location = useLocation();
 
   const handlerSetRouter = (item: {
     title: string;
     path: string;
     menu: { title: string; path: string }[];
   }) => {
-    setselectedMenu(item.title);
     if (item.menu.length > 0) {
       navigate(item.menu[0].path);
     } else {
@@ -23,12 +23,20 @@ function Lobby() {
   };
 
   useEffect(() => {
-    navigate("/lobby/root/graphical");
     setTimeout(() => {
         setLoading(false);
     }, 500);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
+
+  useEffect(() => {
+    mainMenu.forEach((item) => {
+      if (location.pathname.split("/")[2] == item.path.split("/")[2]) {
+        setselectedMenu(item.title);
+      }
+    });
+    // console.log
+  }, [location.pathname]);
 
   return (
     <>

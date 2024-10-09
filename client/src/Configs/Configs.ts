@@ -1,4 +1,5 @@
-export const domain = "https://numer-api.unknowkubbrother.net";
+// export const domain = "https://numer-api.unknowkubbrother.net";
+export const domain = "http://localhost:3000";
 
 export const mainMenu = [
   {
@@ -6,7 +7,7 @@ export const mainMenu = [
     path: "../lobby/root",
     menu: [
       {
-        title: 'graphicalmethods',
+        title: 'graphical',
         path: '/lobby/root/graphical'
       },
       {

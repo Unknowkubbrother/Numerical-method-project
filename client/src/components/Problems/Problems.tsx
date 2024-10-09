@@ -5,7 +5,7 @@ import { problemGetByType } from "../../Api/problem";
 import { round } from 'mathjs';
 import { MatrixFormat,ArrayFormat } from "../ui/MatrixFormat";
 import { BlockMath } from "react-katex";
-
+import { useNavigate } from "react-router-dom";
 interface ProblemItem {
     _id: string;
     type: string;
@@ -51,6 +51,7 @@ function Problems() {
   const { setLoading, loading,setloadingSecond , loadingSecond} = useContext(MyFunctionContext);
   const [selectedMenu, setselectedMenu] = useState(mainMenu[0].title);
   const [table, setTable] = useState<ProblemItem[]>([]);
+  const navigate = useNavigate();
 
   const handlerSetRouter = async (item: {
     title: string;
@@ -81,8 +82,15 @@ function Problems() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
-  const onClickToCalulate = (_id : string) => {
-    console.log(_id);
+  const onClickToCalulate = (data : ProblemItem) => {
+    mainMenu.forEach((item)=>{
+      if (data.type == item.title){
+        const menu = item.menu.filter((title) => {
+          return title.path.split("/")[3] == data.solution;
+        })[0];
+        navigate(`${menu.path}?id=${data._id}`);
+      }
+    })
   }
 
   const renderTableRoot = () => {
@@ -103,7 +111,7 @@ function Problems() {
           table.map((item: ProblemItem, index) => {
             const result = item.output && (item.output as { result: { x: number } }).result;
             return (
-              <tr key={index} className={`cursor-pointer hover:bg-[#152836] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item._id)}>
+              <tr key={index} className={`cursor-pointer hover:bg-[#152836] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
                 <td>{(item.input as RootRequest).func}</td>
@@ -137,7 +145,7 @@ function Problems() {
         {(table &&
           table.map((item: ProblemItem, index) => {
             return (
-              <tr key={index} className={`cursor-pointer hover:bg-[#152836] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item._id)}>
+              <tr key={index} className={`cursor-pointer hover:bg-[#152836] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
                 <td>{(item.input as LinearRequest).matrixA && <BlockMath math={MatrixFormat((item.input as LinearRequest).matrixA as number[][])}/>}</td>
@@ -171,7 +179,7 @@ function Problems() {
         {(table &&
           table.map((item: ProblemItem, index) => {
             return (
-              <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item._id)}>
+              <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
                 <td>{(item.input as InterpolationRequest).x && <BlockMath math={ArrayFormat((item.input as InterpolationRequest).x as number[])}/>}</td>
