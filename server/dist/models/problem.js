@@ -32,7 +32,7 @@ var SolutionType;
     SolutionType["NEWTON_DIVIDED"] = "newtondivided";
     SolutionType["LAGRANGE"] = "lagrange";
     SolutionType["SPLINE"] = "spline";
-    SolutionType["SIMPLEREGRESSION"] = "SimpleRegression";
+    SolutionType["SIMPLEREGRESSION"] = "simple";
 })(SolutionType || (exports.SolutionType = SolutionType = {}));
 const ProblemSchema = new mongoose_1.default.Schema({
     type: {
