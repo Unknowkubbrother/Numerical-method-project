@@ -44,6 +44,7 @@ const InputSimpleRegression = (props : Props) => {
             setSize(input.points.length);
             setX(input.x);
             setCountX(input.x.length);
+            setM(input.M);
           }
         })
         .catch((error) => {
