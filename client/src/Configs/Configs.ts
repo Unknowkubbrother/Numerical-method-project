@@ -1,5 +1,5 @@
-export const domain = "https://numer-api.unknowkubbrother.net";
-// export const domain = "http://localhost:3000";
+// export const domain = "https://numer-api.unknowkubbrother.net";
+export const domain = "http://localhost:3000";
 
 export const mainMenu = [
   {
@@ -89,6 +89,20 @@ export const mainMenu = [
       {
         path: '/lobby/interpolation/spline',
         title: "Spline"
+      }
+    ],
+  },
+  {
+    title: "Regression",
+    path: "../lobby/regression",
+    menu: [
+      {
+        path: '/lobby/regression/simple',
+        title: "SimpleRegression"
+      },
+      {
+        path: '/lobby/regression/multipleLinear',
+        title: "MultipleLinearRegression"
       }
     ],
   },

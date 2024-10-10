@@ -27,6 +27,9 @@ import NewtonDivided from './components/Solutions/Interpolation/NewtonDivided.ts
 import Lagrange from './components/Solutions/Interpolation/Lagrange.tsx';
 import Spline from './components/Solutions/Interpolation/Spline.tsx';
 import Problems from './components/Problems/Problems.tsx'
+import Regression from './components/Solutions/regression/Regression.tsx';
+import SimpleRegression from './components/Solutions/regression/SimpleRegression.tsx';
+import MultiLinearRegression from './components/Solutions/regression/MultiLinearRegression.tsx';
 
 const router = createBrowserRouter([
   {
@@ -132,6 +135,21 @@ const router = createBrowserRouter([
               {
                 path: 'spline',
                 element: <Spline />
+              }
+            ]
+          },
+          {
+            path: 'regression',
+            element: <Regression/>,
+            children:[
+              {
+                path: 'simple',
+                element: <SimpleRegression />
+                
+              },
+              {
+                path: 'multipleLinear',
+                element: <MultiLinearRegression />
               }
             ]
           }

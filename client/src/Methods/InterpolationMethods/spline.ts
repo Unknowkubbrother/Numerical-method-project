@@ -121,7 +121,7 @@ export function SplineMethods( x:number[], points: {x:number, y:number , selecte
             "points" : points,
             "type" : type
         },
-        output: result
+        // output: result
         
     });
 

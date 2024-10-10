@@ -73,7 +73,7 @@ export function LagrangeMethod( x:number[], points: {x:number, y:number , select
             "x" : x,
             "points" : points
         },
-        output: result
+        // output: result
     });
 
     return result;

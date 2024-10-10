@@ -5,8 +5,8 @@ import Swal from "sweetalert2";
 import { MyFunctionContext } from "../../../App";
 import { BlockMath } from "react-katex";
 import {round } from "mathjs";
-import TableInterpolation from "../../ui/TableInterpolation";
-import GraphInterpolation from "../../ui/GraphInterpolation";
+import TableInterpolation from "../../ui/TableXY";
+import GraphInterpolation from "../../ui/GraphScale";
 
 interface Values {
   x: number[]; 

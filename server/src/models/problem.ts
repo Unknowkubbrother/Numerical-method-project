@@ -5,6 +5,7 @@ export enum ProblemType {
     ROOT_OF_EQUATION = "Root of Equation",
     LINEAR_ALGEBRAIC_EQUATION = "Linear Algebraic Equation",
     INTERPOLATION = "Interpolation",
+    REGRESSION = "Regression",
 }
 
 export enum SolutionType {
@@ -26,6 +27,7 @@ export enum SolutionType {
     NEWTON_DIVIDED = "newtondivided",
     LAGRANGE = "lagrange",
     SPLINE = "spline",
+    SIMPLEREGRESSION = "SimpleRegression"
 }
 
 interface IProblem {

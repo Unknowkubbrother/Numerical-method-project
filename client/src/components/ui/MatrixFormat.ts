@@ -175,6 +175,17 @@ export const LTMatrixFormat = (matrix:number[][]) => {
 
 }
 
+export const AarrayFormat = (arr: number[]) => {
+  let str = "";
+  for (let i = 0; i < arr.length; i++) {
+    str += `{{a_{${i}}}} `;
+    if (i !== arr.length - 1) {
+      str += "\\\\";
+    }
+  }
+  return `\\begin{Bmatrix} ${str} \\end{Bmatrix}`;
+}
+
 export const UMatrixFormat = (matrix:number[][]) => {
   let str = "";
   for(let i = 0; i < matrix.length; i++){
