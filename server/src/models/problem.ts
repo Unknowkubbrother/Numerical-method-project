@@ -27,7 +27,7 @@ export enum SolutionType {
     NEWTON_DIVIDED = "newtondivided",
     LAGRANGE = "lagrange",
     SPLINE = "spline",
-    SIMPLEREGRESSION = "SimpleRegression"
+    SIMPLEREGRESSION = "simple"
 }
 
 interface IProblem {
