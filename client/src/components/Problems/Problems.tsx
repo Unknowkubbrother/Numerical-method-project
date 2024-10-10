@@ -46,6 +46,15 @@ interface InterpolationRequest {
 
 
 
+interface RegressionRequest {
+  x?: number[],
+  points?: {
+      x:number,
+      y:number,
+      selected: boolean
+  }[]
+  M?: number
+}
 
 function Problems() {
   const { setLoading, loading,setloadingSecond , loadingSecond} = useContext(MyFunctionContext);
@@ -206,6 +215,52 @@ function Problems() {
     );
   };
 
+  
+  const renderTableRegression = () => {
+    return (
+      <table className="w-[90%] table caption-bottom m-auto">
+        { (!table.length) && <caption className="mt-4 text-sm text-muted-foreground">Data Not Found</caption> }
+        <thead className="w-full bg-[#152836] border-b-2 border-sky-500 sticky top-0 z-50 text-center">
+          <tr>
+            <th>ID</th>
+            <th>Solution</th>
+            <th>X</th>
+            <th>Points</th>
+            <th>M</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody className="text-center">
+        {(table &&
+          table.map((item: ProblemItem, index) => {
+            return (
+              <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
+                <td>{index + 1}</td>
+                <td>{item.solution}</td>
+                <td>{(item.input as RegressionRequest).x && <BlockMath math={ArrayFormat((item.input as RegressionRequest).x as number[])}/>}</td>
+                {/* <td>{(item.input as LinearRequest).arrB && <BlockMath math={ArrayFormat((item.input as LinearRequest).arrB as number[])}/>}</td> */}
+                <td>{(item.input as RegressionRequest).points &&
+
+                    (item.input as RegressionRequest).points?.map((point, index) => {
+                        return (
+                        <div key={index} className="flex flex-col gap-3 flex-wrap">
+                            {point.selected && <BlockMath math={ArrayFormat([point.x,point.y])} />}
+                        </div>
+                        )
+                    })
+                    
+                }</td>
+                <td>{(item.input as RegressionRequest).M}</td>
+                <td>
+                  {new Date(item.createdAt).toLocaleDateString() + " " + new Date(item.createdAt).toLocaleTimeString()}
+                </td>
+              </tr>
+            );
+          }))}
+        </tbody>
+      </table>
+    );
+  };
 
   
 
@@ -252,6 +307,7 @@ function Problems() {
           {selectedMenu == 'Root of Equation' && renderTableRoot()}
           {selectedMenu == 'Linear Algebraic Equation' && renderTableLinear()}
           {selectedMenu == 'Interpolation' && renderTableInterpolation()}
+          {selectedMenu == 'Regression' && renderTableRegression()}
         </div>
       </div>
     </div>

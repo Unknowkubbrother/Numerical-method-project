@@ -91,7 +91,7 @@ export function simpleRegressionMethods( M : number , x:number[], points: {x:num
 
     problemCreate({
         type: "Regression",
-        solution: "SimpleRegression",
+        solution: "simple",
         input: {
             "x" : x,
             "points" : points,
