@@ -10,6 +10,7 @@ var ProblemType;
     ProblemType["ROOT_OF_EQUATION"] = "Root of Equation";
     ProblemType["LINEAR_ALGEBRAIC_EQUATION"] = "Linear Algebraic Equation";
     ProblemType["INTERPOLATION"] = "Interpolation";
+    ProblemType["REGRESSION"] = "Regression";
 })(ProblemType || (exports.ProblemType = ProblemType = {}));
 var SolutionType;
 (function (SolutionType) {
@@ -31,6 +32,7 @@ var SolutionType;
     SolutionType["NEWTON_DIVIDED"] = "newtondivided";
     SolutionType["LAGRANGE"] = "lagrange";
     SolutionType["SPLINE"] = "spline";
+    SolutionType["SIMPLEREGRESSION"] = "SimpleRegression";
 })(SolutionType || (exports.SolutionType = SolutionType = {}));
 const ProblemSchema = new mongoose_1.default.Schema({
     type: {
