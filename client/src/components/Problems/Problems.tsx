@@ -275,7 +275,7 @@ function Problems() {
         </h1>
       </div>
 
-      <div className="w-[70%] m-auto h-5 mt-10 flex justify-center items-center">
+      <div className="w-full m-auto mt-10 flex justify-center items-center flex-col">
         <div className="min-[340px]:w-[75%] lg:w-[90%] 2xl:w-[70%] h-content m-auto list-none flex gap-5 justify-center items-center flex-wrap">
           {mainMenu.map(
             (
@@ -300,15 +300,16 @@ function Problems() {
             }
           )}
         </div>
-      </div>
 
-      <div className="w-full m-auto mt-[5rem]">
-        <div className="w-full h-[700px] rounded-md overflow-auto">
-          {selectedMenu == 'Root of Equation' && renderTableRoot()}
-          {selectedMenu == 'Linear Algebraic Equation' && renderTableLinear()}
-          {selectedMenu == 'Interpolation' && renderTableInterpolation()}
-          {selectedMenu == 'Regression' && renderTableRegression()}
+        <div className="w-full h-content mt-10 flex justify-center items-center">
+          {selectedMenu === "Root of Equation" && renderTableRoot()}
+          {selectedMenu === "Linear Algebraic Equation" && renderTableLinear()}
+          {selectedMenu === "Interpolation" && renderTableInterpolation()}
+          {selectedMenu === "Regression" && renderTableRegression()}
         </div>
+
+
+
       </div>
     </div>
     )
