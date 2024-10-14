@@ -4,6 +4,7 @@ import Plot from 'react-plotly.js';
 interface PropsGraph {
     mainGraph : {x: number, y: number}[]
     data : {x : number, y : number}[]
+    points?: {x:number, y:number}[]
 }
 
 function GraphInterpolation(props : PropsGraph) {  
@@ -29,13 +30,25 @@ function GraphInterpolation(props : PropsGraph) {
                 x: [item.x],
                 y: [item.y],
                 mode: 'markers',
-                name: `(x${index+1},y${index+1})`,
+                name: `Result (x${index+1},y${index+1})`,
                 marker: {
                 color: '#7b00ff',
                 size: 10,
                 },
             }
             }),
+            ...(props.points ?? []).map((item) => {
+              return {
+                  x: [item.x],
+                  y: [item.y],
+                  mode: 'markers',
+                  name: `POINTS (${item.x},${item.y})`,
+                  marker: {
+                  color: 'red',
+                  size: 10,
+                  },
+              }
+              }),
         ]
       }
         layout={{

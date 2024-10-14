@@ -137,7 +137,7 @@ function SimpleRegression() {
 
       
       const renderGraph = () =>{
-        const mainGraph : {x : number , y : number }[] = Data.points.filter((point) => point.selected).map((point) => {
+        const points : {x : number , y : number }[] = Data.points.filter((point) => point.selected).map((point) => {
             return {
               x: point.x,
               y: point.y
@@ -145,12 +145,25 @@ function SimpleRegression() {
           })
           const data = Result?.iterations.map((item) => {
             return {
-                x: item.x,
-                y: item.y
+              x: item.x,
+              y: item.y
+            }
+          })
+
+          const calY = (x : number) => {
+            let y = 0;
+            Result?.arrA.forEach((a,index) => {
+                y += a * Math.pow(x,index);
+            })
+            return y;
           }
-        });
+          const mainGraph = new Array<{x : number , y : number}>();
+          for (let i = Math.min(...points.map((num)=> num.x)) ; i <= Math.max(...points.map((num)=> num.x)); i += 0.1){
+              mainGraph.push({x: i, y: calY(i)});
+          }
+          
           return (
-            <GraphScale mainGraph={mainGraph} data={data || []}/>
+            <GraphScale mainGraph={mainGraph} points={points} data={data || []}/>
           )
 
       }
