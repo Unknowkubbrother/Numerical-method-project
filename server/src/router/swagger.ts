@@ -3,7 +3,8 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
 
 var options = {
-    explorer: false
+    explorer: false,
+    
 };
 
 export default (router: express.Router) => {
