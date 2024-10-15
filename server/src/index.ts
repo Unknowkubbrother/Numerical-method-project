@@ -6,8 +6,9 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import mongoose from 'mongoose';
-// import {swagger} from './swagger';
 import router from './router';
+import swaggerUIPath from 'swagger-ui-express';
+const swaggerDocument = require('./swagger.json');
 const app : express.Express = express();
 
 app.use(cors({
@@ -24,7 +25,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URL)
 mongoose.connection.on('error', (error: Error) => console.log(error));
 
-// swagger(app);
+app.use('/api-docs', swaggerUIPath.serve, swaggerUIPath.setup(swaggerDocument));
 
 app.listen(process.env.SERVER_PORT || 3000, () => {
     console.log(`Sever running on port: ${process.env.SERVER_PORT || 3000}`);

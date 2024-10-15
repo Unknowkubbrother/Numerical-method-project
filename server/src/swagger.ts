@@ -1,11 +1,25 @@
-import swaggerJsdoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
-import fs from 'fs';
-import YAML from 'yaml';
-const file = fs.readFileSync('./src/swagger.yaml', 'utf8');
-const swaggerDocument = YAML.parse(file);
+import swaggerAutogen from 'swagger-autogen';
 
+const outputFile = './swagger.json';
+const endpointsFiles = [
+    '../src/router/problem.ts',
+    '../src/router/rootMethods.ts',
+    '../src/router/HWRootMethods.ts',
+    '../src/router/linearMethods.ts',
+    '../src/router/interpolationMethods.ts',
+    '../src/router/Regression.ts',
+    '../src/router/integration.ts',
+    '../src/router/Differentiation.ts',
+];
 
-export const swagger = (app : any) => {
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-}
+// Generate Swagger documentation
+const doc = {
+    info: {
+        title: 'Numer API',
+        description: 'Numer API',
+    },
+    host: 'numer.unknowkubbrother.net',
+    schemes: ['https'],
+};
+
+swaggerAutogen(outputFile, endpointsFiles, doc);
