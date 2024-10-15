@@ -18,7 +18,7 @@ const doc = {
         title: 'Numer API',
         description: 'Numer API',
     },
-    host: 'numer.unknowkubbrother.net',
+    host: 'numer-api.unknowkubbrother.net',
     schemes: ['https'],
 };
 

@@ -5,7 +5,7 @@
     "description": "Numer API",
     "version": "1.0.0"
   },
-  "host": "numer.unknowkubbrother.net",
+  "host": "numer-api.unknowkubbrother.net",
   "basePath": "/",
   "schemes": [
     "https"
