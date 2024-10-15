@@ -1,0 +1,5 @@
+docker build -t numerical-server-image .
+docker run -p 3000:3000 -d --name numerical-server numerical-server-image
+docker run -v %cd%:/app -p 3000:3000 -d --name numerical-server numerical-server-image // real time render
+
+docker rm numerical-server -f // ลบ run อยู่
