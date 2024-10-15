@@ -4,6 +4,7 @@ import swaggerDocument from '../swagger.json';
 
 var options = {
     explorer: false,
+    customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css"
     
 };
 
