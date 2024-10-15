@@ -7,6 +7,5 @@ var options = {
 };
 
 export default (router: express.Router) => {
-    router.use('/api-docs', swaggerUi.serve);
-    router.get('/api-docs', swaggerUi.setup(swaggerDocument,options));
+    router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 }

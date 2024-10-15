@@ -9,7 +9,6 @@ var options = {
     explorer: false
 };
 exports.default = (router) => {
-    router.use('/api-docs', swagger_ui_express_1.default.serve);
-    router.get('/api-docs', swagger_ui_express_1.default.setup(swagger_json_1.default, options));
+    router.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default, options));
 };
 //# sourceMappingURL=swagger.js.map
