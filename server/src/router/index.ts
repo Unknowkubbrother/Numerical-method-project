@@ -11,7 +11,7 @@ import Differentiation from './Differentiation';
 
 const router = express.Router();
 
-export default (): express.Router => {
+export default () => {
     problem(router)
     rootMethods(router)
     HWRootMethods(router)
