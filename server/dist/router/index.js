@@ -10,6 +10,9 @@ const HWRootMethods_1 = __importDefault(require("./HWRootMethods"));
 const linearMethods_1 = __importDefault(require("./linearMethods"));
 const interpolationMethods_1 = __importDefault(require("./interpolationMethods"));
 const regression_1 = __importDefault(require("./regression"));
+const integration_1 = __importDefault(require("./integration"));
+const Differentiation_1 = __importDefault(require("./Differentiation"));
+const swagger_1 = __importDefault(require("./swagger"));
 const router = express_1.default.Router();
 exports.default = () => {
     (0, problem_1.default)(router);
@@ -18,6 +21,9 @@ exports.default = () => {
     (0, linearMethods_1.default)(router);
     (0, interpolationMethods_1.default)(router);
     (0, regression_1.default)(router);
+    (0, integration_1.default)(router);
+    (0, Differentiation_1.default)(router);
+    (0, swagger_1.default)(router);
     return router;
 };
 //# sourceMappingURL=index.js.map
