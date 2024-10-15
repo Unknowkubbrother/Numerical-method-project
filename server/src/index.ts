@@ -24,11 +24,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URL)
 mongoose.connection.on('error', (error: Error) => console.log(error));
-
-app.use('/api-docs', swaggerUIPath.serve, swaggerUIPath.setup(swaggerDocument));
-
 app.listen(process.env.SERVER_PORT || 3000, () => {
     console.log(`Sever running on port: ${process.env.SERVER_PORT || 3000}`);
 });
 
 app.use('/', router())
+app.use('/api-docs', swaggerUIPath.serve, swaggerUIPath.setup(swaggerDocument));
