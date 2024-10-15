@@ -8,7 +8,7 @@ import compression from 'compression';
 import mongoose from 'mongoose';
 import router from './router';
 import swaggerUIPath from 'swagger-ui-express';
-const swaggerDocument = require('./swagger.json');
+import swaggerDocument from './swagger.json';
 const app : express.Express = express();
 
 app.use(cors({
