@@ -28,5 +28,5 @@ app.listen(process.env.SERVER_PORT || 3000, () => {
     console.log(`Sever running on port: ${process.env.SERVER_PORT || 3000}`);
 });
 
-app.use('/', router());
-app.use('/api-docs', swaggerUIPath.serve, swaggerUIPath.setup(swaggerDocument));
+// app.use('/', router());
+app.use('/', swaggerUIPath.serve, swaggerUIPath.setup(swaggerDocument));
