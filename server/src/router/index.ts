@@ -8,6 +8,7 @@ import interpolationMethods from './interpolationMethods';
 import Regression from './regression';
 import integration from './integration';
 import Differentiation from './Differentiation';
+import swagger from './swagger';
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ export default () => {
     Regression(router)
     integration(router)
     Differentiation(router)
+    swagger(router)
     return router;
 }
