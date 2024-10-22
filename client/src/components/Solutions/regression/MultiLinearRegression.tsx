@@ -236,20 +236,6 @@ function MultiLinearRegression() {
 
     }
 
-
-    const colors = [
-      "red",
-      "blue",
-      "green",
-      "orange",
-      "purple",
-      "brown",
-      "pink",
-      "gray",
-      "cyan",
-      "magenta",
-    ];
-    
     const plotly = [
       {
         x: line.x,
@@ -269,10 +255,9 @@ function MultiLinearRegression() {
             mode: 'markers',
             name: `Result (x${index+1},y${index+1})`,
             marker: {
-            color: colors[(colors.length-index) % colors.length],
-            size: 15,
+              size: 15,
             },
-        }
+          }
         }),
 
         ...points.map((point, index) => {
@@ -282,8 +267,7 @@ function MultiLinearRegression() {
               mode: 'markers',
               name: `X${index + 1}`,
               marker: {
-              color: colors[index % colors.length],
-              size: 10,
+                size: 10,
               },
           }
         })
