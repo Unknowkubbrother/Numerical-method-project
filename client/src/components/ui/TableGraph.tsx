@@ -10,7 +10,7 @@ import {round} from 'mathjs'
 function Table(props : {data : GraphicalResponse | BisectionResponse | FalsePositionResponse | OnePointResponse | NewTonResponse | SecantResponse}) {
   return (
     <div className="w-full rounded-md overflow-hidden">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto overflow-y-hidden">
         <table className="table table-zebra caption-bottom">
           {/* head */}
           { (!props.data) && <caption className="mt-4 text-sm text-muted-foreground">Please enter the formula</caption> }

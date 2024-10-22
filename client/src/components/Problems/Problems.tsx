@@ -301,12 +301,15 @@ function Problems() {
           )}
         </div>
 
+        {(table && table.length) && (
         <div className="w-full h-content mt-10 flex justify-center items-center">
           {selectedMenu === "Root of Equation" && renderTableRoot()}
           {selectedMenu === "Linear Algebraic Equation" && renderTableLinear()}
           {selectedMenu === "Interpolation" && renderTableInterpolation()}
           {selectedMenu === "Regression" && renderTableRegression()}
         </div>
+        )
+        }
 
 
 
