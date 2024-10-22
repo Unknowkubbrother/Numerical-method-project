@@ -216,7 +216,7 @@ function InputMultiRegression(props: Props) {
         </div>
       </div>
 
-      <div className='max-w-[650px] overflow-x-auto h-content p-3 bg-background mt-5 rounded-md flex flex-col'>
+      <div className='max-w-[800px] overflow-x-auto h-content p-3 bg-background mt-5 rounded-md flex flex-col'>
         {Array.from({ length: size }).map((_, index) =>
           <div className="form-control" key={index}>
             <label className="cursor-pointer label gap-5">
@@ -250,7 +250,7 @@ function InputMultiRegression(props: Props) {
         </div>
       </div>
 
-      <div className='max-w-[650px] overflow-x-auto mt-5 rounded-md p-3 flex gap-3 flex-wrap justify-center bg-background'>
+      <div className='max-w-[800px] overflow-x-auto mt-5 rounded-md p-3 flex gap-3 flex-wrap justify-center bg-background'>
         {Array.from({ length: countX }).map((_, index) =>
           <div className="form-control" key={index}>
             <label className="cursor-pointer label flex flex-col gap-2">
