@@ -9,7 +9,7 @@ import {
 import { BlockMath } from "react-katex";
 import { MatrixFormat, ArrayFormat, AarrayFormat } from "../../ui/MatrixFormat";
 import TableXY from "../../ui/TableXY";
-import GraphScale from "../../ui/GraphScale";
+import GraphScale from "../../ui/Graph";
 
 interface Values {
   x: number[];

@@ -9,7 +9,7 @@ import {
   multipleLinearRegressionResponse,
 } from "../../../Methods/regressionMethods/multiplelinearRegrssion";
 import TableXY from "../../ui/TableXY";
-import GraphScale from "../../ui/GraphScale";
+import GraphScale from "../../ui/Graph";
 interface Values {
   x: number[][];
   points: { x: number[]; y: number; selected: boolean }[];

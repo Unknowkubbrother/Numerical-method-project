@@ -62,9 +62,9 @@ function Home() {
             <button className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500" onClick={onClickToLobby}>
               Get Started
             </button>
-            <button className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500">
+            {/* <button className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500">
               Document
-            </button>
+            </button> */}
             <button className="px-[10px] py-[5px] bg-gray-700 rounded-lg hover:bg-secondary duration-500" onClick={onClickToProblems}>
               Problems
             </button>

@@ -6,7 +6,7 @@ import { MyFunctionContext } from "../../../App";
 import { BlockMath } from "react-katex";
 import {round } from "mathjs";
 import TableInterpolation from "../../ui/TableXY";
-import GraphInterpolation from "../../ui/GraphScale";
+import GraphInterpolation from "../../ui/Graph";
 
 interface Values {
   x: number[]; 
