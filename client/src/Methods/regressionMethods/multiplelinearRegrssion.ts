@@ -1,16 +1,22 @@
 import {multiply,inv,round} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface multipleLinearRegressionRequest {
-    x: number[],
+    x: number[][],
     points: {
         x:number[],
-        y:number
-    }[]
+        y:number,
+        selected: boolean;
+    }[],
 }
 
 export interface multipleLinearRegressionResponse {
-    result: number;
+    result: number[];
     martrixX: number[][];
+    iterations: {
+        x: number[];
+        y: number;
+    }[];
     arrY: number[];
     arrA: number[];
     error?: string;
@@ -18,18 +24,21 @@ export interface multipleLinearRegressionResponse {
 }
 
 
-export function multipleLinearRegressionMethods( x:number[], points: {x:number[], y:number}[]) : multipleLinearRegressionResponse{
+export function multipleLinearRegressionMethods( x:number[][], points: {x:number[], y:number, selected: boolean }[]) : multipleLinearRegressionResponse{
 
     const result: multipleLinearRegressionResponse = { 
-        result: 0,
+        result: [],
         martrixX: [],
         arrY: [],
         arrA: [],
+        iterations: [],
         statusCode: 400
     };
 
-    const K = points[0].x.length;
-    const n = points.length;
+    const selectedPoints = points.filter(point => point.selected);
+
+    const K = selectedPoints[0].x.length;
+    const n = selectedPoints.length;
     const xixjSumMemory : { [key: string]: number } = {};
     const getXiXjSum = (i : number , j : number) => {
         const key = `${i}-${j}`;
@@ -39,7 +48,7 @@ export function multipleLinearRegressionMethods( x:number[], points: {x:number[]
 
         let sum = 0;
         for (let k = 0; k < n; k++){
-            sum += (i != 0 ? points[k].x[i - 1] : 1) * (j != 0 ? points[k].x[j - 1] : 1);
+            sum += (i != 0 ? selectedPoints[k].x[i - 1] : 1) * (j != 0 ? selectedPoints[k].x[j - 1] : 1);
         }
 
         xixjSumMemory[key] = sum;
@@ -62,16 +71,20 @@ export function multipleLinearRegressionMethods( x:number[], points: {x:number[]
         }
 
         arrY[i] = 0;
-        for(let j = 0 ; j < points.length; j++){
-            arrY[i] += (i != 0 ? points[j].x[i - 1] : 1) * points[j].y;
+        for(let j = 0 ; j < selectedPoints.length; j++){
+            arrY[i] += (i != 0 ? selectedPoints[j].x[i - 1] : 1) * selectedPoints[j].y;
         }
 
     }
 
     const arrA : number[] = multiply(inv(matrixX), arrY);
 
-    for (let i = 0; i <  K+1; i++){
-        result.result += (i != 0 ? x[i-1] : 1) * arrA[i];
+    for(let xi=0;xi<x.length;xi++){
+        result.result[xi] = 0;
+        for (let i = 0; i <  K+1; i++){
+            result.result[xi] += (i != 0 ? x[xi][i-1] : 1) * arrA[i];
+        }
+        result.iterations.push({x: x[xi], y: result.result[xi]});
     }
 
     result.result = round(result.result, 6);
@@ -81,6 +94,17 @@ export function multipleLinearRegressionMethods( x:number[], points: {x:number[]
 
 
     result.statusCode = 200;
+
+    problemCreate({
+        type: "Regression",
+        solution: "multipleLinear",
+        input: {
+            "x" : x,
+            "points" : points,
+            "k" : K
+        },
+        // output: result
+    });
 
     return result;
 

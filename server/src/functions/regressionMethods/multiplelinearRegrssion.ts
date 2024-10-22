@@ -1,7 +1,7 @@
 import math from '../../lib/math';
 
 export interface multipleLinearRegressionRequest {
-    x: number[],
+    x: number[][],
     points: {
         x:number[],
         y:number
@@ -9,7 +9,7 @@ export interface multipleLinearRegressionRequest {
 }
 
 export interface multipleLinearRegressionResponse {
-    result: number;
+    result: number[];
     martrixX: number[][];
     arrY: number[];
     arrA: number[];
@@ -18,10 +18,10 @@ export interface multipleLinearRegressionResponse {
 }
 
 
-export function multipleLinearRegressionMethods( x:number[], points: {x:number[], y:number}[]) : multipleLinearRegressionResponse{
+export function multipleLinearRegressionMethods( x:number[][], points: {x:number[], y:number}[]) : multipleLinearRegressionResponse{
 
     const result: multipleLinearRegressionResponse = { 
-        result: 0,
+        result: [],
         martrixX: [],
         arrY: [],
         arrA: [],
@@ -70,8 +70,11 @@ export function multipleLinearRegressionMethods( x:number[], points: {x:number[]
 
     let arrA : number[] = math.multiply(math.inv(matrixX), arrY);
 
-    for (let i = 0; i <  K+1; i++){
-        result.result += (i != 0 ? x[i-1] : 1) * arrA[i];
+    for(let xi=0;xi<x.length;xi++){
+        result.result[xi] = 0;
+        for (let i = 0; i <  K+1; i++){
+            result.result[xi] += (i != 0 ? x[xi][i-1] : 1) * arrA[i];
+        }
     }
 
     result.result = math.round(result.result, 6);

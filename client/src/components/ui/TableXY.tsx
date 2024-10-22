@@ -1,7 +1,7 @@
 // import React from "react";
 import {round} from 'mathjs'
 
-function TableInterpolation(props : {data : {iterations : {x : number, y : number}[]}}) {
+function TableInterpolation(props : {data : {iterations : {x : number | number[], y : number}[]}}) {
   return (
     <div className="w-full rounded-md overflow-hidden bg-[#07151b]">
       <div className="overflow-x-auto">
@@ -17,11 +17,20 @@ function TableInterpolation(props : {data : {iterations : {x : number, y : numbe
           </thead>
           <tbody>
             {/* row 1 */}
-            { (props.data) ?  props?.data?.iterations?.map((item: { x: number; y: number; }, index) => {
+            { (props.data) ?  props?.data?.iterations?.map((item: { x: number | number[]; y: number; }, index) => {
               return (
                 <tr key={index}>
                   <td>{index+1}</td>
-                  <td>{round(item?.x,6)}</td>
+                  <td>
+                    {Array.isArray(item?.x) ? 
+                      item?.x.map((x, i) => {
+                        return (
+                          <div key={i}>{round(x,6)}</div>
+                        );
+                      }) : 
+                      round(item?.x,6)
+                    }
+                  </td>
                   <td>{round(item?.y,6)}</td>
                 </tr>
               );

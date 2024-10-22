@@ -80,9 +80,36 @@ function Lagrange() {
         x: item.Xi,
         y: Result.result[index]
     }
-  });
+    });
+
+    const plotly = [
+      {
+        x: mainGraph.map((item) => item.x),
+        y: mainGraph.map((item) => item.y),
+        mode: 'lines',
+        line: {
+          color: '#4db5ff',
+          shape: 'spline',
+          width: 2,
+        },
+        name: 'Main Graph',
+      },
+      ...(data ?? []).map((item,index) => {
+        return {
+            x: [item.x],
+            y: [item.y],
+            mode: 'markers',
+            name: `Result (x${index+1},y${index+1})`,
+            marker: {
+            color: '#7b00ff',
+            size: 10,
+            },
+        }
+        })
+    ]
+    
     return (
-      <GraphInterpolation mainGraph={mainGraph} data={data || []}/>
+      <GraphInterpolation DataGraph={plotly}/>
     )
   }
 

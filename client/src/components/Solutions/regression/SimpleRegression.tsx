@@ -161,9 +161,47 @@ function SimpleRegression() {
           for (let i = Math.min(...points.map((num)=> num.x)) ; i <= Math.max(...points.map((num)=> num.x)); i += 0.1){
               mainGraph.push({x: i, y: calY(i)});
           }
+
+          const plotly = [
+            {
+              x: mainGraph.map((item) => item.x),
+              y: mainGraph.map((item) => item.y),
+              mode: 'lines',
+              line: {
+                color: '#4db5ff',
+                shape: 'spline',
+                width: 2,
+              },
+              name: 'Regression Line',
+            },
+            ...(data ?? []).map((item,index) => {
+              return {
+                  x: [item.x],
+                  y: [item.y],
+                  mode: 'markers',
+                  name: `Result (x${index+1},y${index+1})`,
+                  marker: {
+                  color: '#7b00ff',
+                  size: 10,
+                  },
+              }
+              }),
+              ...(points ?? []).map((item) => {
+                return {
+                    x: [item.x],
+                    y: [item.y],
+                    mode: 'markers',
+                    name: `POINTS (${item.x},${item.y})`,
+                    marker: {
+                    color: 'red',
+                    size: 10,
+                    },
+                }
+                }),
+          ]
           
           return (
-            <GraphScale mainGraph={mainGraph} points={points} data={data || []}/>
+            <GraphScale DataGraph={plotly}/>
           )
 
       }

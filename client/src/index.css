@@ -21,10 +21,34 @@ body{
 :root{
   --primary-color: rgb(77, 181, 255);
   --secondary-color: rgb(40, 139, 209);
+  --background-color: rgb(22, 35, 46);
 }
 
-*::-webkit-scrollbar {
+/* #root::-webkit-scrollbar {
   display: none;
+} */
+
+::-webkit-scrollbar{
+  width: 7px;
+  height: 5px;
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(transparent, var(--secondary-color), transparent);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:horizontal{
+  background: linear-gradient(to right, transparent, var(--secondary-color), transparent);
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(transparent, var(--primary-color), transparent);
+}
+
+::-webkit-scrollbar-thumb:horizontal:hover{
+  background: linear-gradient(to right, transparent, var(--primary-color), transparent);
 }
 
 .active{
