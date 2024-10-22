@@ -287,27 +287,7 @@ function MultiLinearRegression() {
               },
           }
         })
-        
-      // ...points.flatMap((subArray, subArrayIdx) => {
-      //   let isFirst = true;
-    
-      //   return subArray.map((item) => {
-      //     const trace = {
-      //       x: [item.x],
-      //       y: [item.y],
-      //       mode: "markers",
-      //       name: `X${subArrayIdx + 1}`,
-      //       marker: {
-      //         color: colors[subArrayIdx % colors.length],
-      //         size: 10,
-      //       },
-      //       showlegend: isFirst,
-      //     };
-    
-      //     isFirst = false;
-      //     return trace;
-      //   });
-      // }),
+  
     ];
     
     return <GraphScale DataGraph={plotly} />;
