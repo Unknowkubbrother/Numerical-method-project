@@ -1,4 +1,4 @@
-import {evaluate} from 'mathjs';
+import {evaluate,round} from 'mathjs';
 
 export interface CompositeTrapezoidalRequest {
     a : number;
@@ -8,38 +8,74 @@ export interface CompositeTrapezoidalRequest {
 }
 
 export interface CompositeTrapezoidalResponse {
-    result: number;
+    result: {
+        h:{
+            text: string;
+            value: number;
+        }
+        a: number;
+        b: number;
+        equation: string;
+        n: number;
+        result: number;
+        iteartion: {
+            x: number;
+            text: string;
+            value: number;
+        }[]
+    };
     error?: string;
     statusCode: number;
 }
 
 
 export function CompositeTrapezoidalMethods( a : number , b : number , equation : string, n: number ) : CompositeTrapezoidalResponse{
-
+    a = Number(a);
+    b = Number(b);
+    n = Number(n);
     const result: CompositeTrapezoidalResponse = { 
-        result: 0,
+        result: {
+            h: {
+                text: `${b} - (${a})`,
+                value: 0
+            },
+            a: a,
+            b: b,
+            n: n,
+            equation: equation,
+            result: 0,
+            iteartion: []
+        },
         statusCode: 400
     };
 
     const h = (b - a)/n;
+
+    result.result.h.value = h;
     
     const fx = (x : number) => {
         return evaluate(equation, {x});
 
     }
 
-    const iteration = [];
-
+    const iteartion = [];
     for(let i = 0; i <= n; i++){
-        iteration.push( {x: a + i*h, y: fx(a + i*h)});
+        const tempA = a + i*h;
+        iteartion.push({
+            x: tempA,
+            text: equation.replaceAll('x', `(${tempA})`),
+            value: round(fx(tempA),6)
+        });
     }
 
+    result.result.iteartion = iteartion;
+
     let sum = 0;
-    for (let i = 1; i < n; i++){    
+    for (let i = 1; i < n; i++){
         sum += fx(a + i*h);
     }
 
-    result.result = (h/2) * (fx(a) + 2*sum + fx(b));
+    result.result.result = round((h/2) * (fx(a) + 2*sum + fx(b)),6);
 
 
     result.statusCode = 200;

@@ -1,4 +1,4 @@
-import {evaluate} from 'mathjs';
+import {evaluate,round} from 'mathjs';
 
 export interface CompositeSimpsonRequest {
     a : number;
@@ -8,20 +8,49 @@ export interface CompositeSimpsonRequest {
 }
 
 export interface CompositeSimpsonResponse {
-    result: number;
+    result: {
+        h:{
+            text: string;
+            value: number;
+        }
+        a: number;
+        b: number;
+        equation: string;
+        n: number;
+        result: number;
+        iteartion: {
+            x: number;
+            text: string;
+            value: number;
+        }[]
+    };
     error?: string;
     statusCode: number;
 }
 
 
 export function CompositeSimpsonMethods( a : number , b : number , equation : string, n:number) : CompositeSimpsonResponse{
-
+    a = Number(a);
+    b = Number(b);
+    n = Number(n);
     const result: CompositeSimpsonResponse = { 
-        result: 0,
+        result: {
+            h: {
+                text: `${b} - (${a})`,
+                value: 0
+            },
+            a: a,
+            b: b,
+            n: n,
+            equation: equation,
+            result: 0,
+            iteartion: []
+        },
         statusCode: 400
     };
 
     const h = (b - a)/(2*n);
+    result.result.h.value = h;
     
     const fx = (x : number) => {
         return evaluate(equation, {x});
@@ -32,6 +61,11 @@ export function CompositeSimpsonMethods( a : number , b : number , equation : st
 
     for(let i = 0; i <= (2*n); i++){
         iteration.push( {x: a + i*h, y: fx(a + i*h)});
+        result.result.iteartion.push({
+            x: round(a + i*h,6),
+            text: equation.replaceAll('x', `(${round(a + i*h,6)})`),
+            value: round(fx(a + i*h),6)
+        });
     }
 
 
@@ -45,7 +79,8 @@ export function CompositeSimpsonMethods( a : number , b : number , equation : st
         }
     }
 
-    result.result = (h/3) * (fx(a) + sum + fx(b));
+    result.result.result = (h/3) * (fx(a) + sum + fx(b));
+    result.result.result = round(result.result.result,6);
 
     result.statusCode = 200;
 

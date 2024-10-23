@@ -7,7 +7,24 @@ export interface TrapezoidalRequest {
 }
 
 export interface TrapezoidalResponse {
-    result: number;
+    result: {
+        x0:{
+            x: number
+            ans: number;
+            fx: string;
+        },
+        x1:{
+            x: number
+            ans: number;
+            fx: string;
+        },
+        result: number;
+        h: {
+            text: string;
+            ans: number;
+        };
+        equation: string;
+    }
     error?: string;
     statusCode: number;
 }
@@ -16,18 +33,43 @@ export interface TrapezoidalResponse {
 export function TrapezoidalMethods( a : number , b : number , equation : string) : TrapezoidalResponse{
 
     const result: TrapezoidalResponse = { 
-        result: 0,
+        result: {
+            x0: {
+                x: Number(a),
+                ans: 0,
+                fx: ''
+            },
+            x1: {
+                x: Number(b),
+                ans: 0,
+                fx: ''
+            },
+            result: 0,
+            h: {
+                text: `${b} - (${a})`,
+                ans: 0
+            },
+            equation: equation
+        },
         statusCode: 400
     };
 
     const h = (b - a);
     
+    
     const fx = (x : number) => {
         return evaluate(equation, {x});
-
     }
 
-    result.result = (h/2) * (fx(a) + fx(b));
+    const x0 = fx(a);
+    const x1 = fx(b);
+    result.result.x0.ans = x0;
+    result.result.x0.fx = equation.replaceAll('x', `(${a})`);
+    result.result.x1.ans = x1;
+    result.result.x1.fx = equation.replaceAll('x',  `(${b})`);
+    result.result.h.ans = h;
+
+    result.result.result = (h/2) * (x0 + x1);
 
 
     result.statusCode = 200;
