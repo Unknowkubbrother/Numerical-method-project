@@ -102,7 +102,7 @@ function Inputintegration(props: Props) {
                                 type="text"
                                 name="Equation"
                                 className="min-[340px]:w-[150px] min-[667px]:w-[280px] md:w-[300px] lg:w-[100px] h-[40px] px-2 py-3 bg-background rounded-md text-white focus:outline-none focus:outline-primary text-sm"
-                                placeholder="2,4,5,6"
+                                placeholder="2,4,6"
                                 onInput={handleSetN}
                                 value={n}
                             />
