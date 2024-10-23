@@ -7,7 +7,7 @@ exports.multipleLinearRegressionMethods = multipleLinearRegressionMethods;
 const math_1 = __importDefault(require("../../lib/math"));
 function multipleLinearRegressionMethods(x, points) {
     const result = {
-        result: 0,
+        result: [],
         martrixX: [],
         arrY: [],
         arrA: [],
@@ -48,8 +48,11 @@ function multipleLinearRegressionMethods(x, points) {
         }
     }
     let arrA = math_1.default.multiply(math_1.default.inv(matrixX), arrY);
-    for (let i = 0; i < K + 1; i++) {
-        result.result += (i != 0 ? x[i - 1] : 1) * arrA[i];
+    for (let xi = 0; xi < x.length; xi++) {
+        result.result[xi] = 0;
+        for (let i = 0; i < K + 1; i++) {
+            result.result[xi] += (i != 0 ? x[xi][i - 1] : 1) * arrA[i];
+        }
     }
     result.result = math_1.default.round(result.result, 6);
     result.martrixX = math_1.default.round(matrixX, 6);

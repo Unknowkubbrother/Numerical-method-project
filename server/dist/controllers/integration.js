@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CompositeSimpson = exports.Simpson = exports.CompositeTrapezoidal = exports.SingTrapezoidal = void 0;
-const SingTrapezoidal_1 = require("../functions/integration/SingTrapezoidal");
+exports.CompositeSimpson = exports.Simpson = exports.CompositeTrapezoidal = exports.Trapezoidal = void 0;
+const Trapezoidal_1 = require("../functions/integration/Trapezoidal");
 const CompositeTrapezoidal_1 = require("../functions/integration/CompositeTrapezoidal");
 const Simpson_1 = require("../functions/integration/Simpson");
 const CompositeSimpson_1 = require("../functions/integration/CompositeSimpson");
-const SingTrapezoidal = async (req, res) => {
+const Trapezoidal = async (req, res) => {
     try {
-        const { xStart, xEnd, equation } = req.body;
-        let result = (0, SingTrapezoidal_1.SingTrapezoidalMethods)(xStart, xEnd, equation);
+        const { a, b, equation } = req.body;
+        let result = (0, Trapezoidal_1.TrapezoidalMethods)(a, b, equation);
         return res.status(result.statusCode).json(result).end();
     }
     catch (error) {
@@ -16,7 +16,7 @@ const SingTrapezoidal = async (req, res) => {
         return res.sendStatus(400);
     }
 };
-exports.SingTrapezoidal = SingTrapezoidal;
+exports.Trapezoidal = Trapezoidal;
 const CompositeTrapezoidal = async (req, res) => {
     try {
         const { xStart, xEnd, n, equation } = req.body;

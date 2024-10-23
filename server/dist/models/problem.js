@@ -33,6 +33,7 @@ var SolutionType;
     SolutionType["LAGRANGE"] = "lagrange";
     SolutionType["SPLINE"] = "spline";
     SolutionType["SIMPLEREGRESSION"] = "simple";
+    SolutionType["MULTIPLELINEARREGRESSION"] = "multipleLinear";
 })(SolutionType || (exports.SolutionType = SolutionType = {}));
 const ProblemSchema = new mongoose_1.default.Schema({
     type: {
