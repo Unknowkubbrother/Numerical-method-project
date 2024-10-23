@@ -301,14 +301,16 @@ function Problems() {
           )}
         </div>
 
-        {(table && table.length) && (
+        {(table && table.length) ? (
         <div className="w-full h-content mt-10 flex justify-center items-center">
           {selectedMenu === "Root of Equation" && renderTableRoot()}
           {selectedMenu === "Linear Algebraic Equation" && renderTableLinear()}
           {selectedMenu === "Interpolation" && renderTableInterpolation()}
           {selectedMenu === "Regression" && renderTableRegression()}
         </div>
-        )
+        ) :
+
+          <div className="w-full flex justify-center items-center text-xl mt-10">Data Not found!!</div>
         }
 
 

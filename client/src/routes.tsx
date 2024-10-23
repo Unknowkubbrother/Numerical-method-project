@@ -30,6 +30,11 @@ import Problems from './components/Problems/Problems.tsx'
 import Regression from './components/Solutions/regression/Regression.tsx';
 import SimpleRegression from './components/Solutions/regression/SimpleRegression.tsx';
 import MultiLinearRegression from './components/Solutions/regression/MultiLinearRegression.tsx';
+import Integration from './components/Solutions/Integration/Integration.tsx';
+import Trapezoidal from './components/Solutions/Integration/Trapezoidal.tsx';
+import CompositeTrapezoidal from './components/Solutions/Integration/CompositeTrapezoidal.tsx';
+import Simpson from './components/Solutions/Integration/Simpson.tsx';
+import CompositeSimpson from './components/Solutions/Integration/CompositeSimpson.tsx';
 
 const router = createBrowserRouter([
   {
@@ -150,6 +155,28 @@ const router = createBrowserRouter([
               {
                 path: 'multipleLinear',
                 element: <MultiLinearRegression />
+              }
+            ]
+          },
+          {
+            path: 'integration',
+            element: <Integration/>,
+            children:[
+              {
+                path: 'trapezoidal',
+                element: <Trapezoidal />
+              },
+              {
+                path: 'compositetrapezoidal',
+                element: <CompositeTrapezoidal />
+              },
+              {
+                path: 'simpson',
+                element: <Simpson />
+              },
+              {
+                path: 'compositesimpson',
+                element: <CompositeSimpson />
               }
             ]
           }

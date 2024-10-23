@@ -1,8 +1,8 @@
 import { evaluate } from 'mathjs';
 
 export interface TrapezoidalRequest {
-    xStart : number;
-    xEnd : number;
+    a : number;
+    b : number;
     equation : string;
 }
 
@@ -13,21 +13,21 @@ export interface TrapezoidalResponse {
 }
 
 
-export function TrapezoidalMethods( xStart : number , xEnd : number , equation : string) : TrapezoidalResponse{
+export function TrapezoidalMethods( a : number , b : number , equation : string) : TrapezoidalResponse{
 
     const result: TrapezoidalResponse = { 
         result: 0,
         statusCode: 400
     };
 
-    const h = (xEnd - xStart);
+    const h = (b - a);
     
     const fx = (x : number) => {
         return evaluate(equation, {x});
 
     }
 
-    result.result = (h/2) * (fx(xStart) + fx(xEnd));
+    result.result = (h/2) * (fx(a) + fx(b));
 
 
     result.statusCode = 200;

@@ -1,16 +1,16 @@
 import express from 'express';
 
-import { SingSingTrapezoidalRequest, SingTrapezoidalMethods, SingTrapezoidalResponse} from '../functions/integration/SingTrapezoidal';
+import { TrapezoidalRequest, TrapezoidalMethods, TrapezoidalResponse} from '../functions/integration/Trapezoidal';
 import { CompositeTrapezoidalMethods, CompositeTrapezoidalRequest, CompositeTrapezoidalResponse } from '../functions/integration/CompositeTrapezoidal';
 import { SimpsonMethods,SimpsonRequest,SimpsonResponse } from '../functions/integration/Simpson';
 import { CompositeSimpsonMethods, CompositeSimpsonRequest, CompositeSimpsonResponse} from '../functions/integration/CompositeSimpson';
 
-export const SingTrapezoidal = async (req: express.Request, res: express.Response) => {
+export const Trapezoidal = async (req: express.Request, res: express.Response) => {
     try{
 
-        const {xStart, xEnd , equation} : SingSingTrapezoidalRequest = req.body;
+        const {a, b , equation} : TrapezoidalRequest = req.body;
 
-        let result : SingTrapezoidalResponse = SingTrapezoidalMethods(xStart, xEnd , equation);
+        let result : TrapezoidalResponse = TrapezoidalMethods(a, b , equation);
 
         return res.status(result.statusCode).json(result).end();
         

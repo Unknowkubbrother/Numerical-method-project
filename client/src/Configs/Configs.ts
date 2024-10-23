@@ -106,18 +106,28 @@ export const mainMenu = [
       }
     ],
   },
-  // {
-  //   title: "Extrapolation",
-  //   path: "/lobby/root",
-  //   menu: [
-  //   ],
-  // },
-  // {
-  //   title: "Integration",
-  //   path: "/lobby/root",
-  //   menu: [
-  //   ],
-  // },
+  {
+    title: "Integration",
+    path: "../lobby/integration",
+    menu: [
+      {
+        path: '/lobby/integration/trapezoidal',
+        title: "Trapezoidal Rule"
+      },
+      {
+        path: '/lobby/integration/compositetrapezoidal',
+        title: "Composite Trapezoidal Rule"
+      },
+      {
+        path: '/lobby/integration/simpson',
+        title: "Simpson's Rule"
+      },
+      {
+        path: '/lobby/integration/compositesimpson',
+        title: "Composite Simpson's Rule"
+      }
+    ],
+  },
   // {
   //   title: "Differentiation",
   //   path: "/lobby/root",
