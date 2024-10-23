@@ -5,9 +5,9 @@ import { DifferentiationMethods,DifferentiationRequest,DifferentiationResponse }
 export const Differentiation = async (req: express.Request, res: express.Response) => {
     try{
 
-        const {x, h , equation, type, oh} : DifferentiationRequest = req.body;
+        let {x,h,equation,order,oh,direction} : DifferentiationRequest = req.body;
 
-        let result : DifferentiationResponse = DifferentiationMethods(x, h , equation, type, oh);
+        let result : DifferentiationResponse = DifferentiationMethods(x,h,equation,order,oh,direction);
 
         return res.status(result.statusCode).json(result).end();
         

@@ -1,4 +1,4 @@
-import math from '../../lib/math';
+import {evaluate,derivative,abs} from 'mathjs';
 
 export interface DifferentiationRequest {
     x: number;
@@ -18,6 +18,8 @@ export interface DifferentiationResponse {
     error?: string;
     statusCode: number;
 }
+
+// credit by tonkaew131 https://github.com/tonkaew131/NumerProject/blob/main/src/lib/solutions/differentiation.ts
 
 export const diffFormula: {
 	[direction: string]: {
@@ -233,8 +235,6 @@ export const diffFormula: {
 	}
 };
 
-
-
 export function DifferentiationMethods( 
     x: number,
     h : number,
@@ -277,21 +277,21 @@ export function DifferentiationMethods(
 
     const fx = (i : number) => {
         const xValue = x + i * h;
-		return math.evaluate(equation, { x: xValue });
+		return evaluate(equation, { x: xValue });
     }
 
     const diff = (equation : string, x : number, n : number) => {
         if (n == 0){
-            return math.evaluate(equation, {x});
+            return evaluate(equation, {x});
         }
 
-        const diffequation = math.derivative(equation, 'x').toString();
+        const diffequation = derivative(equation, 'x').toString();
 
         return (diff(diffequation, x, n-1));
     }
 
     const exactResult = diff(equation,x,order);
-    const hValue = math.evaluate(formula.frac, {h});
+    const hValue = evaluate(formula.frac, {h});
 
     result.exactResult = exactResult;
     result.h = hValue;
@@ -308,7 +308,7 @@ export function DifferentiationMethods(
     }
 
     result.result/=hValue;
-    result.errorValue = Math.abs((result.result - result.exactResult) / result.exactResult) * 100;
+    result.errorValue = abs((result.exactResult - result.result) / result.exactResult) * 100;
 
 
     result.statusCode = 200;
