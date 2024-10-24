@@ -63,7 +63,8 @@ interface RegressionRequest {
       y:number,
       selected: boolean
   }[]
-  M?: number
+  M?: number,
+  k?: number
 }
 
 export interface IntegrationRequest {
@@ -211,15 +212,39 @@ function Problems() {
               <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
-                <td>{input.x && <BlockMath math={ArrayFormat(input.x)}/>}</td>
-                <td>{input.points &&
-                    input.points?.map((point, index) => {
-                        return (
+                <td>{input.x &&
+                    input.x.map((x, index) => {
+                      return (
                         <div key={index} className="flex flex-col gap-3 flex-wrap">
-                            {point.selected && <BlockMath math={ArrayFormat([point.x,point.y])} />}
+                          <BlockMath math={ArrayFormat(Array.isArray(x) ? x : [x])} />
                         </div>
-                        )
+                      )
                     })
+                  }</td>
+                <td className="flex justify-center items-center">{input.points &&
+                    <div className="flex gap-3">
+                      <div className="flex flex-col gap-3 justify-start items-center">
+                        <span>X</span>
+                        {input.points?.map((point) => {
+                          return (
+                            (point.selected && 
+                              <BlockMath math={ArrayFormat(Array.isArray(point.x) ? point.x : [point.x])} />
+          
+                            )
+                          )
+                      })}
+                      </div>
+                      <div className="flex flex-col gap-3 justify-start items-center">
+                        <span>Y</span>
+                        {input.points?.map((point) => {
+                          return (
+                            (point.selected && 
+                                <BlockMath math={ArrayFormat(Array.isArray(point.y) ? point.y : [point.y])} />
+                            )
+                          )
+                      })}
+                      </div>
+                    </div>
                     
                 }</td>
                 <td>
@@ -245,6 +270,7 @@ function Problems() {
             <th>X</th>
             <th>Points</th>
             <th>M</th>
+            <th>K</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -256,20 +282,43 @@ function Problems() {
               <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
-                <td>{input.x && <BlockMath math={ArrayFormat(input.x)}/>}</td>
-                {/* <td>{(item.input as LinearRequest).arrB && <BlockMath math={ArrayFormat((item.input as LinearRequest).arrB as number[])}/>}</td> */}
-                <td>{input.points &&
-
-                    input.points?.map((point, index) => {
-                        return (
+                <td>{input.x &&
+                    input.x.map((x, index) => {
+                      return (
                         <div key={index} className="flex flex-col gap-3 flex-wrap">
-                            {point.selected && <BlockMath math={ArrayFormat([point.x,point.y])} />}
+                          <BlockMath math={ArrayFormat(Array.isArray(x) ? x : [x])} />
                         </div>
-                        )
+                      )
                     })
+                  }</td>
+                <td className="flex justify-center items-center">{input.points &&
+                    <div className="flex gap-3">
+                      <div className="flex flex-col gap-3 justify-start items-center">
+                        <span>X</span>
+                        {input.points?.map((point) => {
+                          return (
+                            (point.selected && 
+                              <BlockMath math={ArrayFormat(Array.isArray(point.x) ? point.x : [point.x])} />
+          
+                            )
+                          )
+                      })}
+                      </div>
+                      <div className="flex flex-col gap-3 justify-start items-center">
+                        <span>Y</span>
+                        {input.points?.map((point) => {
+                          return (
+                            (point.selected && 
+                                <BlockMath math={ArrayFormat(Array.isArray(point.y) ? point.y : [point.y])} />
+                            )
+                          )
+                      })}
+                      </div>
+                    </div>
                     
                 }</td>
-                <td>{input.M}</td>
+                <td>{input.M || 'N/A'}</td>
+                <td>{input.k || 'N/A'}</td>
                 <td>
                   {new Date(item.createdAt).toLocaleDateString() + " " + new Date(item.createdAt).toLocaleTimeString()}
                 </td>
@@ -365,7 +414,7 @@ function Problems() {
 
   return (
     (loading ? <></> : 
-    <div className={`w-full h-content mt-[90px] ${loadingSecond ? 'blur' : ''}`}>
+    <div className={`w-full h-content mt-[90px] ${loadingSecond ? 'blur select-none' : ''}`}>
       <div className="w-full flex justify-center items-center">
         <h1 className="min-[340px]:text-2xl lg:text-4xl font-bold text-center flex gap-2 mt-10">
           <span>Numerical</span>
