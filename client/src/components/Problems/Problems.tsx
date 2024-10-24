@@ -6,6 +6,7 @@ import { round } from 'mathjs';
 import { MatrixFormat,ArrayFormat } from "../ui/MatrixFormat";
 import { BlockMath } from "react-katex";
 import { useNavigate } from "react-router-dom";
+
 interface ProblemItem {
     _id: string;
     type: string;
@@ -20,8 +21,8 @@ interface RootRequest {
     xEnd?: number;
     xL?: number;
     xR?: number;
-    func?: string;
-    errorFactor?: number;
+    func: string;
+    errorFactor: number;
     xInitial0?: number;
     xInitial1?: number;
     xInitial?: number;
@@ -44,6 +45,15 @@ interface InterpolationRequest {
     type?: string
 }
 
+export interface DifferentiationRequest {
+  x: number;
+  h : number;
+  equation : string;
+  order: 1 | 2 | 3 | 4 | number,
+  oh: "h" | "h^2" | "h^4" | string,
+  direction: "forward" | "backward" | "central" | string;
+}
+
 
 
 interface RegressionRequest {
@@ -54,6 +64,13 @@ interface RegressionRequest {
       selected: boolean
   }[]
   M?: number
+}
+
+export interface IntegrationRequest {
+  a : number;
+  b : number;
+  equation : string;
+  n?: number;
 }
 
 function Problems() {
@@ -119,11 +136,12 @@ function Problems() {
           {(table &&
           table.map((item: ProblemItem, index) => {
             const result = item.output && (item.output as { result: { x: number } }).result;
+            const input = item.input as RootRequest;
             return (
               <tr key={index} className={`cursor-pointer hover:bg-[#152836] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
-                <td>{(item.input as RootRequest).func}</td>
+                <td>{input.func}</td>
                 <td>{result && result.x ? round(result.x, 6) : 'N/A'}</td>
                 <td>
                   {new Date(item.createdAt).toLocaleDateString() + " " + new Date(item.createdAt).toLocaleTimeString()}
@@ -153,13 +171,14 @@ function Problems() {
         <tbody className="text-center">
         {(table &&
           table.map((item: ProblemItem, index) => {
+            const input = item.input as LinearRequest;
             return (
               <tr key={index} className={`cursor-pointer hover:bg-[#152836] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
-                <td>{(item.input as LinearRequest).matrixA && <BlockMath math={MatrixFormat((item.input as LinearRequest).matrixA as number[][])}/>}</td>
-                <td>{(item.input as LinearRequest).arrB && <BlockMath math={ArrayFormat((item.input as LinearRequest).arrB as number[])}/>}</td>
-                <td>{(item.input as LinearRequest).initialX ? <BlockMath math={ArrayFormat((item.input as LinearRequest).initialX as number[])}/> : 'N/A'}</td>
+                <td>{input.matrixA && <BlockMath math={MatrixFormat(input.matrixA)}/>}</td>
+                <td>{input.arrB && <BlockMath math={ArrayFormat(input.arrB)}/>}</td>
+                <td>{input.initialX ? <BlockMath math={ArrayFormat(input.initialX)}/> : 'N/A'}</td>
                 <td>
                   {new Date(item.createdAt).toLocaleDateString() + " " + new Date(item.createdAt).toLocaleTimeString()}
                 </td>
@@ -187,15 +206,14 @@ function Problems() {
         <tbody className="text-center">
         {(table &&
           table.map((item: ProblemItem, index) => {
+            const input = item.input as InterpolationRequest;
             return (
               <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
-                <td>{(item.input as InterpolationRequest).x && <BlockMath math={ArrayFormat((item.input as InterpolationRequest).x as number[])}/>}</td>
-                {/* <td>{(item.input as LinearRequest).arrB && <BlockMath math={ArrayFormat((item.input as LinearRequest).arrB as number[])}/>}</td> */}
-                <td>{(item.input as InterpolationRequest).points &&
-
-                    (item.input as InterpolationRequest).points?.map((point, index) => {
+                <td>{input.x && <BlockMath math={ArrayFormat(input.x)}/>}</td>
+                <td>{input.points &&
+                    input.points?.map((point, index) => {
                         return (
                         <div key={index} className="flex flex-col gap-3 flex-wrap">
                             {point.selected && <BlockMath math={ArrayFormat([point.x,point.y])} />}
@@ -233,15 +251,16 @@ function Problems() {
         <tbody className="text-center">
         {(table &&
           table.map((item: ProblemItem, index) => {
+            const input = item.input as RegressionRequest;
             return (
               <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
                 <td>{index + 1}</td>
                 <td>{item.solution}</td>
-                <td>{(item.input as RegressionRequest).x && <BlockMath math={ArrayFormat((item.input as RegressionRequest).x as number[])}/>}</td>
+                <td>{input.x && <BlockMath math={ArrayFormat(input.x)}/>}</td>
                 {/* <td>{(item.input as LinearRequest).arrB && <BlockMath math={ArrayFormat((item.input as LinearRequest).arrB as number[])}/>}</td> */}
-                <td>{(item.input as RegressionRequest).points &&
+                <td>{input.points &&
 
-                    (item.input as RegressionRequest).points?.map((point, index) => {
+                    input.points?.map((point, index) => {
                         return (
                         <div key={index} className="flex flex-col gap-3 flex-wrap">
                             {point.selected && <BlockMath math={ArrayFormat([point.x,point.y])} />}
@@ -250,7 +269,87 @@ function Problems() {
                     })
                     
                 }</td>
-                <td>{(item.input as RegressionRequest).M}</td>
+                <td>{input.M}</td>
+                <td>
+                  {new Date(item.createdAt).toLocaleDateString() + " " + new Date(item.createdAt).toLocaleTimeString()}
+                </td>
+              </tr>
+            );
+          }))}
+        </tbody>
+      </table>
+    );
+  };
+
+  const renderTableIntegration = () => {
+    return (
+      <table className="w-[90%] table caption-bottom m-auto">
+        { (!table.length) && <caption className="mt-4 text-sm text-muted-foreground">Data Not Found</caption> }
+        <thead className="w-full bg-[#152836] border-b-2 border-sky-500 sticky top-0 z-50 text-center">
+          <tr>
+            <th>ID</th>
+            <th>Solution</th>
+            <th>Equation</th>
+            <th>a</th>
+            <th>b</th>
+            <th>n</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody className="text-center">
+        {(table &&
+          table.map((item: ProblemItem, index) => {
+            const input = item.input as IntegrationRequest;
+            return (
+              <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
+                <td>{index + 1}</td>
+                <td>{item.solution}</td>
+                <td><BlockMath math={input.equation}/></td>
+                <td>{input.a}</td>
+                <td>{input.b}</td>
+                <td>{input.n || 'N/A'}</td>
+                <td>
+                  {new Date(item.createdAt).toLocaleDateString() + " " + new Date(item.createdAt).toLocaleTimeString()}
+                </td>
+              </tr>
+            );
+          }))}
+        </tbody>
+      </table>
+    );
+  };
+
+  const renderTableDifferntiation = () => {
+    return (
+      <table className="w-[90%] table caption-bottom m-auto">
+        { (!table.length) && <caption className="mt-4 text-sm text-muted-foreground">Data Not Found</caption> }
+        <thead className="w-full bg-[#152836] border-b-2 border-sky-500 sticky top-0 z-50 text-center">
+          <tr>
+            <th>ID</th>
+            <th>Solution</th>
+            <th>Direction</th>
+            <th>Order</th>
+            <th>Oh</th>
+            <th>Equation</th>
+            <th>x</th>
+            <th>h</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody className="text-center">
+        {(table &&
+          table.map((item: ProblemItem, index) => {
+            const input = item.input as DifferentiationRequest;
+            return (
+              <tr key={index} className={`cursor-pointer hover:bg-[#112330] duration-300 ${index % 2 == 1 && 'bg-[#1f2020]'}`} onClick={()=> onClickToCalulate(item)}>
+                <td>{index + 1}</td>
+                <td>{item.solution}</td>
+                <td>{input.direction}</td>
+                <td>{input.order}</td>
+                <td>{input.oh}</td>
+                <td><BlockMath math={input.equation}/></td>
+                <td>{input.x}</td>
+                <td>{input.h}</td>
                 <td>
                   {new Date(item.createdAt).toLocaleDateString() + " " + new Date(item.createdAt).toLocaleTimeString()}
                 </td>
@@ -307,6 +406,8 @@ function Problems() {
           {selectedMenu === "Linear Algebraic Equation" && renderTableLinear()}
           {selectedMenu === "Interpolation" && renderTableInterpolation()}
           {selectedMenu === "Regression" && renderTableRegression()}
+          {selectedMenu === "Integration" && renderTableIntegration()}
+          {selectedMenu === "Differentiation" && renderTableDifferntiation()}
         </div>
         ) :
 

@@ -4,8 +4,8 @@ exports.Differentiation = void 0;
 const Differentiation_1 = require("../functions/Differentiation/Differentiation");
 const Differentiation = async (req, res) => {
     try {
-        const { x, h, equation, type, oh } = req.body;
-        let result = (0, Differentiation_1.DifferentiationMethods)(x, h, equation, type, oh);
+        let { x, h, equation, order, oh, direction } = req.body;
+        let result = (0, Differentiation_1.DifferentiationMethods)(x, h, equation, order, oh, direction);
         return res.status(result.statusCode).json(result).end();
     }
     catch (error) {

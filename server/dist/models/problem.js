@@ -11,6 +11,8 @@ var ProblemType;
     ProblemType["LINEAR_ALGEBRAIC_EQUATION"] = "Linear Algebraic Equation";
     ProblemType["INTERPOLATION"] = "Interpolation";
     ProblemType["REGRESSION"] = "Regression";
+    ProblemType["INTEGRATION"] = "Integration";
+    ProblemType["DIFFERENTIATION"] = "Differentiation";
 })(ProblemType || (exports.ProblemType = ProblemType = {}));
 var SolutionType;
 (function (SolutionType) {
@@ -34,6 +36,11 @@ var SolutionType;
     SolutionType["SPLINE"] = "spline";
     SolutionType["SIMPLEREGRESSION"] = "simple";
     SolutionType["MULTIPLELINEARREGRESSION"] = "multipleLinear";
+    SolutionType["TRAPEZOIDAL"] = "trapezoidal";
+    SolutionType["COMPOSITETRAPEZOIDAL"] = "compositetrapezoidal";
+    SolutionType["SIMPSON"] = "simpson";
+    SolutionType["COMPOSITESIMPSON"] = "compositesimpson";
+    SolutionType["DIFF"] = "diff";
 })(SolutionType || (exports.SolutionType = SolutionType = {}));
 const ProblemSchema = new mongoose_1.default.Schema({
     type: {

@@ -1,4 +1,5 @@
 import {evaluate,derivative,abs} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface DifferentiationRequest {
     x: number;
@@ -333,6 +334,20 @@ export function DifferentiationMethods(
 	
 	
 		result.statusCode = 200;
+
+		problemCreate({
+            type: "Differentiation",
+            solution: "diff",
+            input: {
+                "x" : x,
+				"h" : h,
+				"equation": equation,
+				"order" : order,
+				"oh" : oh,
+				"direction" : direction
+            },
+            // output: result
+        });
 	
 		return result;
 	}catch(e){

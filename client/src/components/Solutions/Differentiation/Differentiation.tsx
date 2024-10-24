@@ -1,9 +1,11 @@
-import { useState,useContext } from "react";
+import { useState,useContext,useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { BlockMath } from "react-katex";
 import { MyFunctionContext } from "../../../App";
 import Swal from "sweetalert2";
-import {DifferentiationResponse , DifferentiationMethods} from "../../../Methods/Differentiation/Differentiation";
+import {DifferentiationResponse , DifferentiationMethods, DifferentiationRequest} from "../../../Methods/Differentiation/Differentiation";
+import {problemGetById,Problem} from '../../../Api/problem'
+import { useLocation } from 'react-router-dom';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const directionMenu : {
@@ -41,6 +43,34 @@ function Differentiation() {
     const [h, setH] = useState<number>();
     const [equation, setEquation] = useState<string>("");
     const [result, setResult] = useState<DifferentiationResponse | null>(null);
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const Id = params.get('id');
+
+    useEffect(() => {
+        if (Id != null) {
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(problemGetById(Id));
+            }, 1000);
+          })
+            .then((result: unknown) => {
+              const data = result as Problem;
+              const input = data.input as DifferentiationRequest;
+                if (input.x && input.h && input.equation && input.order && input.oh && input.direction){
+                    setX(input.x);
+                    setH(input.h);
+                    setEquation(input.equation);
+                    setOrder(input.order);
+                    setOh(input.oh);
+                    setDirection(input.direction);
+                }
+            })
+            .catch((error) => {
+              console.log(error)
+            }); 
+        }
+      },[Id]);
 
     const handlerSetEquation = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEquation(e.target.value);
