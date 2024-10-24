@@ -67,13 +67,13 @@ function Diff() {
                         }
                         }
                         {${result.h}} \\\\~\\\\
-						 = \\space ${result.result.toFixed(6)}
+						 = \\space ${result.result.toFixed(6)} \\space \\color{red}\\#
                     `}/>
                 </div>
 
                 <div className='w-fit m-auto'>
                     <BlockMath math={`
-                        \\text{Exact Differentiation; } 
+                        \\text{Exact Differentiation } 
                         \\\\~\\\\
                         f(x) = ${parse(result.defualt.equation).toTex()}
                         \\\\~\\\\
