@@ -19,6 +19,14 @@ function Trapezoidal() {
   
 
   const sendRequest = async () => {
+    if (!Data.a || !Data.b || !Data.equation) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please fill all the fields.",
+        icon: "error",
+      });
+      return;
+    }
     setloadingSecond(true);
     new Promise((resolve) => {
       setTimeout(() => {

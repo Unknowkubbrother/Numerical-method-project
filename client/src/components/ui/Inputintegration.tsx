@@ -81,7 +81,7 @@ function Inputintegration(props: Props) {
   return (
     <div className='w-full flex justify-center items-center flex-col mt-10'>
         <div className='flex px-5 py-2'>
-            <BlockMath math={`\\Large \\int^${b || 'b'}_{${a || 'a'}} ${equation || '\\space.\\space.\\space.'} \\kern{5px} dx
+            <BlockMath math={`\\Large \\int^{${b || 'b'}}_{${a || 'a'}} ${equation || '\\space.\\space.\\space.'} \\kern{5px} dx
             `} />
         </div>
 
