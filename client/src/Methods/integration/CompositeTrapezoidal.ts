@@ -1,4 +1,5 @@
 import {evaluate,round} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface CompositeTrapezoidalRequest {
     a : number;
@@ -49,38 +50,56 @@ export function CompositeTrapezoidalMethods( a : number , b : number , equation 
         statusCode: 400
     };
 
-    const h = (b - a)/n;
+    try{
+        const h = (b - a)/n;
 
-    result.result.h.value = h;
-    
-    const fx = (x : number) => {
-        return evaluate(equation, {x});
+        result.result.h.value = h;
+        
+        const fx = (x : number) => {
+            return evaluate(equation, {x});
 
-    }
+        }
 
-    const iteartion = [];
-    for(let i = 0; i <= n; i++){
-        const tempA = a + i*h;
-        iteartion.push({
-            x: tempA,
-            text: equation.replaceAll('x', `(${tempA})`),
-            value: round(fx(tempA),6)
+        const iteartion = [];
+        for(let i = 0; i <= n; i++){
+            const tempA = a + i*h;
+            iteartion.push({
+                x: tempA,
+                text: equation.replaceAll('x', `(${tempA})`),
+                value: round(fx(tempA),6)
+            });
+        }
+
+        result.result.iteartion = iteartion;
+
+        let sum = 0;
+        for (let i = 1; i < n; i++){
+            sum += fx(a + i*h);
+        }
+
+        result.result.result = round((h/2) * (fx(a) + 2*sum + fx(b)),6);
+
+
+        result.statusCode = 200;
+
+        problemCreate({
+            type: "Integration",
+            solution: "compositetrapezoidal",
+            input: {
+                "a" : a,
+                "b" : b,
+                "equation" : equation,
+                "n": n
+            },
+            // output: result
         });
+
+        return result;
+    }catch(e){
+        result.error = "failed request";
+        result.statusCode = 400;
+        return result;
     }
-
-    result.result.iteartion = iteartion;
-
-    let sum = 0;
-    for (let i = 1; i < n; i++){
-        sum += fx(a + i*h);
-    }
-
-    result.result.result = round((h/2) * (fx(a) + 2*sum + fx(b)),6);
-
-
-    result.statusCode = 200;
-
-    return result;
 
 }
 

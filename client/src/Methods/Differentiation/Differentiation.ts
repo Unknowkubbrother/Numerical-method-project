@@ -271,68 +271,75 @@ export function DifferentiationMethods(
         statusCode: 400
     };
 
-    if (order < 1 || order > 4){
-        result.error = "Order must be between 1 and 4";
+	try{
+		
+		if (order < 1 || order > 4){
+			result.error = "Order must be between 1 and 4";
+			return result;
+		}
+	
+		if (oh != "h" && oh != "h^2" && oh != "h^4"){
+			result.error = "Order of h must be h, h^2 or h^4";
+			return result;
+		}
+	
+		if (direction != "forward" && direction != "backward" && direction != "central"){
+			result.error = "Direction must be forward, backward or central";
+			return result;
+		}
+	
+		const formula = diffFormula[direction][order][oh];
+	
+		if (!formula){
+			result.error = "Invalid formula";
+			return result;
+		}
+	
+		const fx = (i : number) => {
+			const xValue = x + i * h;
+			return evaluate(equation, { x: xValue });
+		}
+	
+		const diff = (equation : string, x : number, n : number) => {
+			if (n == 0){
+				result.exactEquation = equation;
+				return evaluate(equation, {x});
+			}
+	
+			const diffequation = derivative(equation, 'x').toString();
+	
+			return (diff(diffequation, x, n-1));
+		}
+	
+		const exactResult = diff(equation,x,order);
+		const hValue = evaluate(formula.frac, {h});
+	
+		result.exactResult = exactResult;
+		result.h = hValue;
+		
+	
+		for (const i in formula){
+			if (i == "frac"){
+				continue;
+			}
+	
+			const value = formula[i] * fx(parseInt(i));
+			result.fx[parseInt(i)] = value;
+			result.result += value;
+		}
+	
+		result.result/=hValue;
+		result.errorValue = abs((result.exactResult - result.result) / result.exactResult) * 100;
+	
+	
+		result.statusCode = 200;
+	
+		return result;
+	}catch(e){
+		result.error = "failed request";
+        result.statusCode = 400;
         return result;
-    }
-
-    if (oh != "h" && oh != "h^2" && oh != "h^4"){
-        result.error = "Order of h must be h, h^2 or h^4";
-        return result;
-    }
-
-    if (direction != "forward" && direction != "backward" && direction != "central"){
-        result.error = "Direction must be forward, backward or central";
-        return result;
-    }
-
-    const formula = diffFormula[direction][order][oh];
-
-    if (!formula){
-        result.error = "Invalid formula";
-        return result;
-    }
-
-    const fx = (i : number) => {
-        const xValue = x + i * h;
-		return evaluate(equation, { x: xValue });
-    }
-
-    const diff = (equation : string, x : number, n : number) => {
-        if (n == 0){
-			result.exactEquation = equation;
-            return evaluate(equation, {x});
-        }
-
-        const diffequation = derivative(equation, 'x').toString();
-
-        return (diff(diffequation, x, n-1));
-    }
-
-    const exactResult = diff(equation,x,order);
-    const hValue = evaluate(formula.frac, {h});
-
-    result.exactResult = exactResult;
-    result.h = hValue;
-    
-
-    for (const i in formula){
-        if (i == "frac"){
-            continue;
-        }
-
-        const value = formula[i] * fx(parseInt(i));
-        result.fx[parseInt(i)] = value;
-        result.result += value;
-    }
-
-    result.result/=hValue;
-    result.errorValue = abs((result.exactResult - result.result) / result.exactResult) * 100;
-
-
-    result.statusCode = 200;
-
-    return result;
+	}
 
 }
 

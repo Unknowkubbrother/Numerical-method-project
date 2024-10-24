@@ -1,4 +1,5 @@
 import {evaluate} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface SimpsonRequest {
     a : number;
@@ -45,28 +46,45 @@ export function SimpsonMethods( a : number , b : number , equation : string) : S
         statusCode: 400
     };
 
-    const h = (b - a)/2;
-    result.result.h.value = h;
-    
-    const fx = (x : number) => {
-        return evaluate(equation, {x});
-    }
+    try{
+        const h = (b - a)/2;
+        result.result.h.value = h;
+        
+        const fx = (x : number) => {
+            return evaluate(equation, {x});
+        }
 
-    for(let i = 0; i <= 2; i++){
-        result.result.iterations.push({
-            x: a + (i*h),
-            text: equation.replaceAll('x', `(${a + (i*h)})`),
-            value: fx(a + (i*h))
+        for(let i = 0; i <= 2; i++){
+            result.result.iterations.push({
+                x: a + (i*h),
+                text: equation.replaceAll('x', `(${a + (i*h)})`),
+                value: fx(a + (i*h))
+            });
+        }
+        
+
+        result.result.result = (h/3) * (fx(a) + (4*fx(a + h)) + fx(b));
+
+
+        result.statusCode = 200;
+
+        problemCreate({
+            type: "Integration",
+            solution: "simpson",
+            input: {
+                "a" : a,
+                "b" : b,
+                "equation" : equation
+            },
+            // output: result
         });
+
+        return result;
+    }catch(e){
+        result.error = "failed request";
+        result.statusCode = 400;
+        return result;
     }
-    
-
-    result.result.result = (h/3) * (fx(a) + (4*fx(a + h)) + fx(b));
-
-
-    result.statusCode = 200;
-
-    return result;
 
 }
 

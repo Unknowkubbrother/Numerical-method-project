@@ -1,18 +1,11 @@
 import {useEffect, useState} from 'react'
 import { useLocation } from 'react-router-dom';
-import {problemGetById} from '../../Api/problem'
+import {problemGetById,Problem} from '../../Api/problem'
 
 
 interface Values {
   x: number[] | undefined; 
   points: { x: number; y: number; selected: boolean; }[]; 
-}
-
-interface Problem {
-  type: string;
-  solution: string;
-  input: object;
-  output?: object;
 }
 
 interface Props {

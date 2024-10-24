@@ -1,4 +1,5 @@
 import { evaluate } from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface TrapezoidalRequest {
     a : number;
@@ -53,28 +54,46 @@ export function TrapezoidalMethods( a : number , b : number , equation : string)
         },
         statusCode: 400
     };
+    
+    try{
+        
+        const h = (b - a);
+        
+        
+        const fx = (x : number) => {
+            return evaluate(equation, {x});
+        }
 
-    const h = (b - a);
-    
-    
-    const fx = (x : number) => {
-        return evaluate(equation, {x});
+        const x0 = fx(a);
+        const x1 = fx(b);
+        result.result.x0.ans = x0;
+        result.result.x0.fx = equation.replaceAll('x', `(${a})`);
+        result.result.x1.ans = x1;
+        result.result.x1.fx = equation.replaceAll('x',  `(${b})`);
+        result.result.h.ans = h;
+
+        result.result.result = (h/2) * (x0 + x1);
+
+
+        result.statusCode = 200;
+
+        problemCreate({
+            type: "Integration",
+            solution: "trapezoidal",
+            input: {
+                "a" : a,
+                "b" : b,
+                "equation" : equation
+            },
+            // output: result
+        });
+
+        return result;
+    }catch(e){
+        result.error = "failed request";
+        result.statusCode = 400;
+        return result;
     }
-
-    const x0 = fx(a);
-    const x1 = fx(b);
-    result.result.x0.ans = x0;
-    result.result.x0.fx = equation.replaceAll('x', `(${a})`);
-    result.result.x1.ans = x1;
-    result.result.x1.fx = equation.replaceAll('x',  `(${b})`);
-    result.result.h.ans = h;
-
-    result.result.result = (h/2) * (x0 + x1);
-
-
-    result.statusCode = 200;
-
-    return result;
 
 }
 

@@ -1,15 +1,8 @@
 import {useEffect,useState, useImperativeHandle, forwardRef} from 'react'
 import { BlockMath } from "react-katex";
 import Swal from "sweetalert2";
-import {problemGetById} from '../../Api/problem'
+import {problemGetById,Problem} from '../../Api/problem'
 import {useLocation} from 'react-router-dom'
-
-interface Problem {
-    type: string;
-    solution: string;
-    input: object;
-    output?: object;
-  }
 
 interface Values {
     matrixA: number[][];

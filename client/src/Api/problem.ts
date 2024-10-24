@@ -1,7 +1,7 @@
 import axios from "axios";
 import {domain} from '../Configs/Configs';
 
-interface Problem {
+export interface Problem {
     type: string;
     solution: string;
     input: object;

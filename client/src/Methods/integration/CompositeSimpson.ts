@@ -1,4 +1,5 @@
 import {evaluate,round} from 'mathjs';
+import {problemCreate} from '../../Api/problem';
 
 export interface CompositeSimpsonRequest {
     a : number;
@@ -49,42 +50,61 @@ export function CompositeSimpsonMethods( a : number , b : number , equation : st
         statusCode: 400
     };
 
-    const h = (b - a)/(2*n);
-    result.result.h.value = h;
-    
-    const fx = (x : number) => {
-        return evaluate(equation, {x});
+    try{
+            
+        const h = (b - a)/(2*n);
+        result.result.h.value = h;
+        
+        const fx = (x : number) => {
+            return evaluate(equation, {x});
 
-    }
-
-    const iteration = [];
-
-    for(let i = 0; i <= (2*n); i++){
-        iteration.push( {x: a + i*h, y: fx(a + i*h)});
-        result.result.iteartion.push({
-            x: round(a + i*h,6),
-            text: equation.replaceAll('x', `(${round(a + i*h,6)})`),
-            value: round(fx(a + i*h),6)
-        });
-    }
-
-
-    let sum = 0;
-
-    for (let i = 1; i < (2*n); i++){
-        if(i % 2 == 0){
-            sum += iteration[i].y * 2;
-        } else {
-            sum += iteration[i].y * 4;
         }
+
+        const iteration = [];
+
+        for(let i = 0; i <= (2*n); i++){
+            iteration.push( {x: a + i*h, y: fx(a + i*h)});
+            result.result.iteartion.push({
+                x: round(a + i*h,6),
+                text: equation.replaceAll('x', `(${round(a + i*h,6)})`),
+                value: round(fx(a + i*h),6)
+            });
+        }
+
+
+        let sum = 0;
+
+        for (let i = 1; i < (2*n); i++){
+            if(i % 2 == 0){
+                sum += iteration[i].y * 2;
+            } else {
+                sum += iteration[i].y * 4;
+            }
+        }
+
+        result.result.result = (h/3) * (fx(a) + sum + fx(b));
+        result.result.result = round(result.result.result,6);
+
+        result.statusCode = 200;
+
+        problemCreate({
+            type: "Integration",
+            solution: "compositesimpson",
+            input: {
+                "a" : a,
+                "b" : b,
+                "equation" : equation,
+                "n": n
+            },
+            // output: result
+        });
+
+        return result;
+    }catch(e){
+        result.error = "failed request";
+        result.statusCode = 400;
+        return result;
     }
-
-    result.result.result = (h/3) * (fx(a) + sum + fx(b));
-    result.result.result = round(result.result.result,6);
-
-    result.statusCode = 200;
-
-    return result;
 
 }
     // {

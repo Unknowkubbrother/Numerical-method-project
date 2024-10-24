@@ -6,6 +6,8 @@ export enum ProblemType {
     LINEAR_ALGEBRAIC_EQUATION = "Linear Algebraic Equation",
     INTERPOLATION = "Interpolation",
     REGRESSION = "Regression",
+    INTEGRATION = "Integration",
+    DIFFERENTIATION = "Differentiation",
 }
 
 export enum SolutionType {
@@ -29,6 +31,11 @@ export enum SolutionType {
     SPLINE = "spline",
     SIMPLEREGRESSION = "simple",
     MULTIPLELINEARREGRESSION = "multipleLinear",
+    TRAPEZOIDAL = "trapezoidal",
+    COMPOSITETRAPEZOIDAL = "compositetrapezoidal",
+    SIMPSON = "simpson",
+    COMPOSITESIMPSON = "compositesimpson",
+    DIFF = "diff",
 }
 
 interface IProblem {

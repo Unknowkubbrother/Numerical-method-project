@@ -1,5 +1,7 @@
 import {useState,useEffect} from 'react'
 import {BlockMath} from "react-katex"
+import { useLocation } from 'react-router-dom';
+import {problemGetById,Problem} from '../../Api/problem'
 
 interface Values {
     a: number;
@@ -19,6 +21,35 @@ function Inputintegration(props: Props) {
     const [b, setB] = useState<number>();
     const [equation, setEquation] = useState<string>('');
     const [n , setN] = useState<number>();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const Id = params.get('id');
+
+    useEffect(() => {
+        if (Id != null) {
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(problemGetById(Id));
+            }, 1000);
+          })
+            .then((result: unknown) => {
+              const data = result as Problem;
+              const input = data.input as Values;
+                if (input.a && input.b && input.equation){
+                    setA(input.a);
+                    setB(input.b);
+                    setEquation(input.equation);
+                    if (input.n){
+                        setN(input.n);
+                    }
+                }
+            })
+            .catch((error) => {
+              console.log(error)
+            }); 
+        }
+      },[Id]);
+
 
 
     const handleSetA = (e: React.ChangeEvent<HTMLInputElement>) => {
