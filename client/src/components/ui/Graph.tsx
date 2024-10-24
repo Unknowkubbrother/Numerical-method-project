@@ -1,12 +1,6 @@
 
 import Plot from 'react-plotly.js';
 
-// interface PropsGraph {
-//     mainGraph : {x: number, y: number}[]
-//     data : {x : number, y : number}[]
-//     points?: {x:number, y:number}[]
-// }
-
 function GraphInterpolation(props : {DataGraph : Plotly.Data[]}) {  
   
   return (
