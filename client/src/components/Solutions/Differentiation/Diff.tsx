@@ -33,7 +33,7 @@ function Diff() {
                             .sort((a, b) => Number(b) - Number(a))
                             .map((k,idx) => {
                                 let xStr = 'f(x_{'
-                                if (idx === 0){
+                                if (Number(k) === 0){
                                     xStr += 'i'
                                 }else if (Number(k) > 0){
                                     xStr += `i+${Number(k)}`
