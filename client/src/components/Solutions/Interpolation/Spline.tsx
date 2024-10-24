@@ -192,7 +192,7 @@ function Lagrange() {
         Calculate!
       </button>
       <div className="w-full h-content flex flex-col gap-5 mt-10">
-        <h1 className="text-xl font-semibold">Lagrange Interpolation</h1>
+        <h1 className="text-xl font-semibold">Spline Interpolation</h1>
         <div
           className={`w-full rounded-md h-content flex flex-col justify-center items-center p-5 ${Result ? '' : 'bg-background'}`}
         >

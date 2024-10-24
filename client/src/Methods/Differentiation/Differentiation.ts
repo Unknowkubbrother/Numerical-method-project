@@ -4,9 +4,9 @@ export interface DifferentiationRequest {
     x: number;
     h : number;
     equation : string;
-    order: 1 | 2 | 3 | 4;
-    oh: "h" | "h^2" | "h^4";
-    direction: "forward" | "backward" | "central";
+    order: 1 | 2 | 3 | 4 | number,
+    oh: "h" | "h^2" | "h^4" | string,
+    direction: "forward" | "backward" | "central" | string;
 }
 
 export interface DifferentiationResponse {
@@ -14,7 +14,16 @@ export interface DifferentiationResponse {
     fx: {[key:number]: number},
     h : number,
     exactResult : number,
+	exactEquation: string,
     errorValue: number,
+	defualt : {
+		direction: string,
+		order: number,
+		oh: string,
+		equation: string
+		h: number,
+		x: number
+	}
     error?: string;
     statusCode: number;
 }
@@ -24,7 +33,7 @@ export interface DifferentiationResponse {
 export const diffFormula: {
 	[direction: string]: {
 		[order: number]: {
-			[error: string]: {
+			[oh: string]: {
 				[key: number]: number;
 				frac: string;
 			};
@@ -239,9 +248,9 @@ export function DifferentiationMethods(
     x: number,
     h : number,
     equation : string,
-    order: 1 | 2 | 3 | 4,
-    oh: "h" | "h^2" | "h^4",
-    direction: "forward" | "backward" | "central"
+    order: 1 | 2 | 3 | 4 | number,
+    oh: "h" | "h^2" | "h^4" | string,
+    direction: "forward" | "backward" | "central" | string
 ) : DifferentiationResponse{
 
     const result: DifferentiationResponse = { 
@@ -249,7 +258,16 @@ export function DifferentiationMethods(
         fx: {},
         h,
         exactResult: 0,
+		exactEquation: '',
         errorValue: 0,
+		defualt : {
+			direction: direction,
+			order: order,
+			oh: oh,
+			equation,
+			h,
+			x
+		},
         statusCode: 400
     };
 
@@ -282,6 +300,7 @@ export function DifferentiationMethods(
 
     const diff = (equation : string, x : number, n : number) => {
         if (n == 0){
+			result.exactEquation = equation;
             return evaluate(equation, {x});
         }
 

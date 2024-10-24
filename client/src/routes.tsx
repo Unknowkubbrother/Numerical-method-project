@@ -35,6 +35,9 @@ import Trapezoidal from './components/Solutions/Integration/Trapezoidal.tsx';
 import CompositeTrapezoidal from './components/Solutions/Integration/CompositeTrapezoidal.tsx';
 import Simpson from './components/Solutions/Integration/Simpson.tsx';
 import CompositeSimpson from './components/Solutions/Integration/CompositeSimpson.tsx';
+import Differentiation from './components/Solutions/Differentiation/Differentiation.tsx';
+import Diff from './components/Solutions/Differentiation/Diff.tsx';
+
 
 const router = createBrowserRouter([
   {
@@ -177,6 +180,16 @@ const router = createBrowserRouter([
               {
                 path: 'compositesimpson',
                 element: <CompositeSimpson />
+              }
+            ]
+          },
+          {
+            path: 'differentiation',
+            element: <Differentiation/>,
+            children: [
+              {
+                path: 'diff',
+                element: <Diff />
               }
             ]
           }

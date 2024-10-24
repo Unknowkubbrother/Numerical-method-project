@@ -128,10 +128,14 @@ export const mainMenu = [
       }
     ],
   },
-  // {
-  //   title: "Differentiation",
-  //   path: "/lobby/root",
-  //   menu: [
-  //   ],
-  // },
+  {
+    title: "Differentiation",
+    path: "../lobby/differentiation",
+    menu: [
+      {
+        path: '/lobby/differentiation/diff',
+        title: "Differentiation"
+      }
+    ],
+  },
 ];

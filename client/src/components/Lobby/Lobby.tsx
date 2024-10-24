@@ -42,7 +42,7 @@ function Lobby() {
     <>
     {!loading && (
         <div className={`w-full relative ${loadingSecond ? 'blur' : ''}`}>
-        <div className="w-full mt-[90px]">
+        <div className="w-full mt-[100px]">
           <div className="min-[340px]:w-[75%] lg:w-[90%] 2xl:w-[70%] h-content m-auto list-none flex gap-5 justify-center items-center flex-wrap">
             {mainMenu.map(
               (
