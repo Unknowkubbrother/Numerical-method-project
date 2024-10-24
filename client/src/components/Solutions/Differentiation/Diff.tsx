@@ -88,7 +88,7 @@ function Diff() {
                 <div className='w-fit m-auto'>
                     <BlockMath math={`
 						\\text{error = } \\left|
-						\\dfrac{${funcDiff}_{numerical} - ${funcDiff}_{true}}{${funcDiff}_{true}}
+						\\dfrac{${funcDiff}_{true} - ${funcDiff}_{numerical}}{${funcDiff}_{true}}
 						\\right| \\times 100 \\%
 					`}/>
                 </div>
