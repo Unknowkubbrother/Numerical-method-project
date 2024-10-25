@@ -1,6 +1,4 @@
 import axios from "axios";
-import {domain} from '../Configs/Configs';
-
 export interface Problem {
     type: string;
     solution: string;
@@ -10,7 +8,7 @@ export interface Problem {
 
 export const problemCreate = async (problem : Problem) => {
     try {
-        const response = await axios.post(`${domain}/problem/create`, problem);
+        const response = await axios.post(`${process.env.END_POINT}/problem/create`, problem);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -20,7 +18,7 @@ export const problemCreate = async (problem : Problem) => {
 
 export const problemGet = async (input : object, type : string, solution : string) => {
     try {
-        const response = await axios.post(`${domain}/problem/getByITS`, { 
+        const response = await axios.post(`${process.env.END_POINT}/problem/getByITS`, { 
             input : input,
             type : type,
             solution : solution
@@ -33,7 +31,7 @@ export const problemGet = async (input : object, type : string, solution : strin
 
 export const problemGetByType = async (type : string) => {
     try {
-        const response = await axios.post(`${domain}/problem/getByType`, { type : type });
+        const response = await axios.post(`${process.env.END_POINT}/problem/getByType`, { type : type });
         return response.data;
     } catch (error) {
         return null;
@@ -42,7 +40,7 @@ export const problemGetByType = async (type : string) => {
 
 export const problemGetById = async (id : string) => {
     try{
-        const response = await axios.post(`${domain}/problem/${id}`)
+        const response = await axios.post(`${process.env.END_POINT}/problem/${id}`)
         return response.data;
     }catch(error){
         return null

@@ -1,5 +1,30 @@
-docker build -t numerical-server-image .
-docker run -p 3000:3000 -d --name numerical-server numerical-server-image
-docker run -v %cd%:/app -p 3000:3000 -d --name numerical-server numerical-server-image // real time render
 
-docker rm numerical-server -f // ลบ run อยู่
+// run
+docker compose up -d
+
+// look list all container
+docker ps -a
+
+//look list container is running
+docker ps 
+
+//stop container is running
+docker stop client
+docker stop server
+docker stop database
+
+//delete container
+docker rm client -f
+docker rm server -f
+docker rm database -f
+
+//look list all images
+docker images
+
+//delete images
+docker rmi numer_client_image
+docker rmi numer_server_image
+docker rmi mongo
+
+//delete volome database
+docker volume rm numerical-method-project_mongo_db

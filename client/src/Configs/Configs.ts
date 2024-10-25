@@ -1,6 +1,3 @@
-export const domain = "https://numer-api.unknowkubbrother.net";
-// export const domain = "http://localhost:3000";
-
 export const mainMenu = [
   {
     title: "Root of Equation",
