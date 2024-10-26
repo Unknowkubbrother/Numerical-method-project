@@ -111,8 +111,8 @@ export function GaussSeiDelMethod(matrixA: number[][], arrB: number[] , initialX
         }
 
 
-        const arrX = Array(initialX.length).fill(0);
-        let arrXOld = Array(matrixA[0].length).fill(0);
+        const arrX = initialX.map((x) => x);
+        let arrXOld = Array(initialX.length).fill(0);
         let iterations = 0;
         const MAX_ITERATIONS = 1000;
         do{
@@ -120,10 +120,9 @@ export function GaussSeiDelMethod(matrixA: number[][], arrB: number[] , initialX
             arrXOld = arrX.map((x) => x);
             for(let i = 0; i < matrixA[0].length; i++){
             let sum = arrB[i];
-            const temp = arrX.map((x) => x);
                 for(let j = 0; j < matrixA[0].length; j++){
                     if (i !== j) {
-                        sum -= matrixA[i][j] * temp[j];
+                        sum -= matrixA[i][j] * arrX[j];
                     }
                 }
                 arrX[i] = sum / matrixA[i][i];

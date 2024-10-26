@@ -111,8 +111,8 @@ export function JacobiMethod(matrixA: number[][], arrB: number[] , initialX:numb
          }
     
     
-        const arrX = Array(initialX.length).fill(0);
-        let arrXOld = Array(matrixA[0].length).fill(0);
+        const arrX = initialX.map((x) => x);
+        let arrXOld = Array(initialX.length).fill(0);
         let iterations = 0;
         const MAX_ITERATIONS = 1000;
         do{
