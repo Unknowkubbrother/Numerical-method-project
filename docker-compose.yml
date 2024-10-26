@@ -9,7 +9,7 @@ services:
       - mongo_db:/data/db
 
   server:
-    build: ./server .
+    build: ./server
     container_name: server
     image: numer_server_image
     ports:
@@ -21,7 +21,7 @@ services:
       - mongo_db
 
   client:
-    build: ./client .
+    build: ./client
     container_name: client
     image: numer_client_image
     ports:
