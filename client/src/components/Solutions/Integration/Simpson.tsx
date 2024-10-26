@@ -77,7 +77,7 @@ function Simpson() {
               <div className="flex justify-center items-center gap-5">
                 <BlockMath math="Here"/>
                 <div className="flex flex-col justify-start items-start">
-                    <BlockMath math={`h \\kern{3px} = \\frac{b-a}{n} \\kern{3px} = \\kern{3px} \\frac{${Result?.result.h.text}}{2} \\kern{3px} = \\kern{3px} ${Result?.result.h.value}`} />
+                    <BlockMath math={`h \\kern{3px} = \\frac{b-a}{2} \\kern{3px} = \\kern{3px} \\frac{${Result?.result.h.text}}{2} \\kern{3px} = \\kern{3px} ${Result?.result.h.value}`} />
                 </div>
               </div>
               <div className="flex flex-col justify-center items-start">
