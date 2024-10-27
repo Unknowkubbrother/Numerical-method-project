@@ -16,6 +16,7 @@ export interface NewtonDividedResponse {
         iteration: NewtonDividedIterationData[];
     }[];
     CIterations: number[];
+    ctext : string[]
     error?: string;
     statusCode: number;
 }
@@ -33,6 +34,7 @@ export function NewtonDividedMethod( x:number[], points: {x:number, y:number , s
         result: [],
         iterations: [],
         CIterations: [],
+        ctext: [],
         statusCode: 400
     };
 
@@ -45,14 +47,19 @@ export function NewtonDividedMethod( x:number[], points: {x:number, y:number , s
         const selectedPoints = points.filter(point => point.selected);
     
         const C = selectedPoints.map((point) => point.y);
+
+        const ctext : string[] = selectedPoints.map((_,idx)=>`f(x_{${idx}})`)
+
     
         for(let i= 1 ; i<selectedPoints.length; i++){
             for(let j= selectedPoints.length-1; j>=i; j--){
+                ctext[j] = `\\dfrac{(${ctext[j]} - ${ctext[j-1]})}{(x_{${j}} - x_{${j-i}})}`
                 C[j] = (C[j] - C[j-1]) / (selectedPoints[j].x - selectedPoints[j-i].x);
             }
         }
     
         result.CIterations = C;
+        result.ctext = ctext;
     
     
     
