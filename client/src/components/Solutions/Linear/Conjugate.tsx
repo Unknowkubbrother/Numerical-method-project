@@ -164,6 +164,8 @@ function Conjugate() {
                     <th><BlockMath math="\lambda_{k-1}" /></th>
                     <th><BlockMath math="X_{k}" /></th>
                     <th><BlockMath math="R_{k}" /></th>
+                    <th><BlockMath math="\alpha_{k}"/></th>
+                    <th><BlockMath math="D_{k}" /></th>
                     <th><BlockMath math="error_{k}" /></th>
                   </tr>
                 </thead>
@@ -175,6 +177,8 @@ function Conjugate() {
                         <td>{iteration.lamda.toString()}</td>
                         <td><BlockMath math={(ArrayFormat(round(iteration.x.valueOf() as number[], 6)))} /></td>
                         <td><BlockMath math={(ArrayFormat(round(iteration.r.valueOf() as number[], 6)))} /></td>
+                        <td><BlockMath math={`${iteration.alpha && iteration.alpha}`}/></td>
+                        <td><BlockMath math={(ArrayFormat(round(iteration.d.valueOf() as number[], 6)))} /></td>
                         <td><BlockMath math={`${iteration.error}`} /></td>
                       </tr>
                     )
