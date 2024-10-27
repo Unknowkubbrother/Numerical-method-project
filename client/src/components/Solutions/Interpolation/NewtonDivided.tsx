@@ -158,7 +158,7 @@ function NewtonDivided() {
               {Result?.ctext.map((item, index) => {
                 return (
                   <div className="flex flex-wrap" key={index}>
-                    <BlockMath math={`C_{${index}} \\space = \\space \\left[\\footnotesize  {${item}}\\right]`} />
+                    <BlockMath math={`C_{${index}} \\space = \\space ${index != 0 ? `\\left[\\footnotesize  {${item}}\\right]` :  `${item}`}`} />
                   </div>
                   
                 )
