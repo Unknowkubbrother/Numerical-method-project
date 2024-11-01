@@ -50,22 +50,6 @@ export const problemGetByType = async (req: express.Request, res: express.Respon
 
 }
 
-export const problemGetAll = async (req: express.Request, res: express.Response) => {
-    try{
-        const response = await getProblems();
-
-        if (response){
-            return res.status(200).json(response).end();
-        }
-
-        return res.sendStatus(404);
-        
-    }catch (error) {
-        console.log(error);
-        return res.sendStatus(400);
-    }
-}
-
 export const problemsGetbyId = async(req : express.Request , res : express.Response) =>{
     try{
         const { id } = req.params;

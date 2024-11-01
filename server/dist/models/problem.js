@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProblemById = exports.getProblems = exports.getProblemsByType = exports.getProblem = exports.createProblem = exports.Problem = exports.SolutionType = exports.ProblemType = void 0;
+exports.deleteProblemBySolution = exports.deleteProblemById = exports.deleteProblemByType = exports.deleteProblems = exports.updateProblem = exports.getProblemById = exports.getProblems = exports.getProblemsByType = exports.getProblem = exports.createProblem = exports.Problem = exports.SolutionType = exports.ProblemType = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 var ProblemType;
 (function (ProblemType) {
@@ -72,4 +72,14 @@ const getProblems = () => exports.Problem.find();
 exports.getProblems = getProblems;
 const getProblemById = (id) => exports.Problem.findById(id);
 exports.getProblemById = getProblemById;
+const updateProblem = (id, values) => exports.Problem.findByIdAndUpdate(id, values);
+exports.updateProblem = updateProblem;
+const deleteProblems = () => exports.Problem.deleteMany({});
+exports.deleteProblems = deleteProblems;
+const deleteProblemByType = (type) => exports.Problem.deleteMany({ type: type });
+exports.deleteProblemByType = deleteProblemByType;
+const deleteProblemById = (id) => exports.Problem.findByIdAndDelete(id);
+exports.deleteProblemById = deleteProblemById;
+const deleteProblemBySolution = (solution) => exports.Problem.deleteMany({ solution: solution });
+exports.deleteProblemBySolution = deleteProblemBySolution;
 //# sourceMappingURL=problem.js.map

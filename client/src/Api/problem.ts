@@ -16,19 +16,6 @@ export const problemCreate = async (problem : Problem) => {
     }
 }
 
-export const problemGet = async (input : object, type : string, solution : string) => {
-    try {
-        const response = await axios.post(`${process.env.END_POINT}/problem/getByITS`, { 
-            input : input,
-            type : type,
-            solution : solution
-        });
-        return response.data.problem.output;
-    } catch (error) {
-        return null;
-    }
-}
-
 export const problemGetByType = async (type : string) => {
     try {
         const response = await axios.post(`${process.env.END_POINT}/problem/getByType`, { type : type });

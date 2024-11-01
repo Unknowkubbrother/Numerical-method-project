@@ -74,3 +74,8 @@ export const getProblem = (input: object, type: string, solution: string) => Pro
 export const getProblemsByType = (type: string) => Problem.find({ type: type })
 export const getProblems = () => Problem.find();
 export const getProblemById = (id :string) => Problem.findById(id);
+export const updateProblem = (id : string , values : object) => Problem.findByIdAndUpdate(id, values);
+export const deleteProblems = () => Problem.deleteMany({});
+export const deleteProblemByType = (type : string) => Problem.deleteMany({ type: type });
+export const deleteProblemById = (id : string) => Problem.findByIdAndDelete(id);
+export const deleteProblemBySolution = (solution : string) => Problem.deleteMany({ solution: solution });
