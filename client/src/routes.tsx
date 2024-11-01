@@ -2,8 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App.tsx'
 import './index.css'
 import Home from './components/Home/Home.tsx'
-import Login from './components/Login/Login.tsx'
-import Register from './components/Register/Register.tsx';
 import Lobby from './components/Lobby/Lobby.tsx'
 import Root from './components/Solutions/RootOfEquations/Root.tsx'
 import Graphicalmethods from './components/Solutions/RootOfEquations/Graphicalmethods.tsx'
@@ -195,14 +193,6 @@ const router = createBrowserRouter([
           }
         ]
       },
-      {
-        path: 'login',
-        element: <Login/>
-      },
-      {
-        path: 'register',
-        element: <Register/>
-      }
     ],
   },
 ]);
