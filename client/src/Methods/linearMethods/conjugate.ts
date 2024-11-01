@@ -46,6 +46,16 @@ export function ConjugateMethods(matrixA: number[][], arrB: number[], initialX: 
         statusCode: 400
     };
 
+    if (matrixA.length <= 0) {
+        result.error = "Matrix A is empty";
+        return result;
+    }
+
+    if (arrB.length <= 0) {
+        result.error = "Array B is empty";
+        return result;
+    }
+
     if (hasUndefinedMatrix(matrixA)) {
         result.error = "Matrix A contains undefined values";
         return result;
