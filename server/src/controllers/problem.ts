@@ -1,18 +1,10 @@
 import express from 'express';
-import { createProblem , ProblemType, SolutionType , getProblem, getProblemsByType,getProblems,getProblemById } from '../models/problem';
-// import axios from 'axios';
-
-interface Problem {
-    type: ProblemType;
-    solution: SolutionType;
-    input: object;
-    output?: object;
-}
+import { createProblem , getProblem, getProblemsByType,getProblems,getProblemById } from '../models/problem';
 
 export const problemCreate = async (req: express.Request, res: express.Response) => {
     try{
 
-        const { type, solution, input , output} : Problem= req.body;
+        const { type, solution, input , output} = req.body;
         
          if(!type || !solution || !input){
             return res.sendStatus(400);
@@ -33,24 +25,6 @@ export const problemCreate = async (req: express.Request, res: express.Response)
         
         return res.status(201).json(response).end();
 
-    }catch (error) {
-        console.log(error);
-        return res.sendStatus(400);
-    }
-}
-
-export const problemGetByITS = async (req: express.Request, res: express.Response) => {
-    try{
-        const {input , type , solution} = req.body;
-
-        const response = await getProblem(input , type , solution);
-
-        if (response){
-            return res.status(200).json(response).end();
-        }
-
-        return res.sendStatus(404);
-        
     }catch (error) {
         console.log(error);
         return res.sendStatus(400);

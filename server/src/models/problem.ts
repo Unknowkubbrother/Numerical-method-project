@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import lodash from 'lodash';
 
 export enum ProblemType {
     ROOT_OF_EQUATION = "Root of Equation",

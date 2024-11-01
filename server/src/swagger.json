@@ -5,29 +5,13 @@
     "description": "Numer API",
     "version": "1.0.0"
   },
-  "host": "numer-api.unknowkubbrother.net",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/problem/create": {
-      "post": {
-        "description": "",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "409": {
-            "description": "Conflict"
-          }
-        }
-      }
-    },
-    "/problem/getByITS": {
       "post": {
         "description": "",
         "parameters": [
@@ -37,13 +21,16 @@
             "schema": {
               "type": "object",
               "properties": {
-                "input": {
-                  "example": "any"
-                },
                 "type": {
                   "example": "any"
                 },
                 "solution": {
+                  "example": "any"
+                },
+                "input": {
+                  "example": "any"
+                },
+                "output": {
                   "example": "any"
                 }
               }
@@ -51,14 +38,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"
           },
-          "404": {
-            "description": "Not Found"
+          "409": {
+            "description": "Conflict"
           }
         }
       }

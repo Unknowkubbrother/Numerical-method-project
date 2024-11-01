@@ -3,4 +3,5 @@ Dockerfile
 .dockerignore
 .git
 .gitignore
+dist
 README.md

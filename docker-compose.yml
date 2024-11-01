@@ -13,10 +13,11 @@ services:
     container_name: server
     image: numer_server_image
     ports:
-      - 4000:3000
+      - 3000:3000
     environment:
       SERVER_PORT: 3000
       MONGO_URL: mongodb://mongo_db:27017/Numerical
+      DOMAIN: http://localhost:3000
     depends_on:
       - mongo_db
 
@@ -25,9 +26,9 @@ services:
     container_name: client
     image: numer_client_image
     ports:
-      - 5174:5173
+      - 5173:5173
     environment:
-      END_POINT: http://localhost:4000
+      END_POINT: http://localhost:3000
     depends_on:
       - server
 

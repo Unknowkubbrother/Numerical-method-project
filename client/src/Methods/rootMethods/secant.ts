@@ -111,7 +111,13 @@ export function SecantMethod (xInitial0: number, xInitial1: number, func: string
             "func" : func,
             "errorFactor" : errorFactor
         },
-        output: result
+        output: {
+            result: {
+                x: result.result.x,
+                y: result.result.y,
+                error: result.result.error
+            }
+        }
     });
 
     return result;
