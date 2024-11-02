@@ -116,6 +116,7 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
               shape: 'spline',
               width: 2,
             },
+            // fill: 'tozeroy',
             name: 'Main Graph',
           },
           {
@@ -134,10 +135,12 @@ function Graph(props : {data : GraphicalResponse | OnePointResponse | NewTonResp
           margin: { t: 35, r: 0, b: 35, l: 35 },
           dragmode: 'pan',
           autosize: true,
-        }}
+        }
+      }
         config={{
           scrollZoom: true,
         }}
+        
       />
     </div>
   )
