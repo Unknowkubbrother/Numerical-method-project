@@ -12,5 +12,5 @@ test('Home', async () => {
     </MemoryRouter>
 )
 
-  expect(getByText('Numerical')).toBeInTheDocument();
+  expect(getByText('Numerical'));
 })
