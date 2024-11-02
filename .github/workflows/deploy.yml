@@ -3,6 +3,7 @@ on:
   push:
     braches:
       - main
+  workflow_dispath:
 
 jobs:
   deploy:
